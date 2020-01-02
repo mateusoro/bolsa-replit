@@ -64,7 +64,7 @@ def carregar_sky_forcar(links,forcar):
 
 			if len(l['imdb']) > 0 and (db.registros.find({'magnet':l['link']}).count()==0 or forcar) and db.legendado.find({'magnet':ha}).count()==0:
 				socketio.emit('atualizar','Carregando: https://btdb.eu/torrent/' + ha)
-				r = session.get('https://btdb.eu/torrent/' + ha)
+				r = session.get('https://translate.google.com.br/translate?hl=pt-BR&sl=en&tl=pt&u=https://btdb.eu/torrent/' + ha)
 				print(1)
 				titulo = r.html.find("title", first=True).text
 				print(r.html.text)
