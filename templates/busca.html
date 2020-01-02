@@ -1,0 +1,380 @@
+<html>
+
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Atualizar Stremio</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+
+	</script>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+	 crossorigin="anonymous">
+	</script>
+	
+
+	<script type="text/javascript" charset="utf-8">
+		//https://v3-cinemeta.strem.io/meta/series/tt0096697.json
+			
+				class Linha {
+					
+					constructor(config) {
+
+						/*
+							var config = {
+										titulo:info,
+										subtitulo:info,
+										texto:m,
+										texto_link:'Adicionar Preferido',
+										onclick_link:"socket.emit('preferido', '"+im+"','"+m2+"')",
+										local:null,
+										onclick:null,
+										imagem:"https://images.metahub.space/poster/medium/"+im+"/img",
+										link_imagem:'https://www.imdb.com/title/'+im+'/'
+							}
+						*/
+						console.log(config);
+						this.config = config;
+						var target = '';
+						var target_link = '';
+
+						if (!config.onclick){
+        					config.onclick= '';
+							target = 'target="_blank"'
+						}
+						if (!config.onclick_link){
+        					config.onclick_link= '';
+							target_link = 'target="_blank"'
+						}
+						
+						this.titulo = config.titulo;
+						this.linha = $('<li class=" collection-item col s6 m4 l2" style="height: 474px;">');												
+						this.link = $('<a href="#" '+target+' style="width: 100%;" onclick="'+config.onclick+'" >');
+						this.img = $('<img onerror="erroImagem(this)" src="" alt="" style="width: 100%; height: 285px" >');
+						this.link.append(this.img);
+						this.linha.append(this.link);
+						this.linha.append($('<br>'));
+						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.titulo+'</div></span>'));
+						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.subtitulo1+'</div></span>'));
+						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.subtitulo2+'</div></span>'));	
+						config.texto = config.texto.replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ');				
+						this.linha.append($('<span><div style="margin-left: 5px;height: 90px;overflow: overlay; font-size: 13px;">'+config.texto+'</div></span>'));						
+						if(config.texto_link){
+							this.linha.append($('<a href="#" '+target_link+' style="width: 100%;" onclick="'+config.onclick_link+'" >'+config.texto_link+'</a>'));
+						}
+						this.linha.append($('<br>'));							
+
+						if(config.imagem){
+							this.img.attr("src",config.imagem);
+						}
+						if(config.link_imagem){
+							this.link.attr("href",config.link_imagem);
+						}
+						if(config.local){
+							$('#'+config.local).append(this.linha);
+						}
+					}
+					
+					setImage(src){
+						this.img.attr("src",src);
+					}
+					setLink(src){
+						this.link.attr("href",src);
+					}
+				
+				}				
+				function erroImagem(origem){
+					$(origem).attr("src",'https://www.termoparts.com.br/wp-content/uploads/2017/10/no-image.jpg');
+					
+				}
+
+				$.urlParam = function(name){
+					var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+					if (results==null) {
+						return null;
+					}
+					return results[1] || 0;
+				}
+			
+				var ret;
+				var local = "lancamento";
+				var socket = io();
+
+				function buscar_sinopse(im, linha){
+					$.get("https://api.themoviedb.org/3/find/"+im+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
+						//console.log(data);
+						//console.log(data.tv_results[0]);
+						if(data.tv_results[0]){
+							linha.find('.sinopse').text(data.tv_results[0].overview);
+						}
+						if(data.movie_results[0]){
+							linha.find('.sinopse').text(data.movie_results[0].overview);
+						}
+					});
+				}
+
+				var resp;
+                socket.on('connect', function() {
+					console.log('conectado')
+                   // socket.emit('inicio');
+                });
+				socket.on('resposta_navegar', function(m) {
+                    ret = m;					
+					for(var x = 0; x < ret.length; x ++){
+						var link = ret[x].link;
+						var titulo = ret[x].titulo;
+						var img = ret[x].img;
+						
+						$('#navegar_log').append(
+								'<li class="collection-item"><div class="row"><div class="col s12 m2 l1">     <img src="'+img+'" alt="" style="width: 100%" > '+titulo+' <br><a href="#busca_link" onclick="local=\'link\'; socket.emit(\'link\', \''+link+'\', \'\'); $(\'.tabs\').tabs(\'select\',\'busca_link\');" > Carregar</a></div></div></li>');
+												
+					
+					}
+					$('#navegar_log').append($("<li class='collection-item'>").text("Fim da Busca"));
+                });
+				socket.on('resposta_preferidos', function(m) {
+                    ret = JSON.parse(m);					
+					for(var x = 0; x < ret.length; x ++){
+						var im = ret[x].imdb;
+						var titulo = ret[x].nome;
+						var link = '';			
+
+						$('#preferidos_log').append(
+								'<li class="collection-item"><div class="row"><div class="col s12 m2 l1">   <img src="https://images.metahub.space/poster/small/'+im+'/img" alt="" style="width: 100%" ><br> '+titulo+' <br><a href="#" onclick="local=\'link\'; socket.emit(\'remove_preferido\', \''+im+'\')" > Remover</a> <br> <a href="#" onclick="local=\'nome\'; socket.emit(\'buscar\', \''+titulo+'\');$(\'.tabs\').tabs(\'select\',\'busca_nome\');" > Buscar</a></div></div></li>');
+												
+					
+					}
+					$('#preferidos_log').append($("<li class='collection-item'>").text("Fim da Busca"));
+                });
+                socket.on('atualizar', function(m,i) {
+                    console.log(m)
+					if(m.includes("Link:") || m.includes("Carregando:") || m.includes("Legendado ") || m.includes("Detalhes do Link")){
+ 						$('#messages_log').append($("<li class='collection-item'>").text(m));
+						 $('#log_rodape').empty();
+						 $('#log_rodape').append($("<li class='collection-item'>").text(m));
+					}else{
+						var im = m.slice(m.indexOf("(")+1,m.indexOf(")")).split(" ")[0];
+						console.log("im:",im);
+						var linha = $('<li class="collection-item">');						
+												
+						if(im.length>10 || im == "Buscando:" || im == "Fim"){
+							linha.text(m);
+							if(local=='lancamento'){
+								$('#messages').append(linha); 
+							}
+							if(local=='nome'){
+								$('#messages2').append(linha); 
+							}
+							if(local=='link'){
+								$('#messages3').append(linha); 
+							}
+						}else{
+							var info = "";
+							if(m.toUpperCase().indexOf("DUBLADO") > 0){
+								info = info+" [DUBLADO]";
+							}
+							if(m.toUpperCase().indexOf("DUAL") > 0){
+								info = info+" [DUAL]";
+							}
+							if(m.toUpperCase().indexOf("BLURAY") > 0){
+								info = info+" [BluRay]";
+							}
+							if(m.toUpperCase().indexOf("HDTC") > 0){
+								info = info+" [HDTC]";
+							}
+							if(m.toUpperCase().indexOf("HDCAM") > 0){
+								info = info+" [HDCAM]";
+							}
+							if(m.toUpperCase().indexOf("UHD") > 0){
+								info = info+" [UHD]";
+							}
+							if(m.toUpperCase().indexOf("2160P") > 0){
+								info = info+" [2160p]";
+							}
+							if(m.toUpperCase().indexOf("720P") > 0){
+								info = info+" [720p]";
+							}
+							if(m.toUpperCase().indexOf("1080P") > 0){
+								info = info+" [1080p]";
+							}
+							m = m.replace("Adicionado: ","");
+							var m2 = m.split('(')[0];
+
+							var subtitulo1 = m.split(")")[0].replace(m2,'').replace('(','');				
+							var texto = m.split(")")[1];
+
+							subtitulo1 = subtitulo1.replace(' ','->T').replace(' ',' E').replace('->',' -> ')
+							//https://hidratorrent.com/the-flash-6-temporada-torrent
+							var config = {
+										titulo:m2,
+										subtitulo1:subtitulo1,
+										subtitulo2:info,
+										texto:texto,
+										texto_link:'Adicionar Preferido',
+										onclick_link:"socket.emit('preferido', '"+im+"','"+m2+"')",
+										local:null,
+										onclick:null,
+										imagem:"https://images.metahub.space/poster/medium/"+im+"/img",
+										link_imagem:'https://www.imdb.com/title/'+im+'/'
+							}
+
+
+							var linha_n = new Linha(config);		
+														
+							
+							if(local=='lancamento'){
+								$('#messages').append(linha_n.linha); 
+							}
+							if(local=='nome'){
+								$('#messages2').append(linha_n.linha); 
+							}
+							if(local=='link'){
+								$('#messages3').append(linha_n.linha); 
+							}
+						}
+											 	
+						
+					}
+					if(m.includes("Fim da Busca")){
+						$('#progresso').hide();
+					} 
+                    
+                });
+                socket.on('limpar', function(m) {
+                    $('#messages').empty();
+					$('#messages2').empty();
+					$('#messages3').empty();
+					$('#messages_log').empty();										
+					$('#progresso').show();
+                });
+				socket.on('carregado_im', function(m) {
+					ret = JSON.parse(m);
+					for(var x = 0; x < ret.length; x ++){
+						var im = ret[x].imdb.split(' ')[0];
+						var texto = ret[x].titulo + ": "+im;
+						console.log(texto);
+						if($('#messages_imdb').find('li:contains("'+texto+'")').length==0){
+                    		
+							$('#messages_imdb').append(
+								'<li class="collection-item">  <img src="https://images.metahub.space/poster/small/'+im+'/img" alt="" style="height: 120px;" ></br> '+texto+' </br><a href="#" onclick="$(\'#imdb\').val(\''+im+'\');$(\'#texto\').val(\''+ret[x].titulo+'\');"> Escolher</a></br><a href="#" onclick="socket.emit(\'preferido\', \''+im+'\', \''+ret[x].titulo+'\')" >Adicionar Preferido</a></li>');
+							
+							
+							
+
+							//<img src="images/yuna.jpg" alt="" class="circle">
+						}
+					}
+					$('#messages_imdb').append($("<li class='collection-item'>").text("Fim da Busca"));
+                });
+		$(document).ready(function(){
+    		M.AutoInit();
+			if($.urlParam('imdb')){
+
+					var nome = "";
+					$.get("https://api.themoviedb.org/3/find/"+$.urlParam('imdb')+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
+						console.log(data);
+						//console.log(data.tv_results[0]);
+						if(data.tv_results[0]){
+							nome = data.tv_results[0].name || data.tv_results[0].original_name
+						}
+						if(data.movie_results[0]){
+							nome = data.movie_results[0].title || data.movie_results[0].original_title
+						}
+						console.log(nome);
+						document.getElementById('texto').value = nome;
+						document.getElementById('imdb').value = $.urlParam('imdb');
+						$('.tabs').tabs('select','busca_nome');
+
+					});
+				}
+  		});
+	</script>
+</head>
+
+<body>
+	<nav class="nav-extended">
+		<div class="nav-wrapper blue darken-2">
+			<ul class="tabs tabs-transparent" style="padding-top: 10px;">
+				<li class="tab"><a class="active" href="#lancamentos">Lançamentos</a></li>
+				<li class="tab"><a href="#busca_nome">Busca por Nome</a></li>
+				<li class="tab"><a href="#busca_link">Busca por Link</a></li>
+				<li class="tab"><a href="#busca_imdb">Buscar IMDB</a></li>
+				<li class="tab"><a href="#navegar">Navegar</a></li>
+				<li class="tab"><a href="#preferidos">Preferidos</a></li>
+				<li class="tab"><a href="#log">Log</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div id="progresso" style="display: none; margin-bottom: 0px;" class="progress">
+		<div class="indeterminate blue darken-2"></div>
+	</div>
+	<div id="lancamentos" style="padding: 10px;" class="col s12">
+
+		<a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://hidratorrent.com/lancamentos-filmes-');">Lançamentos
+			- Filmes</a><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://hidratorrent.com/lancamentos-series-');">Lançamentos - Séries</a><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista_preferidos');">Atualizar - Preferidos</a><br>
+       
+	    <ul class="collection">
+			<div class="row" id="messages">
+
+			</div>
+		</ul>
+	</div>
+	<div id="busca_nome" style="padding: 10px;" class="col s12">
+		Nome: <input type='text' id='texto' style='width: 100%;'><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='nome'; socket.emit('buscar', document.getElementById('texto').value);">Buscar</a><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+		<ul class="collection">
+			<div class="row" id="messages2">
+
+			</div>
+		</ul>
+	</div>
+	<div id="busca_link" style="padding: 10px;" class="col s12">
+		Link: <input type='text' id='texto2' style='width: 100%;'><br>
+		IMDB: <input type='text' id='imdb' style='width: 100%;'><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn blue darken-3" onclick="local='link'; socket.emit('link', document.getElementById('texto2').value, document.getElementById('imdb').value);">Carregar Link</a><br>
+		<ul class="collection">
+			<div class="row" id="messages3">
+
+			</div>
+		</ul>
+	</div>
+	<div id="busca_imdb" style="padding: 10px;" class="col s12">		
+		Nome: <input type='text' id='texto_i' style='width: 100%;'><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('buscar_im', document.getElementById('texto_i').value);">Buscar no Banco</a><br>
+		<ul class="collection" id="messages_imdb"></ul>
+	</div>
+	<div id="navegar" style="padding: 10px;" class="col s12">		
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#navegar_log').append(
+								'<li class=\'collection-item\'>Buscando</li>'); socket.emit('navegar');">Carregar</a><br>
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#navegar_log').empty(); $('#navegar_log').append(
+								'<li class=\'collection-item\'>Buscando</li>'); socket.emit('navegar_filmes');">Carregar Filmes</a><br>
+		<ul class="collection" id="navegar_log"></ul>
+	</div>
+	<div id="preferidos" style="padding: 10px;" class="col s12">		
+		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#preferidos_log').empty(); $('#preferidos_log').append(
+								'<li class=\'collection-item\'>Carregando</li>'); socket.emit('carregar_preferidos');">Carregar</a><br>
+		<br>
+		<ul class="collection" id="preferidos_log"></ul>
+	</div>
+	<div id="log" style="padding: 10px;" class="col s12">		
+		<ul class="collection" id="messages_log"></ul>
+	</div>
+	 <footer class="page-footer blue darken-2"  style="position:fixed;bottom:0;left:0;width:100%;max-height: 50px;">
+          
+          <div class="footer-copyright">
+            <div id="log_rodape" class="container" style="margin-left: 10px; margin-top: -12px;">
+           
+            </div>
+          </div>
+        </footer>
+</body>
+
+</html>
