@@ -67,7 +67,7 @@ def carregar_sky_forcar(links,forcar):
 				r = session.get('https://btdb.eu/torrent/' + ha)
 				print(1)
 				titulo = r.html.find("title", first=True).text
-				print(titulo)
+				print(r.html.text)
 				ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
 				if "DUAL" in titulo or "DUBLADO" in titulo:
 					ingles = None
