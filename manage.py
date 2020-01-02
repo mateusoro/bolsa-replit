@@ -135,7 +135,7 @@ def carregar_sky_forcar(links,forcar):
 				print('link encontrado')
 				print(len(l['imdb'])) 
 				print(db.registros.find({'magnet':l['link']}).count())
-				print(db.legendado.find({'magnet':ha}).count)
+				print(db.legendado.find({'magnet':ha}).count())
 	
 	socketio.emit('atualizar', 'Fim da Busca')
 	limpar()
