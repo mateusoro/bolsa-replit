@@ -65,6 +65,7 @@ def carregar_sky_forcar(links,forcar):
 			if len(l['imdb']) > 0 and (db.registros.find({'magnet':l['link']}).count()==0 or forcar) and db.legendado.find({'magnet':ha}).count()==0:
 				socketio.emit('atualizar','Carregando: https://btdb.eu/torrent/' + ha)
 				r = session.get('https://btdb.eu/torrent/' + ha)
+				print(1)
 				titulo = r.html.find("title", first=True).text
 				ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
 				if "DUAL" in titulo or "DUBLADO" in titulo:
@@ -73,17 +74,20 @@ def carregar_sky_forcar(links,forcar):
 				teste2 = r.html.find('.file-name:contains("DUAL")', first=True)
 				teste3 = r.html.find('.file-name:contains("Dub")', first=True)
 				teste4 = r.html.find('.file-name:contains("Dual")', first=True)
+				print(2)
 
 				if teste1 != None or teste2 != None or teste3 != None or teste4 != None:
 					ingles = None
 					
 				if ingles == None:
+					print(3)
 					arquivos = r.html.find( '.torrent-file-list tr')
 					ind = 0
 					for a in arquivos:
 						ar = a.find('td')[1].text
 
 						texto = ar
+						print(4)
 						texto = texto.replace('[WWW.BLUDV.TV] ', '').replace(
 						'Acesse o ORIGINAL WWW.BLUDV.TV ', '').replace(
 							'[ACESSE COMANDOTORRENTS.COM] ', '').replace(
@@ -93,6 +97,7 @@ def carregar_sky_forcar(links,forcar):
 						try:
 							if (texto[-3:] not in ['exe', 'txt', 'url', 'srt', 'peg', 'jpg','png','nfo', 'zip']) and (texto[-10:] not in ['sample.mkv']) and (ar not in ["COMANDOTORRENTS.COM.mp4", "BLUDV.TV.mp4", "BLUDV.mp4","LAPUMiA.mp4","File Name"]) and ("LEGENDADO" not in texto):
 								convert = guessit(texto)
+								print(5)
 								if 'season' in convert:
 									sessao = str(convert['season'])
 									if str(convert['season']) == "[2, 1]":
