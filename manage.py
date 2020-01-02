@@ -67,6 +67,7 @@ def carregar_sky_forcar(links,forcar):
 				r = session.get('https://btdb.eu/torrent/' + ha)
 				print(1)
 				titulo = r.html.find("title", first=True).text
+				print(titulo)
 				ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
 				if "DUAL" in titulo or "DUBLADO" in titulo:
 					ingles = None
@@ -85,7 +86,6 @@ def carregar_sky_forcar(links,forcar):
 					ind = 0
 					for a in arquivos:
 						ar = a.find('td')[1].text
-
 						texto = ar
 						print(4)
 						texto = texto.replace('[WWW.BLUDV.TV] ', '').replace(
