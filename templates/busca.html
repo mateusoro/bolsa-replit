@@ -261,7 +261,7 @@
 						if($('#messages_imdb').find('li:contains("'+texto+'")').length==0){
                     		
 							$('#messages_imdb').append(
-								'<li class="collection-item">  <img src="https://images.metahub.space/poster/small/'+im+'/img" alt="" style="height: 120px;" ></br> '+texto+' </br><a href="#" onclick="$(\'#imdb\').val(\''+im+'\');$(\'#texto\').val(\''+ret[x].titulo+'\');"> Escolher</a></br><a href="#" onclick="socket.emit(\'preferido\', \''+im+'\', \''+ret[x].titulo+'\')" >Adicionar Preferido</a></li>');
+								'<li class="collection-item">  <img src="https://images.metahub.space/poster/small/'+im+'/img" alt="" style="height: 120px;" ></br> '+texto+' </br><a href="#" onclick="$(\'#imdb\').val(\''+im+'\');$(\'#texto\').val(\''+ret[x].titulo+'\');"> Escolher</a></br><a href="#" onclick="socket.emit(\'preferido\', \''+im+'\', \''+ret[x].titulo+'\')" >Adicionar Preferido</a></br><a target="_blank" href="https://funcoes.mateusoro.repl.co/?apagar='+im+'" >Apagar Registros</a></li>');
 							
 							
 							
