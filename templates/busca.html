@@ -28,7 +28,8 @@
 						/*
 							var config = {
 										imdb:imdb,
-										info:info
+										info:info,
+										info_adicional:info_adicional
 							}
 						*/
 						
@@ -47,12 +48,14 @@
 								nome = data.movie_results[0].title || data.movie_results[0].original_title
 							}
 							linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+nome+'</div></span>'));
-							linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.info+'</div></span>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'preferido='+config.imdb+'\')" >Adicionar Favoritos</a>'));
+							linha.append($('<span><div style="margin-left: 5px;height: 45px;overflow: overlay; font-size: 12px;">'+config.info+'</div></span>'));
+							linha.append($('<a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'preferido='+config.imdb+'\')" >Adicionar Favoritos</a>'));
 							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'remover_preferido='+config.imdb+'\')" >Remover Favoritos</a>'));
 							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_nome\'); $(\'#texto\').val(\''+nome+'\')" >Buscar</a>'));
 							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'apagar='+config.imdb+'\')" >Apagar Registros</a>'));
-							
+							if(config.info_adicional){
+								linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'#log_rodape\').empty();$(\'#log_rodape\').append($(\'<li>\').text(\''+config.info_adicional+'\'));" >Info Completa</a>'));
+							}
 						});
 						
 						$("#messages").append(linha);
@@ -69,79 +72,8 @@
 						$('<iframe src="https://funcoes.mateusoro.repl.co/?'+parametro+'" frameborder="0" scrolling="no" style="margin: 0px;height: 40px;" id="myFrame"></iframe>')
 						.appendTo('#log_rodape');
 				}
-				var config = {imdb:'tt8111088', info:'720p'}
-				var config2 = {imdb:'tt7286456', info:'720p'}				
-				$('#messages').append(new Exibicao(config)); 
-				$('#messages').append(new Exibicao(config2)); 
-								
 				
-				class Linha {
-					
-					constructor(config) {
-
-						/*
-							var config = {
-										titulo:info,
-										subtitulo:info,
-										texto:m,
-										texto_link:'Adicionar Preferido',
-										onclick_link:"socket.emit('preferido', '"+im+"','"+m2+"')",
-										local:null,
-										onclick:null,
-										imagem:"https://images.metahub.space/poster/medium/"+im+"/img",
-										link_imagem:'https://www.imdb.com/title/'+im+'/'
-							}
-						*/
-						console.log(config);
-						this.config = config;
-						var target = '';
-						var target_link = '';
-
-						if (!config.onclick){
-        					config.onclick= '';
-							target = 'target="_blank"'
-						}
-						if (!config.onclick_link){
-        					config.onclick_link= '';
-							target_link = 'target="_blank"'
-						}
-						
-						this.titulo = config.titulo;
-						this.linha = $('<li class=" collection-item col s6 m4 l2" style="height: 474px;">');												
-						this.link = $('<a href="#" '+target+' style="width: 100%;" onclick="'+config.onclick+'" >');
-						this.img = $('<img onerror="erroImagem(this)" src="" alt="" style="width: 100%; height: 285px" >');
-						this.link.append(this.img);
-						this.linha.append(this.link);
-						this.linha.append($('<br>'));
-						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.titulo+'</div></span>'));
-						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.subtitulo1+'</div></span>'));
-						this.linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+config.subtitulo2+'</div></span>'));	
-						config.texto = config.texto.replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ').replace('.',' ');				
-						this.linha.append($('<span><div style="margin-left: 5px;height: 90px;overflow: overlay; font-size: 13px;">'+config.texto+'</div></span>'));						
-						if(config.texto_link){
-							this.linha.append($('<a href="#" '+target_link+' style="width: 100%;" onclick="'+config.onclick_link+'" >'+config.texto_link+'</a>'));
-						}
-						this.linha.append($('<br>'));							
-
-						if(config.imagem){
-							this.img.attr("src",config.imagem);
-						}
-						if(config.link_imagem){
-							this.link.attr("href",config.link_imagem);
-						}
-						if(config.local){
-							$('#'+config.local).append(this.linha);
-						}
-					}
-					
-					setImage(src){
-						this.img.attr("src",src);
-					}
-					setLink(src){
-						this.link.attr("href",src);
-					}
-				
-				}				
+												
 				function erroImagem(origem){
 					$(origem).attr("src",'https://www.termoparts.com.br/wp-content/uploads/2017/10/no-image.jpg');
 					
@@ -230,7 +162,7 @@
 						var texto = m.split(")")[1];
 						subtitulo1 = subtitulo1.replace(' ','->T').replace(' ',' E').replace('->',' -> ')
 					
-						new Exibicao({imdb:im, info:subtitulo1+" "+info+" "+texto}); 
+						new Exibicao({imdb:im, info:subtitulo1+" "+info, info_adicional:texto}); 
 												
 					}
 					if(m.includes("Fim da Busca")){
