@@ -65,9 +65,9 @@ def carregar_sky_forcar(links,forcar):
 			if len(l['imdb']) > 0 and (db.registros.find({'magnet':l['link']}).count()==0 or forcar) and db.legendado.find({'magnet':ha}).count()==0:
 				socketio.emit('atualizar','Carregando: https://btdb.eu/torrent/' + ha)
 				r = session.get('https://btdb.eu/torrent/' + ha)
-				print(1)
+				#print(1)
 				titulo = r.html.find("title", first=True).text
-				print(r.html.text)
+				#print(r.html.text)
 				ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
 				if "DUAL" in titulo or "DUBLADO" in titulo:
 					ingles = None
@@ -75,19 +75,19 @@ def carregar_sky_forcar(links,forcar):
 				teste2 = r.html.find('.file-name:contains("DUAL")', first=True)
 				teste3 = r.html.find('.file-name:contains("Dub")', first=True)
 				teste4 = r.html.find('.file-name:contains("Dual")', first=True)
-				print(2)
+
 
 				if teste1 != None or teste2 != None or teste3 != None or teste4 != None:
 					ingles = None
 					
 				if ingles == None:
-					print(3)
+
 					arquivos = r.html.find( '.torrent-file-list tr')
 					ind = 0
 					for a in arquivos:
 						ar = a.find('td')[1].text
 						texto = ar
-						print(4)
+
 						texto = texto.replace('[WWW.BLUDV.TV] ', '').replace(
 						'Acesse o ORIGINAL WWW.BLUDV.TV ', '').replace(
 							'[ACESSE COMANDOTORRENTS.COM] ', '').replace(
@@ -97,7 +97,7 @@ def carregar_sky_forcar(links,forcar):
 						try:
 							if (texto[-3:] not in ['exe', 'txt', 'url', 'srt', 'peg', 'jpg','png','nfo', 'zip']) and (texto[-10:] not in ['sample.mkv']) and (ar not in ["COMANDOTORRENTS.COM.mp4", "BLUDV.TV.mp4", "BLUDV.mp4","LAPUMiA.mp4","File Name"]) and ("LEGENDADO" not in texto):
 								convert = guessit(texto)
-								print(5)
+
 								if 'season' in convert:
 									sessao = str(convert['season'])
 									if str(convert['season']) == "[2, 1]":
@@ -235,18 +235,6 @@ def hello_world():
 	return render_template('busca.html')
 
 
-@socketio.on('preferido')
-def preferido(im, nome):
-	print("Preferido:" + im)
-	print(db.preferidos.find({'imdb':im}).count())
-	if db.preferidos.find({'imdb':im}).count() == 0:
-		db.preferidos.insert_one({'imdb': im,'nome': nome})
-
-@socketio.on('remove_preferido')
-def remove_preferido(im):
-	print("Não Preferido:" + im)
-	db.preferidos.delete_many({'imdb':im})
-
 @socketio.on('parar')
 def parar():
 	print("Parando")
@@ -381,53 +369,6 @@ def test_connect():
 @socketio.on('tabela')
 def sock_tabela():
 	socketio.emit('carregar_tabela', dumps(db.registros.find({})))
-
-@socketio.on('navegar')
-def sock_navegar():
-	s = []
-	for x in range(1, 10):
-		r = session.get('https://hidratorrent.com/lancamentos-'+ str(x))
-		titulos = r.html.find('.list-inline > li')
-		for elem in titulos:
-			link = elem.find('a', first=True).attrs['href']
-			img = elem.find('img', first=True).attrs['src']
-			titulo = elem.find('h2', first=True).text.strip()
-			dublado = elem.find('.idioma_lista', first=True).text.strip()
-			# print(link, dublado)
-			if dublado == "Dublado":
-				#print(link, dublado, img, titulo)
-				s.append({'titulo':titulo, 'link':link, 'img':img})
-	for x in range(1, 10):
-		r = session.get('https://hidratorrent.com/-'+ str(x))
-		titulos = r.html.find('.list-inline > li')
-		for elem in titulos:
-			link = elem.find('a', first=True).attrs['href']
-			img = elem.find('img', first=True).attrs['src']
-			titulo = elem.find('h2', first=True).text.strip()
-			dublado = elem.find('.idioma_lista', first=True).text.strip()
-			# print(link, dublado)
-			if dublado == "Dublado":
-				#print(link, dublado, img, titulo)
-				s.append({'titulo':titulo, 'link':link, 'img':img})
-	socketio.emit('resposta_navegar', s)
-
-@socketio.on('navegar_filmes')
-def sock_navegar_filmes():
-	s = []
-	for x in range(1, 10):
-		r = session.get('https://hidratorrent.com/lancamentos-filmes-'+ str(x))
-		titulos = r.html.find('.list-inline > li')
-		for elem in titulos:
-			link = elem.find('a', first=True).attrs['href']
-			img = elem.find('img', first=True).attrs['src']
-			titulo = elem.find('h2', first=True).text.strip()
-			dublado = elem.find('.idioma_lista', first=True).text.strip()
-			# print(link, dublado)
-			if dublado == "Dublado":
-				#print(link, dublado, img, titulo)
-				s.append({'titulo':titulo, 'link':link, 'img':img})		
-	
-	socketio.emit('resposta_navegar', s)
 
 if __name__ == "__main__":
 	port = int(os.environ.get("PORT", 5000))
