@@ -232,6 +232,7 @@
 	<div id="busca_imdb" style="padding: 10px;" class="col s12">		
 		Nome: <input type='text' id='texto_i' style='width: 100%;'><br>
 		<a href="#" id="buscar_banco" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('buscar_im', document.getElementById('texto_i').value);">Buscar no Banco</a><br>
+		<a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('carregar_lancamentos');">Lançamentos IMDB</a><br>
 		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
 		
 	</div>

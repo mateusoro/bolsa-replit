@@ -6,12 +6,14 @@ import pymongo
 import dns
 from imdbparser import IMDb
 from pymongo import MongoClient
-
 from guessit import guessit
 from flask_socketio import SocketIO, emit
 import logging
 import threading
 import os
+
+#ps -fA | grep main.py
+#kill 509
 
 session = HTMLSession()
 app = Flask('app')
@@ -316,6 +318,36 @@ def thread_lista_preferidos():
 					
 	carregar_sky(s)
 
+@socketio.on('carregar_lancamentos')
+def sock_lancamento():    
+    nav = sock_navegar()
+    seq = 1
+    for n in nav:
+        im_n = n['link'][7:16]
+        for b in db.registros.find({"$or":[{'imdb': {'$regex': '.*'+im_n+'.*','$options': 'i'}}]}).sort('imdb',-1).limit(1):
+	        socketio.emit('atualizar', dumps(b))    
+        seq = seq + 1
+    
+def sock_navegar():
+    s = []    
+    r = session.get('https://www.imdb.com/chart/moviemeter?sort=us,desc&mode=simple&page=1')
+    titulos = r.html.find('.lister-list tr .titleColumn')
+    for elem in titulos:
+        link = elem.find('a', first=True).attrs['href']
+        ano = elem.find('span', first=True).text
+        titulo =  elem.find('a', first=True).text.strip()
+        s.append({'link':link, 'ano':ano, 'titulo':titulo+' (Filme)'})        
+    
+    r = session.get('https://www.imdb.com/chart/tvmeter?sort=us,desc&mode=simple&page=1')
+    titulos = r.html.find('.lister-list tr .titleColumn')
+    for elem in titulos:
+        link = elem.find('a', first=True).attrs['href']
+        ano = elem.find('span', first=True).text
+        titulo =  elem.find('a', first=True).text.strip()
+        s.append({'link':link, 'ano':ano, 'titulo':titulo+' (Série)'})        
+    
+    return s
+
 @socketio.on('link')
 def sock_link(message, im):
 	socketio.emit('limpar')
@@ -361,7 +393,7 @@ def parar():
 	continuar = False
 
 @socketio.on('carregar_preferidos')
-def sock_navegar():
+def sock_preferidos():
 	global continuar
 	continuar = True
 	socketio.emit('limpar')
