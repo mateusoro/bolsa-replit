@@ -11,7 +11,7 @@ from flask_socketio import SocketIO, emit
 import logging
 import threading
 import os
-
+#https://www.btmulu.com/hash/
 #ps -fA | grep main.py
 #kill 509
 
