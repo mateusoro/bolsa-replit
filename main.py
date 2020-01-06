@@ -364,14 +364,21 @@ def parar():
 def sock_navegar():
 	global continuar
 	continuar = True
-	socketio.emit('resposta_preferidos', dumps(db.preferidos.find()))
+	socketio.emit('limpar')
+	socketio.emit('atualizar', 'Buscando: ')
+	#socketio.emit('resposta_preferidos', dumps(db.preferidos.find()))
+	for b in db.preferidos.find().sort('imdb',-1):
+		socketio.emit('atualizar', dumps(b))
+	socketio.emit('atualizar', 'Fim da Busca')
 
 @socketio.on('buscar_im')
-def buscar_im(nome):
-	global continuar
-	continuar = True
+def buscar_im(nome):	
+	socketio.emit('limpar')
+	socketio.emit('atualizar', 'Buscando: '+nome)
 	print("Buscando IMDB: " + nome)
-	socketio.emit('carregado_im', dumps(db.registros.find({"$or":[{'nome': {'$regex': '.*'+nome+'.*'}},{'titulo': {'$regex': '.*'+nome+'.*'}}]})))
+	for b in db.registros.find({"$or":[{'nome': {'$regex': '.*'+nome+'.*','$options': 'i'}},{'titulo': {'$regex': '.*'+nome+'.*','$options': 'i'}},{'imdb': {'$regex': '.*'+nome+'.*','$options': 'i'}}]}).sort('imdb',-1):
+		socketio.emit('atualizar', dumps(b))
+	socketio.emit('atualizar', 'Fim da Busca')
 
 @socketio.on('connect')
 def test_connect():
