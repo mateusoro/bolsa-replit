@@ -16,7 +16,7 @@ import os
 session = HTMLSession()
 app = Flask('app')
 app.debug = False
-continuar = True
+
 ia = imdb.IMDb()
 top = ia.get_top250_movies()
 print(top[0])
@@ -49,6 +49,7 @@ def carregar_sky(links):
 
 def carregar_sky_forcar(links,forcar):
 	print('Início')
+	global continuar	
 	socketio.emit('atualizar', 'Detalhes do Link')
 	#links = db.magnets.find({'imdb': {'$ne': ''}})
 	for l in links:
@@ -137,10 +138,7 @@ def carregar_sky_forcar(links,forcar):
 					db.legendado.insert_one(ins)
 					socketio.emit('atualizar', 'Legendado ' + titulo +': https://btdb.eu/torrent/' + ha)
 			else:
-				print('link encontrado')
-				print(len(l['imdb'])) 
-				print(db.registros.find({'magnet':l['link']}).count())
-				print(db.legendado.find({'magnet':ha}).count())
+				print('link encontrado')			
 	
 	socketio.emit('atualizar', 'Fim da Busca')
 	limpar()
@@ -235,19 +233,7 @@ def hello_world():
 	return render_template('busca.html')
 
 
-@socketio.on('parar')
-def parar():
-	print("Parando")
-	continuar = False
 
-@socketio.on('carregar_preferidos')
-def sock_navegar():
-	socketio.emit('resposta_preferidos', dumps(db.preferidos.find()))
-
-@socketio.on('buscar_im')
-def buscar_im(nome):
-	print("Buscando IMDB: " + nome)
-	socketio.emit('carregado_im', dumps(db.registros.find({"$or":[{'nome': {'$regex': '.*'+nome+'.*'}},{'titulo': {'$regex': '.*'+nome+'.*'}}]})))
 
 def thread_link(q, im):
 
@@ -272,68 +258,77 @@ def thread_link(q, im):
 
 def thread_lista(url, tamanho):
 	s = []
+	global continuar
 	for x in range(1, tamanho):
 		print(url + str(x))
-		r = session.get(url + str(x))
-		titulos = r.html.find('.list-inline > li')
-		for elem in titulos:
-			# print(elem.find('a',first=True).attrs)
-			link = elem.find('a', first=True).attrs['href']
-			dublado = elem.find('.idioma_lista', first=True).text.strip()
-			# print(link, dublado)
-			if dublado == "Dublado":
-				print(link)
-				socketio.emit('atualizar', 'Link: ' + link)
-				r2 = session.get(link)
-				id_imdb = ""
-				try:
-					id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
-					id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
-				except:
-					id_imdb = ""
+		if continuar:
+			r = session.get(url + str(x))
+			titulos = r.html.find('.list-inline > li')
+			for elem in titulos:
+				if continuar:
+					# print(elem.find('a',first=True).attrs)
+					link = elem.find('a', first=True).attrs['href']
+					dublado = elem.find('.idioma_lista', first=True).text.strip()
+					# print(link, dublado)
+					if dublado == "Dublado":
+						print(link)
+						socketio.emit('atualizar', 'Link: ' + link)
+						r2 = session.get(link)
+						id_imdb = ""
+						try:
+							id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
+							id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
+						except:
+							id_imdb = ""
 
-				for html in r2.html.find('a[href^="magnet"]'):
-					s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
-					#db.magnets.insert_one({'imdb': id_imdb, 'link': list(html.links)[0]})
+						for html in r2.html.find('a[href^="magnet"]'):
+							s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
+							#db.magnets.insert_one({'imdb': id_imdb, 'link': list(html.links)[0]})
 	carregar_sky(s)
 
 def thread_lista_preferidos():
 	s = []
+	global continuar
 	for pref in db.preferidos.find({}):
-		r = session.get("https://hidratorrent.com/index.php?campo1=" + pref["nome"] + "&nome_campo1=pesquisa&categoria=lista&")
-		titulos = r.html.find('.list-inline > li')
-		for elem in titulos:
-			# print(elem.find('a',first=True).attrs)
-			link = elem.find('a', first=True).attrs['href']
-			dublado = elem.find('.idioma_lista', first=True).text.strip()
-			# print(link, dublado)
-			if dublado == "Dublado":
+		if continuar:
+			r = session.get("https://hidratorrent.com/index.php?campo1=" + pref["nome"] + "&nome_campo1=pesquisa&categoria=lista&")
+			titulos = r.html.find('.list-inline > li')
+			for elem in titulos:
+				# print(elem.find('a',first=True).attrs)
+				link = elem.find('a', first=True).attrs['href']
+				dublado = elem.find('.idioma_lista', first=True).text.strip()
+				# print(link, dublado)
+				if dublado == "Dublado":
 
-				r2 = session.get(link)
-				id_imdb = ""
-				try:
-					id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
-					id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
-				except:
+					r2 = session.get(link)
 					id_imdb = ""
+					try:
+						id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
+						id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
+					except:
+						id_imdb = ""
 
-				if id_imdb == pref["imdb"]:
-					print(link)
-					socketio.emit('atualizar', 'Link: ' + link)
-					for html in r2.html.find('a[href^="magnet"]'):
-						s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
+					if id_imdb == pref["imdb"]:
+						print(link)
+						socketio.emit('atualizar', 'Link: ' + link)
+						for html in r2.html.find('a[href^="magnet"]'):
+							s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
 					
 	carregar_sky(s)
 
 @socketio.on('link')
 def sock_link(message, im):
 	socketio.emit('limpar')
+	global continuar
+	continuar = True
 	socketio.start_background_task(thread_link, message, im)
 
 @socketio.on('buscar')
 def sock_buscar(message):
 	socketio.emit('limpar')
 	socketio.emit('atualizar', 'Buscando: ' + message)
+	global continuar
+	continuar = True
 	lin = "https://hidratorrent.com/index.php?campo1=" + message + "&nome_campo1=pesquisa&categoria=lista&"
 	socketio.start_background_task(thread_lista, lin, 3)
 
@@ -342,25 +337,41 @@ def sock_buscar(message):
 def sock_lista(message):
 	socketio.emit('limpar')
 	socketio.emit('atualizar', 'Buscando: ')
+	global continuar
+	continuar = True
 	socketio.start_background_task(thread_lista, message, 3)
 
 @socketio.on('lista_preferidos')
 def sock_lista_preferidos():
 	socketio.emit('limpar')
 	socketio.emit('atualizar', 'Buscando: ')
+	global continuar
+	continuar = True
 	socketio.start_background_task(thread_lista_preferidos)
-
-@socketio.on('lista_pirate')
-def sock_lista_pirate(message):
-	socketio.emit('limpar')
-	socketio.emit('atualizar', 'Buscando: ')
-	socketio.start_background_task(thread_lista_pirate, message, 3)
-
 
 @socketio.on('inicio')
 def sock_iniciado():
 	print('inicio')
 	#socketio.start_background_task(thread_lista, 'https://hidratorrent.com/lancamentos-', 3)
+
+@socketio.on('parar')
+def parar():
+	print("Parando")
+	global continuar
+	continuar = False
+
+@socketio.on('carregar_preferidos')
+def sock_navegar():
+	global continuar
+	continuar = True
+	socketio.emit('resposta_preferidos', dumps(db.preferidos.find()))
+
+@socketio.on('buscar_im')
+def buscar_im(nome):
+	global continuar
+	continuar = True
+	print("Buscando IMDB: " + nome)
+	socketio.emit('carregado_im', dumps(db.registros.find({"$or":[{'nome': {'$regex': '.*'+nome+'.*'}},{'titulo': {'$regex': '.*'+nome+'.*'}}]})))
 
 @socketio.on('connect')
 def test_connect():
@@ -368,6 +379,8 @@ def test_connect():
 
 @socketio.on('tabela')
 def sock_tabela():
+	global continuar
+	continuar = True
 	socketio.emit('carregar_tabela', dumps(db.registros.find({})))
 
 if __name__ == "__main__":
