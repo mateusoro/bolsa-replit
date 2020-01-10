@@ -62,7 +62,7 @@ def carregar_sky_forcar(links,forcar):
 			try:
 				ha = li[20:li.index('&')].lower()
 			except:
-				print("Erro: "+ li)
+				print("Erro Magnet: "+ li)
 				ha = li[20:].lower()
 
 			if len(l['imdb']) > 0 and (db.registros.find({'magnet':l['link']}).count()==0 or forcar) and db.legendado.find({'magnet':ha}).count()==0:
@@ -100,9 +100,10 @@ def carregar_sky_forcar(links,forcar):
 						try:
 							if (texto[-3:] not in ['exe', 'txt', 'url', 'srt', 'peg', 'jpg','png','nfo', 'zip']) and (texto[-10:] not in ['sample.mkv']) and (ar not in ["COMANDOTORRENTS.COM.mp4", "BLUDV.TV.mp4", "BLUDV.mp4","LAPUMiA.mp4","File Name"]) and ("LEGENDADO" not in texto):
 								convert = guessit(texto)
-
+								print('season' in convert)
 								if 'season' in convert:
 									sessao = str(convert['season'])
+									print(2)
 									if str(convert['season']) == "[2, 1]":
 										sessao = "1"
 									episode = str(convert['episode'])
@@ -122,13 +123,12 @@ def carregar_sky_forcar(links,forcar):
 									if ('NOS4A2' in texto) or ('nos4a2' in texto):
 										socketio.emit('atualizar', 'Adicionado:  NOS4A2 (' + im + ") "+ texto)
 									else:
-										socketio.emit('atualizar', 'Adicionado: ' + convert['title'] + " (" + im + ") "+ texto)
+										socketio.emit('atualizar', dumps(ins))
 								else:
 									ins = {'id': 0,'imdb': l['imdb'],'magnet': li,'mapa': ind,'nome': texto}
 									db.registros.insert_one(ins)
 									socketio.emit(
-									'atualizar', 'Adicionado: ' +
-									convert['title'] + " (" + l['imdb'] + ") "+ texto)
+									'atualizar', dumps(ins))
 									print(l['imdb'], ind, convert['title'], texto)
 
 						except:
