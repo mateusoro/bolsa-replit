@@ -43,7 +43,7 @@ def set_interval(func, sec):
 
 def automatico_ultimo():
 	print('Automático Último Adicionado')
-	socketio.start_background_task(thread_lista, 'https://hidratorrent.com/-', 5)
+	socketio.start_background_task(thread_lista, 'https://ondeeubaixo.net/-', 5)
 
 #set_interval(automatico_ultimo,60*20)
 def carregar_sky(links):
@@ -230,7 +230,7 @@ def hello_world():
 	q = request.args.get("q")
 	print(q)
 	if (q != None):
-		lin = "https://hidratorrent.com/index.php?campo1=" + q + "&nome_campo1=pesquisa&categoria=lista&"
+		lin = "https://ondeeubaixo.net/index.php?campo1=" + q + "&nome_campo1=pesquisa&categoria=lista&"
 		socketio.start_background_task(thread_lista, lin, 3)
 	return render_template('busca.html')
 
@@ -293,7 +293,7 @@ def thread_lista_preferidos():
 	global continuar
 	for pref in db.preferidos.find({}):
 		if continuar:
-			r = session.get("https://hidratorrent.com/index.php?campo1=" + pref["nome"] + "&nome_campo1=pesquisa&categoria=lista&")
+			r = session.get("https://ondeeubaixo.net/index.php?campo1=" + pref["nome"] + "&nome_campo1=pesquisa&categoria=lista&")
 			titulos = r.html.find('.list-inline > li')
 			for elem in titulos:
 				# print(elem.find('a',first=True).attrs)
@@ -361,7 +361,7 @@ def sock_buscar(message):
 	socketio.emit('atualizar', 'Buscando: ' + message)
 	global continuar
 	continuar = True
-	lin = "https://hidratorrent.com/index.php?campo1=" + message + "&nome_campo1=pesquisa&categoria=lista&"
+	lin = "https://ondeeubaixo.net/index.php?campo1=" + message + "&nome_campo1=pesquisa&categoria=lista&"
 	socketio.start_background_task(thread_lista, lin, 3)
 
 
@@ -384,7 +384,7 @@ def sock_lista_preferidos():
 @socketio.on('inicio')
 def sock_iniciado():
 	print('inicio')
-	#socketio.start_background_task(thread_lista, 'https://hidratorrent.com/lancamentos-', 3)
+	#socketio.start_background_task(thread_lista, 'https://ondeeubaixo.net/lancamentos-', 3)
 
 @socketio.on('parar')
 def parar():
