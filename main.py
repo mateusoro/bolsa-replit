@@ -11,6 +11,14 @@ from flask_socketio import SocketIO, emit
 import logging
 import threading
 import os
+
+import libtorrent as lt
+import time
+
+ses = lt.session()
+params = { 'save_path': '/home/downloads/'}
+ses.start_dht()
+
 #https://www.btmulu.com/hash/
 #ps -fA | grep main.py
 #kill 509
@@ -51,7 +59,7 @@ def carregar_sky(links):
 
 def carregar_sky_forcar(links,forcar):
 	print('Início')
-	global continuar	
+	global continuar
 	socketio.emit('atualizar', 'Detalhes do Link')
 	#links = db.magnets.find({'imdb': {'$ne': ''}})
 	for l in links:
@@ -68,28 +76,52 @@ def carregar_sky_forcar(links,forcar):
 			if len(l['imdb']) > 0 and (db.registros.find({'magnet':l['link']}).count()==0 or forcar) and db.legendado.find({'magnet':ha}).count()==0:
 				socketio.emit('atualizar','Carregando: https://btdb.eu/torrent/' + ha)
 				r = session.get('https://btdb.eu/torrent/' + ha)
-				#print(1)
-				titulo = r.html.find("title", first=True).text
-				#print(r.html.text)
-				ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
-				if "DUAL" in titulo or "DUBLADO" in titulo:
-					ingles = None
-				teste1 = r.html.find('.file-name:contains("DUB")', first=True)
-				teste2 = r.html.find('.file-name:contains("DUAL")', first=True)
-				teste3 = r.html.find('.file-name:contains("Dub")', first=True)
-				teste4 = r.html.find('.file-name:contains("Dual")', first=True)
+				arquivos = r.html.find('.torrent-file-list tr')
+
+				ingles = ''
+				titulo = 'Não Encontrado'
+
+				if len(arquivos)>0:
+
+					#print(1)
+					titulo = r.html.find("title", first=True).text
+					#print(r.html.text)
+					ingles = r.html.find('td:contains("LANGUAGE:United States")', first=True)
+					if "DUAL" in titulo or "DUBLADO" in titulo:
+						ingles = None
+					teste1 = r.html.find('.file-name:contains("DUB")', first=True)
+					teste2 = r.html.find('.file-name:contains("DUAL")', first=True)
+					teste3 = r.html.find('.file-name:contains("Dub")', first=True)
+					teste4 = r.html.find('.file-name:contains("Dual")', first=True)
+
+					if teste1 != None or teste2 != None or teste3 != None or teste4 != None:
+						ingles = None
+
+				else:
+					arquivos = carregar_torrent_download(li)
+					for t in arquivos:
+						if "DUAL" in t:
+							ingles = None
+						if "DUB" in t:
+							ingles = None
+						if "Dub" in t:
+							ingles = None
+						if "Dual" in t:
+							ingles = None
 
 
-				if teste1 != None or teste2 != None or teste3 != None or teste4 != None:
-					ingles = None
-					
 				if ingles == None:
 
-					arquivos = r.html.find( '.torrent-file-list tr')
 					ind = 0
 					for a in arquivos:
-						ar = a.find('td')[1].text
-						texto = ar
+
+						if type(a) is str:
+							ar = a
+							texto = ar
+						else:
+							ar = a.find('td')[1].text
+							texto = ar
+
 
 						texto = texto.replace('[WWW.BLUDV.TV] ', '').replace(
 						'Acesse o ORIGINAL WWW.BLUDV.TV ', '').replace(
@@ -98,12 +130,15 @@ def carregar_sky_forcar(links,forcar):
 									'WWW.BLUDV.TV', '').replace(
 										'[WW.BLUDV.TV]', '').replace('WwW.LAPUMiAFiLMES.COM', '').replace('x264', '').replace('h264', '')
 						try:
+
 							if (texto[-3:] not in ['exe', 'txt', 'url', 'srt', 'peg', 'jpg','png','nfo', 'zip']) and (texto[-10:] not in ['sample.mkv']) and (ar not in ["COMANDOTORRENTS.COM.mp4", "BLUDV.TV.mp4", "BLUDV.mp4","LAPUMiA.mp4","File Name"]) and ("LEGENDADO" not in texto):
+
 								convert = guessit(texto)
+
 								print('season' in convert)
 								if 'season' in convert:
 									sessao = str(convert['season'])
-									print(2)
+
 									if str(convert['season']) == "[2, 1]":
 										sessao = "1"
 									episode = str(convert['episode'])
@@ -140,11 +175,30 @@ def carregar_sky_forcar(links,forcar):
 					db.legendado.insert_one(ins)
 					socketio.emit('atualizar', 'Legendado ' + titulo +': https://btdb.eu/torrent/' + ha)
 			else:
-				print('link encontrado')			
-	
+				print('link encontrado')
+
 	socketio.emit('atualizar', 'Fim da Busca')
 	limpar()
 
+def carregar_torrent_download(link):
+	r=[]
+	handle = lt.add_magnet_uri(ses, link, params)
+
+	contador = 0
+	while (not handle.has_metadata() and contador < 20):
+		print("Esperando "+str(contador))
+		contador += 1
+		time.sleep(1)
+
+	if handle.has_metadata():
+		torinfo = handle.get_torrent_info()
+
+		for x in range(torinfo.files().num_files()):
+			r.append(torinfo.files().file_path(x))
+			print(torinfo.files().file_path(x))
+
+		ses.remove_torrent(handle)
+	return r
 
 def limpar():
 	for r in db.registros.find({"$or":[{"nome": {"$regex":"\.srt|\.url|\.exe|\.sub|\.txt|\.nfo|\.jpeg|\.jpg|\.png|\.zip|sample"}}, {"nome": "BLUDV.TV.mp4"}, {"nome": "BLUDV.mp4"},{"nome": "LAPUMiA.mp4"}, {"nome": "COMANDOTORRENTS.COM.mp4"}]}).limit(1000):
@@ -294,27 +348,24 @@ def thread_lista_preferidos():
 	for pref in db.preferidos.find({}):
 		if continuar:
 			r = session.get("https://ondeeubaixo.net/index.php?campo1=" + pref["nome"] + "&nome_campo1=pesquisa&categoria=lista&")
-			titulos = r.html.find('.list-inline > li')
+			titulos = r.html.find('.list-inline .semelhantes')
 			for elem in titulos:
 				# print(elem.find('a',first=True).attrs)
 				link = elem.find('a', first=True).attrs['href']
-				dublado = elem.find('.idioma_lista', first=True).text.strip()
-				# print(link, dublado)
-				if dublado == "Dublado":
 
-					r2 = session.get(link)
+				r2 = session.get(link)
+				id_imdb = ""
+				try:
+					id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
+					id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
+				except:
 					id_imdb = ""
-					try:
-						id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
-						id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
-					except:
-						id_imdb = ""
 
-					if id_imdb == pref["imdb"]:
-						print(link)
-						socketio.emit('atualizar', 'Link: ' + link)
-						for html in r2.html.find('a[href^="magnet"]'):
-							s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
+				if id_imdb == pref["imdb"]:
+					print(link)
+					socketio.emit('atualizar', 'Link: ' + link)
+					for html in r2.html.find('a[href^="magnet"]'):
+						s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
 					
 	carregar_sky(s)
 
@@ -425,6 +476,8 @@ def sock_tabela():
 if __name__ == "__main__":
 	port = int(os.environ.get("PORT", 5000))
 	socketio.run(app,  debug=False,  host='0.0.0.0', port=port)
+
+
 
 
 
