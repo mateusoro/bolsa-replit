@@ -342,6 +342,34 @@ def thread_lista(url, tamanho):
 							#db.magnets.insert_one({'imdb': id_imdb, 'link': list(html.links)[0]})
 	carregar_sky(s)
 
+def thread_busca(url, tamanho):
+	s = []
+	global continuar
+	for x in range(1, tamanho):
+		print(url + str(x))
+		if continuar:
+			r = session.get(url + str(x))
+			titulos = r.html.find('.list-inline .semelhantes')
+			for elem in titulos:
+				if continuar:
+					# print(elem.find('a',first=True).attrs)
+					link = elem.find('a', first=True).attrs['href']
+					print(link)
+					socketio.emit('atualizar', 'Link: ' + link)
+					r2 = session.get(link)
+					id_imdb = ""
+					try:
+						id_imdb = r2.html.find("a[href*='www.imdb.com']", first=True).attrs['href']
+						id_imdb = id_imdb.replace("http://www.imdb.com/title/", "").replace("https://www.imdb.com/title/", "").replace("/", "").replace("/", "").replace("?ref_=nv_sr_", "").replace("?ref_=plg_rt_1", "").replace("http:www.imdb.com", "").strip()
+					except:
+						id_imdb = ""
+
+					for html in r2.html.find('a[href^="magnet"]'):
+						s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
+						#db.magnets.insert_one({'imdb': id_imdb, 'link': list(html.links)[0]})
+	carregar_sky(s)
+
+
 def thread_lista_preferidos():
 	s = []
 	global continuar
@@ -368,6 +396,35 @@ def thread_lista_preferidos():
 						s.append({'imdb': id_imdb, 'link': list(html.links)[0]})
 					
 	carregar_sky(s)
+
+
+@socketio.on('preferido')
+def preferido(im, nome):
+	print("Preferido:" + im)
+	print(db.preferidos.find({'imdb': im}).count())
+	if db.preferidos.find({'imdb': im}).count() == 0:
+		db.preferidos.insert_one({
+			'imdb': im,
+			'nome': nome
+		})
+	socketio.emit('resposta_funcoes', 'Adicionado ao Preferidos: ' + nome)
+
+
+@socketio.on('remove_preferido')
+def remove_preferido(im):
+	print("Não Preferido:" + im)
+	db.preferidos.delete_many({
+		'imdb': im
+	})
+	socketio.emit('resposta_funcoes', 'Removido dos Preferidos: ' + im)
+
+
+@socketio.on('apagar')
+def apagar(im):
+	print("Apagado: " + im)
+	db.registros.delete_many({'imdb': {'$regex': '.*' + im}})
+	socketio.emit('resposta_funcoes', 'Apagado: ' + im)
+
 
 @socketio.on('carregar_lancamentos')
 def sock_lancamento():    
@@ -413,7 +470,7 @@ def sock_buscar(message):
 	global continuar
 	continuar = True
 	lin = "https://ondeeubaixo.net/index.php?campo1=" + message + "&nome_campo1=pesquisa&categoria=lista&"
-	socketio.start_background_task(thread_lista, lin, 3)
+	socketio.start_background_task(thread_busca, lin, 3)
 
 
 @socketio.on('lista')

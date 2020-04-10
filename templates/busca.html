@@ -53,10 +53,10 @@
 							}
 							linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+nome+'</div></span>'));
 							linha.append($('<span><div style="margin-left: 5px;height: 45px;overflow: overlay; font-size: 12px;">'+config.info+'</div></span>'));
-							linha.append($('<a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'preferido='+config.imdb+'\')" >Adicionar Favoritos</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'remover_preferido='+config.imdb+'\')" >Remover Favoritos</a>'));
+							linha.append($('<a href="#" style="margin-left: 5px;" onclick="socket.emit(\'preferido\', \''+config.imdb+'\', \''+nome+'\')" >Adicionar Favoritos</a>'));
+							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'remove_preferido\', \''+config.imdb+'\')" >Remover Favoritos</a>'));
 							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_nome\'); $(\'#texto\').val(\''+nome+'\')" >Buscar</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="carregar_funcoes(\'apagar='+config.imdb+'\')" >Apagar Registros</a>'));
+							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'apagar\', \''+config.imdb+'\')" >Apagar Registros</a>'));
 							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_imdb\'); $(\'#texto_i\').val(\''+config.imdb+'\');$(\'#buscar_banco\').click();" >Carregar Arquivos</a>'));
 							if(config.info_adicional){
 								linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'#log_rodape\').empty();$(\'#log_rodape\').append($(\'<li>\').text(\''+config.info_adicional+'\'));" >Info Completa</a>'));
@@ -70,6 +70,8 @@
 					
 				
 				}
+
+
 				function carregar_funcoes(parametro){
 						//console.log("https://funcoes.mateusoro.repl.co/?"+parametro);
 						$('#log_rodape').empty();
@@ -100,7 +102,11 @@
                    // socket.emit('inicio');
                 });
 							
-				
+				socket.on('resposta_funcoes', function(m) {
+					$('#log_rodape').empty();
+					$('#log_rodape').append($("<li class='collection-item'>").text(m));
+                });
+
                 socket.on('atualizar', function(m,i) {
                     console.log(m)
 					if(m.includes("Link") || m.includes("Carregando") || m.includes("Legendado ") || m.includes("Detalhes do Link")|| m.includes("Buscando")|| m.includes("Fim")|| m.includes("IMDB:")){
