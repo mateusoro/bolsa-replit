@@ -1,1 +1,1 @@
-FROM mateusoro/debian:2
+FROM mateusoro/notebook:1
