@@ -1,1 +1,1 @@
-FROM mateusoro/notebook:1
+FROM  jupyter/all-spark-notebook:latest
