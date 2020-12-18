@@ -1,1 +1,2 @@
-./ngrok http 8888&jupyter lab --allow-root --no-browser --ip="0.0.0.0"&
+sh stop.sh
+./ngrok start --all& jupyter lab --allow-root --no-browser --ip="0.0.0.0"&
