@@ -8,6 +8,8 @@ touch /home/coder/.config/rclone/rclone.conf
 echo $RCLONE_DATA | base64 -d > /home/coder/.config/rclone/rclone.conf
 
 rclone sync rclone: /home/coder/ -vv
+echo "Instalando Node Modulos..."
+cd ~/busca
 npm install tulind csv-load-sync async-get-file async-get-file express path localtunnel
 
 # Now we can run code-server with the default entrypoint
