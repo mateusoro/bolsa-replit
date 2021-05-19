@@ -19,6 +19,10 @@ RUN curl https://rclone.org/install.sh | sudo bash
 # RUN sudo apt-get install -y build-essential
 # RUN COPY myTool /home/coder/myTool
 
+# Install NodeJS
+RUN sudo curl -fsSL https://deb.nodesource.com/setup_15.x | sudo bash -
+RUN sudo apt-get install -y nodejs
+
 # Fix permissions for code-server
 RUN sudo chown -R coder:coder /home/coder/.local
 
