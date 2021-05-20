@@ -33,7 +33,10 @@ ENV PORT=8080
 COPY deploy-container/entrypoint.sh /usr/bin/deploy-container-entrypoint.sh
 
 RUN mkdir -p /home/coder/.config/rclone/
+RUN sudo mkdir -p /root/.config/rclone/
 COPY deploy-container/rclone.conf /home/coder/.config/rclone/rclone.conf
+COPY deploy-container/rclone.conf /root/.config/rclone/rclone.conf
+
 RUN sudo rclone sync rclone: /home/coder/ -vv
 RUN sudo npm install -g tulind csv-load-sync async-get-file async-get-file express path localtunnel cron shelljs
 
