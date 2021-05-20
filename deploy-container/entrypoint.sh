@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_DIR=/home/coder/project
+START_DIR=/home/coder/busca
 
 cd ~/busca
 node backup_automatico.js&
