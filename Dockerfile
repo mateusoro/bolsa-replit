@@ -38,6 +38,8 @@ COPY deploy-container/rclone.conf /home/coder/.config/rclone/rclone.conf
 COPY deploy-container/rclone.conf /root/.config/rclone/rclone.conf
 
 RUN sudo rclone sync rclone:/baskup_code_server /home/coder/ -vv
+RUN cd /home/coder/.local/share/code-server/extensions && sudo npm install fs-cp fs-walk ftp lodash mkdirp scp2 ssh2 stat-mode upath vscode
 RUN cd /home/coder/busca && sudo npm install tulind csv-load-sync async-get-file async-get-file express path localtunnel cron shelljs
+
 
 ENTRYPOINT ["/usr/bin/deploy-container-entrypoint.sh"]
