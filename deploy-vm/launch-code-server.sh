@@ -23,6 +23,7 @@ chown -R coder:coder /home/coder/.ssh
 mkdir -p /home/coder/.config/code-server
 touch /home/coder/.config/code-server/config.yaml
 echo "link: true" > /home/coder/.config/code-server/config.yaml
+echo "auth: none" > /home/coder/.config/code-server/config.yaml
 chown -R coder:coder /home/coder/.config
 
 # start and enable code-server and our helper service
