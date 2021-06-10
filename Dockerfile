@@ -16,7 +16,7 @@ RUN curl https://rclone.org/install.sh | sudo bash
 
 # RUN code-server --install-extension esbenp.prettier-vscode
 RUN sudo apt-get install -y build-essential
-RUN sudo apt-get install -y pstree
+
 # RUN COPY myTool /home/coder/myTool
 
 # Install NodeJS
