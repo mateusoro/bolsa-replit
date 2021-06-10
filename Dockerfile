@@ -2,7 +2,6 @@
 FROM codercom/code-server:latest 
 
 USER coder
-
 # Apply VS Code settings
 COPY deploy-container/settings.json .local/share/code-server/User/settings.json
 
