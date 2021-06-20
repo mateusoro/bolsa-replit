@@ -25,7 +25,7 @@ RUN sudo apt-get install -y nodejs
 RUN sudo apt-get install -y python3
 RUN sudo apt-get install -y python3-pip
 RUN sudo apt-get install -y python-libtorrent
-
+RUN sudo apt-get install -y python3-libtorrent
 
 
 # Fix permissions for code-server
