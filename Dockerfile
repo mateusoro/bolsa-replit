@@ -23,7 +23,7 @@ RUN sudo apt-get install -y build-essential
 RUN sudo curl -fsSL https://deb.nodesource.com/setup_15.x | sudo bash -
 RUN sudo apt-get install -y nodejs
 RUN sudo apt-get install -y python3
-RUN sudo apt-get install -y pip3
+RUN sudo apt-get install -y python3-pip
 RUN sudo apt-get install -y python-libtorrent
 
 
