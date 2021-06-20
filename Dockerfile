@@ -22,6 +22,11 @@ RUN sudo apt-get install -y build-essential
 # Install NodeJS
 RUN sudo curl -fsSL https://deb.nodesource.com/setup_15.x | sudo bash -
 RUN sudo apt-get install -y nodejs
+RUN sudo apt-get install -y python3
+RUN sudo apt-get install -y pip3
+RUN sudo apt-get install -y python-libtorrent
+
+
 
 # Fix permissions for code-server
 RUN sudo chown -R coder:coder /home/coder/.local
