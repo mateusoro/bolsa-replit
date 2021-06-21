@@ -1,7 +1,7 @@
 # Start from the code-server Debian base image
 FROM codercom/code-server:latest 
 
-USER coder
+USER root
 
 
 # Apply VS Code settings
