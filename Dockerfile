@@ -28,6 +28,7 @@ RUN sudo apt-get install -y python3
 RUN sudo apt-get install -y python3-pip
 RUN sudo apt-get install -y python-libtorrent
 RUN sudo apt-get install -y python3-libtorrent
+RUN sudo apt-get install -y net-tools 
 
 
 # Fix permissions for code-server
