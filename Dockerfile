@@ -50,5 +50,5 @@ RUN cd /home/coder/.local/share/code-server/extensions && sudo npm install fs-cp
 RUN cd /home/coder/busca && sudo npm install tulind csv-load-sync async-get-file async-get-file express path localtunnel cron shelljs
 
 RUN sudo chown -R coder:coder /home/
-
+RUN cd /home/coder/busca && pip3 install requests_html flask imdbpy bson pymongo dnspython imdbparser guessit flask_socketio mysql-connector-python
 ENTRYPOINT ["/usr/bin/deploy-container-entrypoint.sh"]
