@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Carregar Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+    <script>
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+
+        var socket = io();
+        socket.on('connect', function () {
+
+            console.log('Conectado');
+            $('#rodar').show();
+
+
+        });
+        socket.on('disconnect', function () {
+
+            $('#rodar').hide();
+            console.log('Disconectado');
+
+
+        });
+        socket.on('status', function (msg) {
+
+            console.log(msg);
+            $('.status').val(msg);
+            //window.scrollTo(0, document.body.scrollHeight);
+        });
+        var geral = '';
+
+        socket.on('predefinidos', function (msg) {
+
+            console.log(msg);
+
+            var col = $('<ul class="collection">');
+            var t1 = $('<li class="collection-item"><a href="' + msg.link + '" target="_blank">' + msg.requisicao.acao + '</a></li>');
+            var t2 = $('<li class="collection-item" style="height: 45px;"><a class="waves-effect waves-light btn-small" style="margin-top: 4px !important; margin-right: 5px !important;" onclick="rodar(\'' + msg._id + '\')">Rodar</a><a class="waves-effect waves-light red btn-small" style="margin-top: 4px !important;" onclick="remove(\'' + msg._id + '\',this)">Remover</a></li>')
+
+            col.append(t1);
+
+
+
+            for (var r in msg.requisicao.estrategias) {
+
+                var tipo = msg.requisicao.estrategias[r].tipo;
+                var ind;
+                if (msg.requisicao.estrategias[r].indicador) {
+                    ind = msg.requisicao.estrategias[r].indicador + ": " + msg.requisicao.estrategias[r].teste+ " X " + msg.requisicao.estrategias[r].parametro
+                }
+                if (msg.requisicao.estrategias[r].indicador_compra) {
+                    ind = msg.requisicao.estrategias[r].indicador_compra + ": " + msg.requisicao.estrategias[r].teste_compra + " X " + msg.requisicao.estrategias[r].indicador_venda + ": " + msg.requisicao.estrategias[r].teste_venda;
+                }
+                ind = ind.toUpperCase();
+                tipo = tipo.toUpperCase();
+                console.log(tipo, ind);
+                var t = $('<li class="collection-item">' + tipo + ' ' + ind + '</li>');
+                col.append(t);
+            }
+
+            col.append(t2);
+
+            $('#messages2').prepend(col);
+
+        });
+
+        socket.on('resultado', function (msg) {
+
+            console.log(msg);
+            id = msg._id;
+            msg.descricao = msg.resultado;
+
+            var estrategias_prontas = [];
+            for (var e in msg.descricao.estrategias) {
+
+                var est = msg.descricao.estrategias[e];
+                if (est.tipo) {
+                    est.indicador_valores_compra = '';
+                    est.indicador_valores_venda = '';
+                    est.sinal = '';
+                    est.indicador_valores = '';
+                    estrategias_prontas.push(est);
+                }
+
+            }
+
+            var estrat = encodeURIComponent(JSON.stringify(estrategias_prontas));
+            var link = window.location.origin;
+            link += "/?acao=" + msg.descricao.acao +
+                "&stop=" + msg.descricao.stop +
+                "&quant_stop=" + msg.descricao.quant_stop +
+                "&quant_operacoes=" + msg.descricao.quant_operacoes +
+                "&quant_acertos=" + msg.descricao.quant_acertos +
+                "&quant_perdas=" + msg.descricao.quant_perdas +
+                "&estrategias=" + estrat;
+
+            geral = link;
+            console.log(link);
+
+            var col = $('<ul class="collection">');
+            var t1 = $('<li class="collection-item">' + msg.descricao.acao + '</li>');
+            var t2 = $('<li class="collection-item">Resutado Dia: ' + msg.descricao.resultado_dia + '%</li>');
+            var t3 = $('<li class="collection-item">Resultado Total: ' + msg.descricao.resultado_total + '%</li>');
+            var t4 = $('<li class="collection-item">Dias Comprados: ' + msg.descricao.dias_comprados + '</li>');
+            var t5 = $('<li class="collection-item">Acertos: ' + msg.descricao.quant_acertos + '</li>');
+            var t6 = $('<li class="collection-item">Perdas: ' + msg.descricao.quant_perdas + '</li>');
+            var t7 = $('<li class="collection-item">Operações: ' + msg.descricao.quant_operacoes + '</li>');
+            var t8 = $('<li class="collection-item">Stops: ' + msg.descricao.quant_stops + '</li>');
+            var t9 = $('<li class="collection-item">Estratégia Atual: ' + msg.descricao.estrategia_atual + '</li>');
+            var t10 = $('<li class="collection-item"><a href="/grafico?id=' + id + '" target="_blank">Gráfico</a></li>');
+            var t101 = $('<li class="collection-item"><a href="/tabela?id=' + id + '" target="_blank">Tabela</a></li>');
+            var t11 = $('<li class="collection-item"><a href="' + link + '" target="_blank">Link</a></li>');
+
+            col.append(t1);
+            col.append(t2);
+            col.append(t3);
+            col.append(t4);
+            col.append(t5);
+            col.append(t6);
+            col.append(t7);
+            col.append(t8);
+            col.append(t9);
+            col.append(t10);
+            col.append(t101);
+            col.append(t11);
+
+            $('#messages').prepend(col);
+            //window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        function remove(id, elemento) {
+
+            socket.emit('remover_predefinidos', id);
+            $(elemento).parent().parent().remove();
+
+        }
+        function rodar(id) {
+
+            socket.emit('rodar_predefinidos', id);
+
+        }
+        $(document).ready(function () {
+            
+            $('select').formSelect();
+            socket.emit('carregar_predefinidos');
+            $('.filtro').keyup(function () {
+
+                var searchText = $(this).val().toUpperCase();
+
+                $('#messages > ul').each(function () {
+
+                    var currentLiText = $(this).text().toUpperCase();
+                    var showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+                    $(this).toggle(showCurrentLi);
+
+                });
+            });
+
+        });
+
+
+
+
+
+
+
+    </script>
+    <style>
+        .collection .collection-item {
+
+            line-height: 15px;
+            padding: 2px;
+            padding-left: 8px;
+
+        }
+
+        input {
+            height: 19px !important;
+        }
+
+        .input-field {
+            margin-bottom: 3px !important;
+        }
+
+        .btn {
+            margin-top: -18px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col s6">
+            <div class="col s12">
+                <div class="input-field col s12"><a style="margin-top: 0px !important; margin-left: -10px;" class="waves-effect waves-light btn gray"
+                        onclick="$('#messages2').empty(); socket.emit('carregar_predefinidos');">Recarregar</a></div>
+            </div>
+            <div class="col s12">
+                <ul id="messages2"></ul>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input placeholder="PETR4" value="" type="text" class="validate filtro">
+                    <label>Filtrar</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input placeholder="Status" value="" type="text" class="validate status">
+                    <label>STATUS</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <ul id="messages"></ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

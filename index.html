@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Carregar Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+    <script>
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+
+        var socket = io();
+        socket.on('connect', function () {
+
+            console.log('Conectado');
+            $('#rodar').show();
+
+
+        });
+        socket.on('disconnect', function () {
+
+            $('#rodar').hide();
+            console.log('Disconectado');
+
+
+        });
+        var geral = '';
+        socket.on('resultado', function (msg) {
+
+            console.log(msg);
+            id = msg._id;
+            msg.descricao = msg.resultado;
+
+            var estrategias_prontas = [];
+            for (var e in msg.descricao.estrategias) {
+
+                var est = msg.descricao.estrategias[e];
+                if (est.tipo) {
+                    est.indicador_valores_compra = '';
+                    est.indicador_valores_venda = '';
+                    est.sinal = '';
+                    est.indicador_valores = '';
+                    estrategias_prontas.push(est);
+                }
+
+            }
+
+            var estrat = encodeURIComponent(JSON.stringify(estrategias_prontas));
+            var link = window.location.origin;
+            link += "/?acao=" + msg.descricao.acao +
+                "&stop=" + msg.descricao.stop +
+                "&quant_stop=" + msg.descricao.quant_stop +
+                "&quant_operacoes=" + msg.descricao.quant_operacoes +
+                "&quant_acertos=" + msg.descricao.quant_acertos +
+                "&quant_perdas=" + msg.descricao.quant_perdas +
+                "&estrategias=" + estrat;
+
+            geral = link;
+            console.log(link);
+
+            var col = $('<ul class="collection">');
+            var t1 = $('<li class="collection-item">' + msg.descricao.acao + '</li>');
+            var t2 = $('<li class="collection-item">Resutado Dia: ' + msg.descricao.resultado_dia + '%</li>');
+            var t3 = $('<li class="collection-item">Resultado Total: ' + msg.descricao.resultado_total + '%</li>');
+            var t4 = $('<li class="collection-item">Dias Comprados: ' + msg.descricao.dias_comprados + '</li>');
+            var t5 = $('<li class="collection-item">Acertos: ' + msg.descricao.quant_acertos + '</li>');
+            var t6 = $('<li class="collection-item">Perdas: ' + msg.descricao.quant_perdas + '</li>');
+            var t7 = $('<li class="collection-item">Operações: ' + msg.descricao.quant_operacoes + '</li>');
+            var t8 = $('<li class="collection-item">Stops: ' + msg.descricao.quant_stops + '</li>');
+            var t9 = $('<li class="collection-item">Estratégia Atual: ' + msg.descricao.estrategia_atual + '</li>');
+            var t10 = $('<li class="collection-item"><a href="/grafico?id=' + id + '" target="_blank">Gráfico</a></li>');
+            var t101 = $('<li class="collection-item"><a href="/tabela?id=' + id + '" target="_blank">Tabela</a></li>');
+            var t11 = $('<li class="collection-item"><a href="' + link + '" target="_blank">Link</a></li>');
+
+            col.append(t1);
+            col.append(t2);
+            col.append(t3);
+            col.append(t4);
+            col.append(t5);
+            col.append(t6);
+            col.append(t7);
+            col.append(t8);
+            col.append(t9);
+            col.append(t10);
+            col.append(t101);
+            col.append(t11);
+
+            $('#messages').prepend(col);
+            //window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on('fim', function (msg) {
+
+            console.log(msg);
+
+            var col = $('<ul class="collection">');
+            var t1 = $('<li class="collection-item">' + msg + '</li>');
+
+            col.prepend(t1);
+            $('#messages').prepend(col);
+            //window.scrollTo(0, document.body.scrollHeight);
+        });
+        socket.on('status', function (msg) {
+
+            console.log(msg);
+            $('.status').val(msg);
+            //window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        function iniciar() {
+            var col = $('<ul class="collection">');
+            var t1 = $('<li class="collection-item">Rodando!</li>');
+            col.prepend(t1);
+            $('#messages').prepend(col);
+        }
+        function link_consulta() {
+
+            var estrategias = [];
+            $('.estrategias .modelo_compra').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();               
+
+                var estrategia = {
+                    tipo: 'Compra',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_venda').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+                
+
+                var estrategia = {
+                    tipo: 'Venda',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_crosser').each(function () {
+
+
+                var indicador_compra = $(this).find('.indicador_compra').val();
+                var indicador_venda = $(this).find('.indicador_venda').val();
+                var teste_compra = $(this).find('.teste_compra').val();
+                var teste_venda = $(this).find('.teste_venda').val();
+
+
+                var estrategia = {
+                    tipo: 'Crosser',
+                    indicador_compra: indicador_compra,
+                    indicador_venda: indicador_venda,
+                    teste_compra: teste_compra,
+                    teste_venda: teste_venda
+                }
+                estrategias.push(estrategia);
+            })
+
+            var estrat = encodeURIComponent(JSON.stringify(estrategias));
+            var link = window.location.origin;
+
+            link += "/?acao=" + $('.acao').val() +
+                "&stop=" + $('.stop').val() +
+                "&quant_stop=" + $('.quant_stop').val() +
+                "&quant_operacoes=" + $('.quant_operacoes').val() +
+                "&quant_acertos=" + $('.quant_acertos').val() +
+                "&quant_perdas=" + $('.quant_perdas').val() +
+                "&consulta=true" +
+                "&estrategias=" + estrat;
+
+            window.open(link, '_blank');
+            return link;
+
+        }
+        function salvar_consulta() {
+
+            var estrategias = [];
+            $('.estrategias .modelo_compra').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+                
+
+                var estrategia = {
+                    tipo: 'Compra',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_venda').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+               
+                var estrategia = {
+                    tipo: 'Venda',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_crosser').each(function () {
+
+
+                var indicador_compra = $(this).find('.indicador_compra').val();
+                var indicador_venda = $(this).find('.indicador_venda').val();
+                var teste_compra = $(this).find('.teste_compra').val();
+                var teste_venda = $(this).find('.teste_venda').val();
+
+
+                var estrategia = {
+                    tipo: 'Crosser',
+                    indicador_compra: indicador_compra,
+                    indicador_venda: indicador_venda,
+                    teste_compra: teste_compra,
+                    teste_venda: teste_venda
+                }
+                estrategias.push(estrategia);
+            })
+
+            var estrat = encodeURIComponent(JSON.stringify(estrategias));
+            var link = window.location.origin;
+
+            link += "/?acao=" + $('.acao').val() +
+                "&stop=" + $('.stop').val() +
+                "&quant_stop=" + $('.quant_stop').val() +
+                "&quant_operacoes=" + $('.quant_operacoes').val() +
+                "&quant_acertos=" + $('.quant_acertos').val() +
+                "&quant_perdas=" + $('.quant_perdas').val() +
+                "&consulta=true" +
+                "&estrategias=" + estrat;
+
+            //window.open(link, '_blank');
+            //return link;
+
+            var acao = $('.acao').val();
+            var stop = $('.stop').val();
+            var quant_stop = $('.quant_stop').val();
+            var quant_operacoes = $('.quant_operacoes').val();
+            var quant_acertos = $('.quant_acertos').val();
+            var quant_perdas = $('.quant_perdas').val();
+
+
+            var estrategias = [];
+            $('.estrategias .modelo_compra').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();               
+
+                var estrategia = {
+                    tipo: 'Compra',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_venda').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+
+                var estrategia = {
+                    tipo: 'Venda',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_crosser').each(function () {
+
+
+                var indicador_compra = $(this).find('.indicador_compra').val();
+                var indicador_venda = $(this).find('.indicador_venda').val();
+                var teste_compra = $(this).find('.teste_compra').val();
+                var teste_venda = $(this).find('.teste_venda').val();
+
+
+                var estrategia = {
+                    tipo: 'Crosser',
+                    indicador_compra: indicador_compra,
+                    indicador_venda: indicador_venda,
+                    teste_compra: teste_compra,
+                    teste_venda: teste_venda
+                }
+                estrategias.push(estrategia);
+
+            })
+
+            var resultado = {
+                acao: acao,
+                stop: stop,
+                quant_stop: quant_stop,
+                quant_operacoes: quant_operacoes,
+                quant_acertos: quant_acertos,
+                quant_perdas: quant_perdas,
+                estrategias: estrategias
+            }
+            socket.emit('salvar', { link: link, requisicao: resultado });
+
+        }
+        function recarregar() {
+
+            var consulta = $.urlParam('consulta');
+
+            if (consulta) {
+
+                $('.acao').val($.urlParam('acao'));
+                $('.stop').val($.urlParam('stop'));
+                $('.quant_stop').val(($.urlParam('quant_stop')));
+                $('.quant_operacoes').val($.urlParam('quant_operacoes'));
+                $('.quant_acertos').val($.urlParam('quant_acertos'));
+                $('.quant_perdas').val($.urlParam('quant_perdas'));
+
+
+                var estrategias_carregar = JSON.parse(decodeURIComponent($.urlParam('estrategias')))
+                for (var e in estrategias_carregar) {
+
+                    var est = estrategias_carregar[e];
+                    if (est.tipo == "Compra") {
+                        var c = $(".modelos .modelo_compra").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador').val(est.indicador);
+                        c.find('.teste').val(est.teste);
+                        c.find('.parametro').val(est.parametro);
+                        
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                    if (est.tipo == "Venda") {
+                        var c = $(".modelos .modelo_venda").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador').val(est.indicador);
+                        c.find('.teste').val(est.teste);
+                        c.find('.parametro').val(est.parametro);
+                       
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                    if (est.tipo == "Crosser") {
+                        var c = $(".modelos .modelo_crosser").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador_compra').val(est.indicador_compra);
+                        c.find('.indicador_venda').val(est.indicador_venda);
+                        c.find('.teste_compra').val(est.teste_compra);
+                        c.find('.teste_venda').val(est.teste_venda);
+
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                }
+
+            } else {
+
+                $('.acao').val($.urlParam('acao'));
+                $('.stop').val($.urlParam('stop'));
+                $('.quant_stop').val(($.urlParam('quant_stop') * 1) + 1);
+                $('.quant_operacoes').val(($.urlParam('quant_operacoes') * 1) - 1);
+                $('.quant_acertos').val(($.urlParam('quant_acertos') * 1) - 1);
+                $('.quant_perdas').val(($.urlParam('quant_perdas') * 1) + 1);
+
+
+                var estrategias_carregar = JSON.parse(decodeURIComponent($.urlParam('estrategias')))
+                for (var e in estrategias_carregar) {
+
+                    var est = estrategias_carregar[e];
+                    if (est.tipo == "Compra") {
+                        var c = $(".modelos .modelo_compra").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador').val(est.indicador);
+                        c.find('.teste').val(est.tamanho_indicador);
+                        c.find('.parametro').val(est.parametro);
+                       
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                    if (est.tipo == "Venda") {
+                        var c = $(".modelos .modelo_venda").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador').val(est.indicador);
+                        c.find('.teste').val(est.tamanho_indicador);
+                        c.find('.parametro').val(est.parametro);
+                       
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                    if (est.tipo == "Crosser") {
+                        var c = $(".modelos .modelo_crosser").clone();
+                        c.find('.select-wrapper ul').remove();
+                        c.find('.select-wrapper input').remove();
+
+                        c.find('.indicador_compra').val(est.indicador_compra);
+                        c.find('.indicador_venda').val(est.indicador_venda);
+                        c.find('.teste_compra').val(est.tamanho_indicador_compra);
+                        c.find('.teste_venda').val(est.tamanho_indicador_venda);
+
+                        c.appendTo(".estrategias")
+                        $('select').formSelect();
+                    }
+                }
+            }
+        }
+
+
+        function rodar() {
+
+            var acao = $('.acao').val();
+            var stop = $('.stop').val();
+            var quant_stop = $('.quant_stop').val();
+            var quant_operacoes = $('.quant_operacoes').val();
+            var quant_acertos = $('.quant_acertos').val();
+            var quant_perdas = $('.quant_perdas').val();
+            var tipo_cruzamento = $('#tipo_cruzamento').val();
+
+
+            var estrategias = [];
+            $('.estrategias .modelo_compra').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+               
+                var estrategia = {
+                    tipo: 'Compra',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_venda').each(function () {
+
+
+                var indicador = $(this).find('.indicador').val();
+                var teste = $(this).find('.teste').val();
+                var parametro = $(this).find('.parametro').val();
+                
+                var estrategia = {
+                    tipo: 'Venda',
+                    indicador: indicador,
+                    teste: teste,
+                    parametro: parametro
+                }
+                estrategias.push(estrategia);
+
+            })
+            $('.estrategias .modelo_crosser').each(function () {
+
+
+                var indicador_compra = $(this).find('.indicador_compra').val();
+                var indicador_venda = $(this).find('.indicador_venda').val();
+                var teste_compra = $(this).find('.teste_compra').val();
+                var teste_venda = $(this).find('.teste_venda').val();
+
+
+                var estrategia = {
+                    tipo: 'Crosser',
+                    indicador_compra: indicador_compra,
+                    indicador_venda: indicador_venda,
+                    teste_compra: teste_compra,
+                    teste_venda: teste_venda
+                }
+                estrategias.push(estrategia);
+
+            })
+
+            var resultado = {
+                acao: acao,
+                stop: stop,
+                quant_stop: quant_stop,
+                quant_operacoes: quant_operacoes,
+                quant_acertos: quant_acertos,
+                quant_perdas: quant_perdas,
+                tipo_cruzamento: tipo_cruzamento,
+                estrategias: estrategias
+            }
+            socket.emit('carregar', resultado);
+            console.log(resultado);
+
+        }
+
+        function atualizar() {
+            socket.emit('atualizar', $('.acao').val());
+        }
+
+        $(document).ready(function () {
+            $('select').formSelect();
+            $('.filtro').keyup(function () {
+
+                var searchText = $(this).val().toUpperCase();
+
+                $('#messages > ul').each(function () {
+
+                    var currentLiText = $(this).text().toUpperCase();
+                    var showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+                    $(this).toggle(showCurrentLi);
+
+                });
+            });
+            if ($.urlParam('acao')) {
+                recarregar();
+                //rodar();
+            }
+        });
+        function add_estrategia() {
+
+            if ($('#estra').val() == 'Compra') {
+                var c = $(".modelos .modelo_compra").clone();
+                c.find('.select-wrapper ul').remove();
+                c.find('.select-wrapper input').remove();
+                c.appendTo(".estrategias")
+                $('select').formSelect();
+            }
+
+            if ($('#estra').val() == 'Venda') {
+                var c = $(".modelos .modelo_venda").clone();
+                c.find('.select-wrapper ul').remove();
+                c.find('.select-wrapper input').remove();
+                c.appendTo(".estrategias")
+                $('select').formSelect();
+            }
+            if ($('#estra').val() == 'Crosser') {
+                var c = $(".modelos .modelo_crosser").clone();
+                c.find('.select-wrapper ul').remove();
+                c.find('.select-wrapper input').remove();
+                c.appendTo(".estrategias")
+                $('select').formSelect();
+            }
+
+
+        }
+        function remove(elemento) {
+
+            $(elemento).parent().parent().remove();
+
+        }
+
+
+
+
+
+    </script>
+    <style>
+        .collection .collection-item {
+
+            line-height: 15px;
+            padding: 2px;
+            padding-left: 8px;
+
+        }
+
+        input {
+            height: 19px !important;
+        }
+
+        .input-field {
+            margin-bottom: 3px !important;
+        }
+
+        .btn {
+            margin-top: -18px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col s6">
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="PETR4.SA" value="PETR4.SA" type="text" class="validate acao">
+                    <label>Ação</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="-1,-2,-3,-4,-5" value="-1,-2,-3,-4,-5" type="text" class="validate stop">
+                    <label>STOP</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="5" type="text" value="50" class="validate quant_stop">
+                    <label>Qtd MAX STOP</label>
+                </div>
+            </div>
+
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="15" type="text" value="1" class="validate quant_operacoes">
+                    <label>Qtd MIN OPERAÇÕES</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="4" type="text" value="400" class="validate quant_perdas">
+                    <label>Qtd MAX PERDAS</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <input placeholder="10" type="text" value="1" class="validate quant_acertos">
+                    <label>Qtd MIN ACERTOS</label>
+                </div>
+            </div>
+
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <select id="tipo_cruzamento">
+                        <option value="e">E</option>
+                        <option value="ou">OU</option>
+                    </select>
+                    <label>Tipo do Cruzamento</label>
+                </div>
+            </div>
+
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <select id="estra">
+                        <option value="Crosser">Crosser</option>
+                        <option value="Compra">Compra</option>
+                        <option value="Venda">Venda</option>
+                    </select>
+                    <label>Estratégia</label>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="input-field col s12"><a class="waves-effect waves-light btn"
+                        onclick="add_estrategia()">Adicionar</a></div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 estrategias">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col s6">
+            <div class="col s12" style="margin-top: 25px;">
+                <a class="col s2 waves-effect waves-light btn" id="rodar" onclick="rodar();iniciar();">Rodar</a>
+                <a class="col s2 waves-effect waves-light btn grey" onclick="link_consulta()">Link Estratégia</a>
+                <a class="col s2 waves-effect waves-light btn grey"
+                    onclick="salvar_consulta()">Salvar</a>
+                <a class="col s2 waves-effect waves-light btn red" onclick="socket.emit('parar');">Parar</a>
+                <a class="col s2 waves-effect waves-light btn grey" onclick="atualizar()">Atualizar</a>
+                <a class="col s2 waves-effect waves-light btn orange" onclick="$('#messages').empty()">Limpar</a>
+            </div>
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input placeholder="Status" value="" type="text" class="validate status">
+                    <label>STATUS</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input placeholder="PETR4" value="" type="text" class="validate filtro">
+                    <label>Filtrar</label>
+                </div>
+            </div>
+           
+            <div class="col s12">
+                <ul id="messages"></ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modelos" style="display: none;height: 0px;">
+        <div class="col s6 modelo_compra" style="margin-top: 20px;">
+            <div class="input-field col s12">
+                <select class="indicador">                    
+                    <option value="adx">ADX</option>
+                    <option value="aroonosc">Oscilador AROON</option>
+                    <option value="rsi">RSI</option>
+                    <option value="stochrsi">StochRSI</option>
+                </select>
+                <label>Indicador Compra</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="2,4,6,8,10" value="2,4,6,8,10" type="text" class="validate teste">
+                <label>Testes</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="0" value="0" type="text" class="validate parametro">
+                <label>Parâmetro</label>
+            </div>
+            
+            <div class="input-field col s12">
+                <a class="waves-effect waves-light red btn" onclick="remove(this)">Remover</a>
+            </div>
+        </div>
+        <div class="col s6 modelo_venda" style="margin-top: 20px;">
+            <div class="input-field col s12">
+                <select class="indicador">                    
+                    <option value="adx">ADX</option>
+                    <option value="aroonosc">Oscilador AROON</option>
+                    <option value="rsi">RSI</option>
+                    <option value="stochrsi">StochRSI</option>
+                </select>
+                <label>Indicador Venda</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="2,4,6,8,10" value="2,4,6,8,10" type="text" class="validate teste">
+                <label>Testes</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="0" value="0" type="text" class="validate parametro">
+                <label>Parâmetro</label>
+            </div>
+            
+            <div class="input-field col s12">
+                <a class="waves-effect waves-light red btn" onclick="remove(this)">Remover</a>
+            </div>
+        </div>
+        <div class="col s6 modelo_crosser" style="margin-top: 20px;">
+            <div class="input-field col s12">
+                <select class="indicador_compra">
+                    <option value="sma">Média Simples</option>
+                    <option value="ema">Média Exponencial</option>                    
+                </select>
+                <label>Indicador Compra</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="2,4,6,8,10" value="2,4,6,8,10" type="text" class="validate teste_compra">
+                <label>Testes Compra</label>
+            </div>
+            <div class="input-field col s12">
+                <select class="indicador_venda">
+                    <option value="sma">Média Simples</option>
+                    <option value="ema">Média Exponencial</option>                   
+                </select>
+                <label>Indicador Venda</label>
+            </div>
+            <div class="input-field col s12">
+                <input placeholder="10,12,14,18,20" value="10,12,14,18,20" type="text" class="validate teste_venda">
+                <label>Testes Venda</label>
+            </div>
+            <div class="input-field col s12">
+                <a class="waves-effect waves-light red btn" onclick="remove(this)">Remover</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

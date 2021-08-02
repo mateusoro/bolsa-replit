@@ -1,0 +1,25 @@
+{
+    "remotePath": "./baskup_code_server/busca",
+    "host": "151.106.96.79",
+    "username": "u888071488.ftp",
+    "password": "Ss161514",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": [
+        "\\.git",
+        "\\.DS_Store",
+        ".*node_modules.*"
+    ],
+    "generatedFiles": {
+        "extensionsToInclude": [".js"],
+        "path": ""
+    }
+}
