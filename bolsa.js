@@ -163,7 +163,7 @@ function emitir(resultado) {
                 io.emit(destino, mensagem);
             }
         } else {
-            console.log('Esperando', result);
+            console.log('Esperando', resultado);
 
             if (resultado[0].destino == 'status' && resultado[0].mensagem == 'Fim') {
 
