@@ -7,6 +7,7 @@ var io = new Server(server);
 var allClients = [];
 const fs = require('fs');
 const https = require('https');
+var process = require('process');
 
 var Datastore = require('nedb-promise');
 var db = {};
@@ -19,7 +20,11 @@ db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true })
 
 const localtunnel = require('localtunnel');
 var shell = require('shelljs');
-//shell.exec('node servico_cruzamento.js&');
+var rrr = shell.exec('pidof node');
+if(rrr.stdout.split(' ').length>4){
+	shell.exec('kill $(pidof node)');	
+	shell.exec('node index.js & node servico_cruzamento.js');	
+}
 
 
 setInterval(async () => {
@@ -59,9 +64,8 @@ io.sockets.on('connection', (socket) => {
         var acoes = msg.split(',');
         for (var a in acoes) {
             var nome_acao = [acoes[a], acoes[a].replace('.', '_')];
-            setTimeout(() => {
-                atualizar_acao(nome_acao);
-            }, 1000);
+            atualizar_acao(nome_acao);
+            
 
             //atualizar_acao(nome_acao);
 
@@ -230,14 +234,16 @@ function tunel() {
 
 async function atualizar_acao(nome_acao) {
     try {
-        nome_acao[1] = "acoes/"+nome_acao[1]
+		if(nome_acao[1].indexOf('acoes')==-1){
+        	nome_acao[1] = "acoes/"+nome_acao[1]
+		}
         if (fs.existsSync(nome_acao[1])) {
             const stats = fs.statSync(nome_acao[1]);
             if (stats.mtime.getDay() != new Date().getDay()) {
                 console.log("Atualizado " + nome_acao[0])
                 download(nome_acao);
             } else {
-                console.log("Ação já atualizada");
+                console.log("Ação já atualizada "+ nome_acao[0]);
                 await db.status.update({}, { status: 'Ações atualizadas' }, { upsert: true });
 
             }

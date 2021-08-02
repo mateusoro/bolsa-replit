@@ -1,1 +1,1 @@
-run = "node index.js & node servico_cruzamento.js"
+run = "kill $(pidof node)\n node index.js & node servico_cruzamento.js"
