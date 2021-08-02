@@ -165,7 +165,7 @@ function emitir(resultado) {
         } else {
             console.log('Esperando');
             setTimeout(() => {
-                l
+                console.log();
                 emitir(resultado);
             }, 1000);
             
