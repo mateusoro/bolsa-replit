@@ -74,7 +74,7 @@ RUN cd /home/coder/code-server-bolsa && git checkout main
 
 #RUN sudo rclone sync rclone:/baskup_buscar /home/coder/ -vv --exclude="**node_modules/**" --exclude="**\.npm/**" --exclude="**site-packages/**" --exclude="**\.cache/**" --exclude="**downloads/**"
 #RUN cd /home/coder/.local/share/code-server/extensions && sudo npm install fs-cp fs-walk ftp lodash mkdirp scp2 ssh2 stat-mode upath vscode
-RUN cd /home/coder/code-server-bolsa && sudo npm install tulind csv-load-sync async-get-file async-get-file express path localtunnel cron shelljs
+RUN cd /home/coder/code-server-bolsa && sudo npm install nedb-promise socket.io tulind csv-load-sync async-get-file async-get-file express path localtunnel cron shelljs
 
 #RUN sudo chown -R coder:coder /home/
 RUN cd /home/coder/code-server-bolsa && pip3 install requests_html flask imdbpy bson pymongo dnspython imdbparser guessit flask_socketio mysql-connector-python
