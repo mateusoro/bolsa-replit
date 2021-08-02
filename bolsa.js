@@ -5,7 +5,6 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 var io = new Server(server);
 var allClients = [];
-
 const fs = require('fs');
 const https = require('https');
 
