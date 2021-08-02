@@ -19,7 +19,7 @@ db.parar = new Datastore({ filename: '../requisicoes/parar.json', autoload: true
 
 const localtunnel = require('localtunnel');
 var shell = require('shelljs');
-//shell.exec('rclone sync /home/coder/busca/bolsa.js  rclone:/busca/ -vv');
+shell.exec('rclone sync /home/coder/busca/bolsa.js  rclone:/busca/ -vv');
 
 
 setInterval(async () => {
