@@ -19,7 +19,7 @@ db.parar = new Datastore({ filename: '../requisicoes/parar.json', autoload: true
 
 const localtunnel = require('localtunnel');
 var shell = require('shelljs');
-shell.exec('cd ');
+shell.exec('cd ..');
 
 
 setInterval(async () => {
