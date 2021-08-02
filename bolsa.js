@@ -183,7 +183,7 @@ app.get('/tabela', function (req, res) {
     res.sendFile(__dirname + 'paginas/tabela.html');
 });
 app.get('/predefinidos', function (req, res) {
-    res.sendFile(__dirname + '/predefinidos.html');
+    res.sendFile(__dirname + 'paginas/predefinidos.html');
 });
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
