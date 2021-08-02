@@ -164,7 +164,7 @@ function emitir(resultado) {
             }
         } else {
             console.log('Esperando');
-            if(resultado[0].status)
+            if(resultado[0].destino=='')
             setTimeout(() => {
                 console.log(resultado);
                 emitir(resultado);
