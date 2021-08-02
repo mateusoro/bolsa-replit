@@ -8,3 +8,4 @@ const job2 = new CronJob('*/10 * * * * *', function() {
     shell.exec('rclone sync /home/coder/busca/bolsa.js  rclone:/busca/ -vv');
 });
 job2.start();
+

@@ -1,0 +1,26 @@
+{
+    "editor.formatOnSave": true,
+    "workbench.colorTheme": "Visual Studio Light",
+    "emeraldwalk.runonsave": {
+
+        "shell" : "bash",
+        "commands": [
+            {
+                "match": "\\.py$",
+                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin main",
+                "isAsync": true               
+            },
+            {
+                "match": "\\.js$",
+                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin main",
+                "isAsync": true               
+            },
+            {
+                "match": "\\.html$",
+                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin main",
+                "isAsync": true               
+            }
+
+        ]
+    }
+}
