@@ -149,7 +149,7 @@ io.sockets.on('connection', (socket) => {
 
 
 });
-var pacote
+var pacote_envio = []
 function emitir(resultado) {
 
     //console.log(resultado.length, allClients.length)
