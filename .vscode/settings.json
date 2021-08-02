@@ -2,6 +2,7 @@
     "editor.formatOnSave": true,
     "workbench.colorTheme": "Visual Studio Light",
     "emeraldwalk.runonsave": {
+    
 
         "shell" : "bash",
         "commands": [
