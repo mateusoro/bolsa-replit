@@ -165,7 +165,7 @@ function emitir(resultado) {
             console.log('Esperando');
             setInterval(() => {
                 
-            }, interval);
+            }, 1000);
             emitir(resultado);
         }
     }, 1000);
