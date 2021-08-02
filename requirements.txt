@@ -1,0 +1,9 @@
+flask
+requests-html
+dnspython
+flask-socketio
+guessit
+imdbparser
+pymongo
+IMDbPY==6.8
+imdb-cli-tool

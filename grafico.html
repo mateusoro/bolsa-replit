@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Carregar Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
+    <script
+        src='https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.1/chartjs-plugin-annotation.js'> </script>
+
+    <script src='https://cdn.jsdelivr.net/npm/luxon@1.26.0'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0'></script>
+    <script src='https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js'></script>
+    <script
+        src='https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.0.0-beta.2/chartjs-plugin-zoom.js'></script>
+
+    <script>
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+
+        var socket = io();
+        var leftEnd;
+        var rightEnd;
+        var logChart, logChart_segundo;
+        var graficos;
+
+        socket.on('grafico', function (grafico) {           
+           
+            console.log(grafico);
+            
+            graficos = grafico;            
+
+            graficos.segundo_grafico.options.plugins.zoom.zoom.onZoom = function(){
+                
+                logChart.options.scales.x.min = logChart_segundo.options.scales.x.min;  
+                logChart.options.scales.x.max = logChart_segundo.options.scales.x.max;             
+                logChart.update();
+
+            }
+            graficos.segundo_grafico.options.plugins.zoom.pan.onPan = function(){
+                
+                logChart.options.scales.x.min = logChart_segundo.options.scales.x.min;  
+                logChart.options.scales.x.max = logChart_segundo.options.scales.x.max;             
+                logChart.update();
+
+            }
+            graficos.grafico.options.plugins.zoom.zoom.onZoom = function(){
+                
+                logChart_segundo.options.scales.x.min = logChart.options.scales.x.min;  
+                logChart_segundo.options.scales.x.max = logChart.options.scales.x.max;             
+                logChart_segundo.update();
+
+            }
+            graficos.grafico.options.plugins.zoom.pan.onPan = function(){
+                
+                logChart_segundo.options.scales.x.min = logChart.options.scales.x.min;  
+                logChart_segundo.options.scales.x.max = logChart.options.scales.x.max;             
+                logChart_segundo.update();
+
+            }
+
+            logChart = new Chart(document.getElementById('bar-chart').getContext('2d'), graficos.grafico); 
+            logChart_segundo = new Chart(document.getElementById('bar-chart_segundo').getContext('2d'),graficos.segundo_grafico)
+        });
+
+        $(document).ready(function () {
+            if ($.urlParam('id')) {
+                console.log($.urlParam('id'))
+                socket.emit('carregar_grafico', $.urlParam('id'));
+            }
+        });
+       
+       
+        function updateChart(grafico) {
+            console.log(grafico); 
+            Chart.helpers.each(Chart.instances, function (instance) {
+                instance.options.scales.xAxes[0].time.min = leftEnd;
+                instance.options.scales.xAxes[0].time.max = rightEnd;
+                instance.update();
+            });
+        }
+        
+        
+
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="row">
+
+        <div class="col s12">
+            <div class='chart-container' width='1000' height='530'><canvas id='bar-chart' width='1000' height='530'></canvas>
+            </div>
+            <div class='chart-container' width='1000' height='200'><canvas id='bar-chart_segundo' width='1000'
+                    height='200'></canvas></div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

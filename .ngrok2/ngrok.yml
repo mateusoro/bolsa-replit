@@ -1,0 +1,8 @@
+authtoken: 4dYctaJU6NBwoegCSzv7h_4eJNGRSL5pbiNu6vjZ6B2
+tunnels:
+  first:
+    addr: 3000
+    proto: http    
+  second:
+    addr: 8888
+    proto: http
