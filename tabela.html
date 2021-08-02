@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Carregar Dados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+    <script>
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+
+        var socket = io();
+
+        socket.on('grafico', function (grafico) {
+
+            console.log(grafico);
+            var graf1 = grafico.grafico;
+            var graf2 = grafico.segundo_grafico;
+            
+            var colunas = [{ title: 'Data'}];
+            var datas = [];
+            var dataset = [];
+            datas.push(graf1.data.labels);
+            for(var g of graf1.data.datasets){
+                colunas.push({ title: g.label });
+                datas.push(g.data);
+            }
+            for(var g of graf2.data.datasets){
+                colunas.push({ title: g.label });
+                datas.push(g.data);
+            }
+            for(var x in datas[0]){
+                var linha = [];
+                for(var d of datas){
+                    linha.push(d[x]);                                      
+                }
+                dataset.push(linha);
+            }
+            console.log(dataset);
+            console.log(colunas);
+
+
+
+                $('#tabela').DataTable({
+                    data: dataset,
+                    columns: colunas
+                });
+           
+
+
+        });
+
+        $(document).ready(function () {
+            if ($.urlParam('id')) {
+                console.log($.urlParam('id'))
+                socket.emit('carregar_grafico', $.urlParam('id'));
+            }
+        });
+
+
+
+
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="row">
+
+        <div class="col s12">
+            <table id="tabela" class="display" style="width:100%">
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

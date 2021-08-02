@@ -2,123 +2,146 @@
 
 <head>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Atualizar Stremio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atualizar Stremio</title>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.js">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-	</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" 
+            integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 
-	</script>
+    <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        //https://v3-cinemeta.strem.io/meta/series/tt0096697.json
+            
+            
+            class Exibicao {
+                    
+                    constructor(config) {
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
-	 crossorigin="anonymous">
+                        /*
+                            var config = {
+                                        imdb:imdb,
+                                        info:info,
+                                        info_adicional:info_adicional
+                            }
+                        */
+                        
+                        console.log(config);
+                        this.config = config;
+                        var linha = $('<li class=" collection-item col s6 m4 l2" style="height: 490px;">');
+                        this.img = $('<a href="https://www.imdb.com/title/'+config.imdb+'/" target="_blank" style="width: 100%;" ><img onerror="erroImagem(this)" src="https://images.metahub.space/poster/medium/'+config.imdb+'/img" alt="" style="width: 100%; height: 285px;padding: 3px;" ></a>');
+                        linha.append(this.img);
+                        linha.append($('<br>'));
+                        $.get("https://api.themoviedb.org/3/find/"+config.imdb+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
+                            var nome='';
+                            if(data.tv_results[0]){
+                                nome = data.tv_results[0].name || data.tv_results[0].original_name
+                            }
+                            if(data.movie_results[0]){
+                                nome = data.movie_results[0].title || data.movie_results[0].original_title
+                            }
+                            linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+nome+'</div></span>'));
+                            linha.append($('<span><div style="margin-left: 5px;height: 45px;overflow: overlay; font-size: 12px;">'+config.info+'</div></span>'));
+                            linha.append($('<a href="#" style="margin-left: 5px;" onclick="socket.emit(\'preferido\', \''+config.imdb+'\', \''+nome+'\')" >Adicionar Favoritos</a>'));
+                            linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'remove_preferido\', \''+config.imdb+'\')" >Remover Favoritos</a>'));
+                            linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_nome\'); $(\'#texto\').val(\''+nome+'\');$(\'#imdb\').val(\''+config.imdb+'\')" >Buscar</a>'));
+                            linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'apagar\', \''+config.imdb+'\')" >Apagar Registros</a>'));
+                            linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_imdb\'); $(\'#texto_i\').val(\''+config.imdb+'\');$(\'#buscar_banco\').click();" >Carregar Arquivos</a>'));
+                            if(config.info_adicional){
+                                linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'#log_rodape\').append($(\'<li>\').text(\''+config.info_adicional+'\'));" >Info Completa</a>'));
+                            }
+                        });
+                        
+                        $("#messages").append(linha);                        
+                        return linha;
+                        
+                    }                    
+                    
+                
+                }
+                               
+                                                
+                function erroImagem(origem){
+                    $(origem).attr("src",'https://www.termoparts.com.br/wp-content/uploads/2017/10/no-image.jpg');
+                    
+                }
 
-	</script>
+                $.urlParam = function(name){
+                    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                    if (results==null) {
+                        return null;
+                    }
+                    return results[1] || 0;
+                }
+            
+                var ret;            
+                var socket = io();                
 
-
-	<script type="text/javascript" charset="utf-8">
-		//https://v3-cinemeta.strem.io/meta/series/tt0096697.json
-			
-              
-			class Exibicao {
-					
-					constructor(config) {
-
-						/*
-							var config = {
-										imdb:imdb,
-										info:info,
-										info_adicional:info_adicional
-							}
-						*/
-						
-						console.log(config);
-						this.config = config;
-						var linha = $('<li class=" collection-item col s6 m4 l2" style="height: 490px;">');
-						this.img = $('<a href="https://www.imdb.com/title/'+config.imdb+'/" target="_blank" style="width: 100%;" ><img onerror="erroImagem(this)" src="https://images.metahub.space/poster/medium/'+config.imdb+'/img" alt="" style="width: 100%; height: 285px;padding: 3px;" ></a>');
-						linha.append(this.img);
-						linha.append($('<br>'));
-						$.get("https://api.themoviedb.org/3/find/"+config.imdb+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
-							var nome='';
-							if(data.tv_results[0]){
-								nome = data.tv_results[0].name || data.tv_results[0].original_name
-							}
-							if(data.movie_results[0]){
-								nome = data.movie_results[0].title || data.movie_results[0].original_title
-							}
-							linha.append($('<span><div style="margin-left: 5px;height: 24px;overflow: overlay;">'+nome+'</div></span>'));
-							linha.append($('<span><div style="margin-left: 5px;height: 45px;overflow: overlay; font-size: 12px;">'+config.info+'</div></span>'));
-							linha.append($('<a href="#" style="margin-left: 5px;" onclick="socket.emit(\'preferido\', \''+config.imdb+'\', \''+nome+'\')" >Adicionar Favoritos</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'remove_preferido\', \''+config.imdb+'\')" >Remover Favoritos</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_nome\'); $(\'#texto\').val(\''+nome+'\')" >Buscar</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="socket.emit(\'apagar\', \''+config.imdb+'\')" >Apagar Registros</a>'));
-							linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'.tabs\').tabs(\'select\',\'busca_imdb\'); $(\'#texto_i\').val(\''+config.imdb+'\');$(\'#buscar_banco\').click();" >Carregar Arquivos</a>'));
-							if(config.info_adicional){
-								linha.append($('</br><a href="#" style="margin-left: 5px;" onclick="$(\'#log_rodape\').empty();$(\'#log_rodape\').append($(\'<li>\').text(\''+config.info_adicional+'\'));" >Info Completa</a>'));
-							}
-						});
-						
-						$("#messages").append(linha);						
-						return linha;
-						
-					}					
-					
-				
-				}
-
-
-				function carregar_funcoes(parametro){
-						//console.log("https://funcoes.mateusoro.repl.co/?"+parametro);
-						$('#log_rodape').empty();
-						$('<iframe src="https://funcoes.mateusoro.repl.co/?'+parametro+'" frameborder="0" scrolling="no" style="margin: 0px;height: 40px;" id="myFrame"></iframe>')
-						.appendTo('#log_rodape');
-				}
-				
-												
-				function erroImagem(origem){
-					$(origem).attr("src",'https://www.termoparts.com.br/wp-content/uploads/2017/10/no-image.jpg');
-					
-				}
-
-				$.urlParam = function(name){
-					var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-					if (results==null) {
-						return null;
-					}
-					return results[1] || 0;
-				}
-			
-				var ret;			
-				var socket = io();				
-
-				var resp;
+                var resp;
                 socket.on('connect', function() {
-					console.log('conectado')
+                    console.log('conectado')
                    // socket.emit('inicio');
                 });
-							
-				socket.on('resposta_funcoes', function(m) {
-					$('#log_rodape').empty();
-					$('#log_rodape').append($("<li class='collection-item'>").text(m));
+                
+                socket.on('log', function(m) {                                
+                    $('#log_rodape').prepend($("<li class='collection-item'>").text(m));                  
+                });
+                socket.on('log_limpar', function() {                                
+                    $('#log_rodape').empty();                  
+                });
+                socket.on('carregar_tabela', function(tabela) {   
+                    
+                    $('#messages').empty();  
+                    $('#messages').append($("<div id='table-todos'></div>")); 
+                    console.log('Carregado Tabela');
+                    ret = JSON.parse(tabela);
+                    var table = new Tabulator("#table-todos", {
+                        data:ret,           //load row data from array
+                        layout:"fitColumns",      //fit columns to width of table
+                        responsiveLayout:"hide",  //hide columns that dont fit on the table
+                        tooltips:true,            //show tool tips on cells
+                        addRowPos:"top",          //when adding a new row, add it to the top of the table
+                        history:true,             //allow undo and redo actions on the table
+                        pagination:"local",       //paginate the data
+                        paginationSize:9,         //allow 7 rows per page of data
+                        movableColumns:true,      //allow column order to be changed
+                        resizableRows:true,       //allow row order to be changed
+                        initialSort:[             //set the initial sort order of the data
+                            {column:"ano", dir:"desc"},
+                        ],
+                        columns:[                 //define the table columns                        
+                            {title:"Ano", field:"ano",sorter:"string", headerFilter:"input", hozAlign:"left",width:70},
+                            {title:"Título", field:"titulo",sorter:"string", headerFilter:"input",  hozAlign:"left",width:200},
+                            {title:"IMDB", field:"imdb",sorter:"string", headerFilter:"input",  hozAlign:"left",width:130},                           
+                            {title:"Magnet", field:"magnet",sorter:"string", headerFilter:"input",  hozAlign:"left", width:130, formatter:"link", formatterParams:{label:"Magnet",urlField:"magnet"}},      
+                            {title:"Nome", field:"nome",sorter:"string", headerFilter:"input",  hozAlign:"left"}
+                            
+                            
+                        ]
+                    });                    
+                                
+                });
+                            
+                socket.on('resposta_funcoes', function(m) {                   
+                    $('#log_rodape').append($("<li class='collection-item'>").text(m));
                 });
 
                 socket.on('atualizar', function(m,i) {
                     console.log(m)
-					if(m.includes("Link") || m.includes("Carregando") || m.includes("Legendado ") || m.includes("Detalhes do Link")|| m.includes("Buscando")|| m.includes("Fim")|| m.includes("IMDB:")){
- 						$('#messages_log').append($("<li class='collection-item'>").text(m));
-						 $('#log_rodape').empty();
-						 $('#log_rodape').append($("<li class='collection-item'>").text(m));
-					}else{
-						ret = JSON.parse(m);
-						console.log(ret);
-						if(ret[0]){
-							ret = ret[0];
-						}
+                    if(m.includes("Link") || m.includes("Carregando") || m.includes("Legendado ") || m.includes("Detalhes do Link")|| m.includes("Buscando")|| m.includes("Fim")|| m.includes("IMDB:")){
+                         $('#messages_log').append($("<li class='collection-item'>").text(m));                       
+                    }else{
+                        ret = JSON.parse(m);
+                        console.log(ret);
+                        if(ret[0]){
+                            ret = ret[0];
+                        }
                          //console.log(ret)
                         var im = ret.imdb.split(" ")[0];
                         var temp_episodeo = '';                        
@@ -128,147 +151,159 @@
                         if(ret.imdb.split(" ")[2]){
                             temp_episodeo = temp_episodeo + ' E:'+ret.imdb.split(" ")[2]+' ';
                         }
-						
-						var info = "";
-						var nome = ret.nome.toUpperCase();
-						if(nome.indexOf("DUBLADO") > 0){
-							info = info+" [DUBLADO]";
-						}
-						if(nome.indexOf("DUAL") > 0){
-							info = info+" [DUAL]";
-						}
-						if(nome.indexOf("BLURAY") > 0){
-							info = info+" [BluRay]";
-						}
-						if(nome.indexOf("HDTC") > 0){
-							info = info+" [HDTC]";
-						}
-						if(nome.indexOf("HDCAM") > 0){
-							info = info+" [HDCAM]";
-						}
-						if(nome.indexOf("UHD") > 0){
-							info = info+" [UHD]";
-						}
-						if(nome.indexOf("2160P") > 0){
-							info = info+" [2160p]";
-						}
-						if(nome.indexOf("720P") > 0){
-							info = info+" [720p]";
-						}
-						if(nome.indexOf("1080P") > 0){
-							info = info+" [1080p]";
-						}
-						new Exibicao({imdb:im, info:temp_episodeo+info, info_adicional:ret.nome});
-												
-					}
-					if(m.includes("Fim da Busca")){
-						$('#progresso').hide();
-					} 
+                        
+                        var info = "";
+                        var nome = ret.nome.toUpperCase();
+                        if(nome.indexOf("DUBLADO") > 0){
+                            info = info+" [DUBLADO]";
+                        }
+                        if(nome.indexOf("DUAL") > 0){
+                            info = info+" [DUAL]";
+                        }
+                        if(nome.indexOf("BLURAY") > 0){
+                            info = info+" [BluRay]";
+                        }
+                        if(nome.indexOf("HDTC") > 0){
+                            info = info+" [HDTC]";
+                        }
+                        if(nome.indexOf("HDCAM") > 0){
+                            info = info+" [HDCAM]";
+                        }
+                        if(nome.indexOf("UHD") > 0){
+                            info = info+" [UHD]";
+                        }
+                        if(nome.indexOf("2160P") > 0){
+                            info = info+" [2160p]";
+                        }
+                        if(nome.indexOf("720P") > 0){
+                            info = info+" [720p]";
+                        }
+                        if(nome.indexOf("1080P") > 0){
+                            info = info+" [1080p]";
+                        }
+                        new Exibicao({imdb:im, info:temp_episodeo+info, info_adicional:ret.nome});
+                                                
+                    }
+                    if(m.includes("Fim da Busca")){
+                        $('#progresso').hide();
+                    } 
                     
                 });
                 socket.on('limpar', function(m) {
                     $('#messages').empty();
-					$('#messages_log').empty();
-					$('#progresso').show();
+                    $('#messages_log').empty();
+                    $('#progresso').show();
+                    $('#log_rodape').empty();      
                 });
-				
-		$(document).ready(function(){
-    		M.AutoInit();
-			$('<iframe src="https://funcoes.mateusoro.repl.co/" frameborder="0" scrolling="no" style="margin: 0px;height: 40px;" id="myFrame"></iframe>')
-			if($.urlParam('imdb')){
+                
+        $(document).ready(function(){
+            M.AutoInit();
+            $('<iframe src="https://funcoes.mateusoro.repl.co/" frameborder="0" scrolling="no" style="margin: 0px;height: 40px;" id="myFrame"></iframe>')
+            if($.urlParam('imdb')){
 
-					var nome = "";
-					$.get("https://api.themoviedb.org/3/find/"+$.urlParam('imdb')+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
-						console.log(data);
-						//console.log(data.tv_results[0]);
-						if(data.tv_results[0]){
-							nome = data.tv_results[0].name || data.tv_results[0].original_name
-						}
-						if(data.movie_results[0]){
-							nome = data.movie_results[0].title || data.movie_results[0].original_title
-						}
-						console.log(nome);
-						document.getElementById('texto').value = nome;
-						document.getElementById('imdb').value = $.urlParam('imdb');
-						$('.tabs').tabs('select','busca_nome');
+                    var nome = "";
+                    $.get("https://api.themoviedb.org/3/find/"+$.urlParam('imdb')+"?api_key=fda55c79b27aed8a3c9a8a7084d73806&language=pt-BR&external_source=imdb_id", function(data, status){
+                        console.log(data);
+                        //console.log(data.tv_results[0]);
+                        if(data.tv_results[0]){
+                            nome = data.tv_results[0].name || data.tv_results[0].original_name
+                        }
+                        if(data.movie_results[0]){
+                            nome = data.movie_results[0].title || data.movie_results[0].original_title
+                        }
+                        console.log(nome);
+                        document.getElementById('texto').value = nome;
+                        document.getElementById('imdb').value = $.urlParam('imdb');
+                        $('.tabs').tabs('select','busca_nome');
 
-					});
-				}
-  		});
-	</script>
+                    });
+                }
+          });
+    </script>
 </head>
 
 <body>
-	<nav class="nav-extended">
-		<div class="nav-wrapper blue darken-2">
-			<ul class="tabs tabs-transparent" style="padding-top: 10px;">
-				<li class="tab"><a class="active" href="#lancamentos">Lançamentos</a></li>
-				<li class="tab"><a href="#busca_nome">Busca por Nome</a></li>
-				<li class="tab"><a href="#busca_link">Busca por Link</a></li>
-				<li class="tab"><a href="#busca_imdb">Buscar Salvos</a></li>
-				<li class="tab"><a href="#preferidos">Preferidos</a></li>
-				<li class="tab"><a href="#log">Log</a></li>
-			</ul>
-		</div>
-	</nav>
-	<div id="progresso" style="display: none; margin-bottom: 0px;" class="progress">
-		<div class="indeterminate blue darken-2"></div>
-	</div>
-	<div id="lancamentos" style="padding: 10px;" class="col s12">
+    <nav class="nav-extended">
+        <div class="nav-wrapper blue darken-2">
+            <ul class="tabs tabs-transparent" style="padding-top: 10px;">
+                <li class="tab"><a class="active" href="#lancamentos">Lançamentos</a></li>
+                <li class="tab"><a href="#busca_nome">Busca por Nome</a></li>
+                <li class="tab"><a href="#busca_link">Busca por Link</a></li>
+                <li class="tab"><a href="#busca_imdb">Buscar Salvos</a></li>
+                <li class="tab"><a href="#preferidos">Preferidos</a></li>
+                <li class="tab"><a href="#tabela">Tabela</a></li>
+                <li class="tab"><a href="#config">Config</a></li>
+                <li class="tab"><a href="#log">Log</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="progresso" style="display: none; margin-bottom: 0px;" class="progress">
+        <div class="indeterminate blue darken-2"></div>
+    </div>
+    <div id="lancamentos" style="padding: 10px;" class="col s12">
 
-		<a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://ondeeubaixo.net/lancamentos-filmes-');">Lançamentos
-			- Filmes</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://ondeeubaixo.net/lancamentos-series-');">Lançamentos - Séries</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista_preferidos');">Atualizar - Preferidos</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+        <a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://ondeeubaixo.net/lancamentos-filmes-');">Lançamentos
+            - Filmes</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista', 'https://ondeeubaixo.net/lancamentos-series-');">Lançamentos - Séries</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='lancamento'; socket.emit('lista_preferidos');">Atualizar - Preferidos</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
 
-	</div>
-	<div id="busca_nome" style="padding: 10px;" class="col s12">
-		Nome: <input type='text' id='texto' style='width: 100%;'><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='nome'; socket.emit('buscar', document.getElementById('texto').value);">Buscar</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
-		
-	</div>
-	<div id="busca_link" style="padding: 10px;" class="col s12">
-		Link: <input type='text' id='texto2' style='width: 100%;'><br>
-		IMDB: <input type='text' id='imdb' style='width: 100%;'><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn blue darken-3" onclick="local='link'; socket.emit('link', document.getElementById('texto2').value, document.getElementById('imdb').value);">Carregar Link</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
-		
-	</div>
-	<div id="busca_imdb" style="padding: 10px;" class="col s12">		
-		Nome: <input type='text' id='texto_i' style='width: 100%;'><br>
-		<a href="#" id="buscar_banco" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('buscar_im', document.getElementById('texto_i').value);">Buscar no Banco</a><br>
-		<a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('carregar_lancamentos');">Lançamentos IMDB</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
-		
-	</div>
-	
-	<div id="preferidos" style="padding: 10px;" class="col s12">		
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#preferidos_log').empty(); $('#preferidos_log').append(
-								'<li class=\'collection-item\'>Carregando</li>'); socket.emit('carregar_preferidos');">Carregar</a><br>
-		<a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
-				
-		
-	</div>
-	<div style="padding: 10px;">	
-		<ul class="collection">
-			<div class="row" id="messages">
+    </div>
+    <div id="busca_nome" style="padding: 10px;" class="col s12">
+        Nome: <input type='text' id='texto' style='width: 100%;'><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="local='nome'; socket.emit('buscar', document.getElementById('texto').value);">Buscar</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+        
+    </div>
+    <div id="busca_link" style="padding: 10px;" class="col s12">
+        Link: <input type='text' id='texto2' style='width: 100%;'><br>
+        IMDB: <input type='text' id='imdb' style='width: 100%;'><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn blue darken-3" onclick="local='link'; socket.emit('link', document.getElementById('texto2').value, document.getElementById('imdb').value);">Carregar Link</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+        
+    </div>
+    <div id="busca_imdb" style="padding: 10px;" class="col s12">        
+        Nome: <input type='text' id='texto_i' style='width: 100%;'><br>
+        <a href="#" id="buscar_banco" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('buscar_im', document.getElementById('texto_i').value);">Buscar no Banco</a><br>
+        <a href="#" style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#messages_imdb').empty(); socket.emit('carregar_lancamentos');">Lançamentos IMDB</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+        
+    </div>
+    
+    <div id="preferidos" style="padding: 10px;" class="col s12">        
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  blue darken-3" onclick="$('#preferidos_log').empty(); $('#preferidos_log').append(
+                                '<li class=\'collection-item\'>Carregando</li>'); socket.emit('carregar_preferidos');">Carregar</a><br>
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn  red" onclick="socket.emit('parar');$('#messages_log').append($('<li class=\'collection-item\'>').text('Parando'))">Parar</a><br>
+                
+        
+    </div>
+    <div id="config" style="padding: 10px;" class="col s12">
+        Tamanho Busca: <input type='text' id='texto7' style='width: 100%;'><br>        
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn blue darken-3" onclick="socket.emit('config', 'tamanho', document.getElementById('texto7').value);">Salvar</a><br>
+        
+    </div>
+     <div id="tabela" style="padding: 10px;" class="col s12">             
+        <a href="#"  style="width: 250px; margin-bottom: 3px;" class="waves-effect waves-light btn blue darken-3"       onclick="socket.emit('tabela');">Carregar</a><br>
+       
+    </div>
+    <div style="padding: 10px;">    
+        <ul class="collection">
+            <div class="row" style="margin-bottom: 80px !important;" id="messages">
 
-			</div>
-		</ul>
-	</div>
-	<div id="log" style="padding: 10px;" class="col s12">		
-		<ul class="collection" id="messages_log"></ul>
-	</div>
-	 <footer class="page-footer blue darken-2"  style="position:fixed;bottom:0;left:0;width:100%;max-height: 50px;">
-          
-          <div class="footer-copyright">
+            </div>
+        </ul>
+    </div>
+    
+    <div id="log" style="padding: 10px;" class="col s12">        
+        <ul class="collection" id="messages_log"></ul>
+    </div>
+     <div class="page-footer blue darken-2"  style="position:fixed;bottom:0;left:0;width:100%;max-height: 100px;line-height: 1.1;font-size: 12px;overflow-y: scroll;height: 100px;">
+                  
             <div id="log_rodape" class="container" style="margin-left: 10px; margin-top: -12px;">
            
             </div>
-          </div>
-        </footer>
+          
+        </div>
 </body>
 
 </html>
