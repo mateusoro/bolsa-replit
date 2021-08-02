@@ -230,7 +230,7 @@ function tunel() {
 
 async function atualizar_acao(nome_acao) {
     try {
-        nome_acao[1] = "../"+nome_acao[1]
+        nome_acao[1] = "../acoes"+nome_acao[1]
         if (fs.existsSync(nome_acao[1])) {
             const stats = fs.statSync(nome_acao[1]);
             if (stats.mtime.getDay() != new Date().getDay()) {
