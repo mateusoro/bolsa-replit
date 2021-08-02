@@ -166,7 +166,7 @@ function emitir(resultado) {
             console.log('Esperando');
             if(resultado[0].destino=='status' && resultado[0].mensagem == 'Fim'){
 
-            }else{}
+            }else{
             setTimeout(() => {
                 console.log(resultado);
                 emitir(resultado);
