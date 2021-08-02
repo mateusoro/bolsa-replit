@@ -23,7 +23,6 @@ var shell = require('shelljs');
 //shell.exec('rclone sync /home/coder/busca/bolsa.js  rclone:/busca/ -vv');
 
 
-
 setInterval(async () => {
     try {
         db.retorno.loadDatabase();
