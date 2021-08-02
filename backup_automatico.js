@@ -8,3 +8,4 @@ const job = new CronJob('0 */5 * * * *', function() {
     shell.exec('bash push.sh');
 });
 job.start();
+
