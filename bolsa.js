@@ -163,7 +163,7 @@ function emitir(resultado) {
             }
         } else {
             console.log('Esperando');
-            setInterval(() => {
+            setTimeout(() => {
                 emitir(resultado);
             }, 1000);
             
