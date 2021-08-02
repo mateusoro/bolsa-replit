@@ -171,6 +171,7 @@ function emitir(resultado) {
                 console.log(resultado);
                 emitir(resultado);
             }, 1000);
+        }
             
         }
     }, 1000);
