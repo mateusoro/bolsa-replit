@@ -177,7 +177,7 @@ function emitir(resultado) {
 
 }
 app.get('/grafico', function (req, res) {
-    res.sendFile(__dirname + '/grafico.html');
+    res.sendFile(__dirname + 'paginas/grafico.html');
 });
 app.get('/tabela', function (req, res) {
     res.sendFile(__dirname + '/tabela.html');
