@@ -180,7 +180,7 @@ app.get('/grafico', function (req, res) {
     res.sendFile(__dirname + 'paginas/grafico.html');
 });
 app.get('/tabela', function (req, res) {
-    res.sendFile(__dirname + 'paginas//tabela.html');
+    res.sendFile(__dirname + 'paginas/tabela.html');
 });
 app.get('/predefinidos', function (req, res) {
     res.sendFile(__dirname + '/predefinidos.html');
