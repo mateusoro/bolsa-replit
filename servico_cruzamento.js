@@ -3,11 +3,12 @@ const { load } = require('csv-load-sync');
 var Datastore = require('nedb-promise');
 var moment = require('moment');
 var db = {};
-db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
-db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
-db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
-db.status = new Datastore({ filename: 'requisicoes/status.json', autoload: true });
-db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true });
+db.requisicao = new Datastore({ filename: '../requisicoes/requisicao.json', autoload: true });
+db.retorno = new Datastore({ filename: '../requisicoes/retorno.json', autoload: true });
+db.grafico = new Datastore({ filename: '../requisicoes/grafico.json', autoload: true });
+db.predefinido = new Datastore({ filename: '../requisicoes/predefinodo.json', autoload: true });
+db.status = new Datastore({ filename: '../requisicoes/status.json', autoload: true });
+db.parar = new Datastore({ filename: '../requisicoes/parar.json', autoload: true });
 
 var shell = require('shelljs');
 
