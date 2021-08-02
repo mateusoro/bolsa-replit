@@ -163,6 +163,7 @@ function emitir(resultado) {
             }
         } else {
             console.log('Esperando');
+            set
             emitir(resultado);
         }
     }, 1000);
