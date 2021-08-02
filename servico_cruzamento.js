@@ -950,7 +950,6 @@ async function grafico(estra, id, solicitacao) {
         }
 
     }
-
     solicitacao.estrategia_atual = solicitacao.estrategia_atual.substring(0, solicitacao.estrategia_atual.length - 1);
     solicitacao.estrategias = estrategia.estrategias;
     //console.log(solicitacao.estrategias);   
