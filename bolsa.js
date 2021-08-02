@@ -149,6 +149,7 @@ io.sockets.on('connection', (socket) => {
 
 
 });
+
 function emitir(resultado) {
 
     //console.log(resultado.length, allClients.length)
