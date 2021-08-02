@@ -961,6 +961,7 @@ async function grafico(estra, id, solicitacao) {
     //emitir('resultado', { descricao: solicitacao, url: link + "/?id=" + id })
 
 }
+
 console.log("Rodando Serviço");
 
 
