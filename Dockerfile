@@ -66,7 +66,8 @@ RUN cd /home/coder/code-server-bolsa && git config --global user.name "mateusoro
 RUN cd /home/coder/code-server-bolsa && git config --global user.email "mateusoro@gmail.com"
 RUN cd /home/coder/code-server-bolsa && git init
 RUN cd /home/coder/code-server-bolsa && sudo git remote add origin https://mateusoro:Ss161514.@github.com/mateusoro/code-server-bolsa.git
-RUN cd /home/coder/code-server-bolsa && git pull origin main
+RUN cd /home/coder/code-server-bolsa && git pull origin HEAD:main
+RUN cd /home/coder/code-server-bolsa && git checkout main
 
 #RUN mkdir -p /home/coder/busca/
 #RUN cp -rf code-server-busca/* busca/
