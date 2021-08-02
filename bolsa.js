@@ -186,7 +186,7 @@ app.get('/predefinidos', function (req, res) {
     res.sendFile(__dirname + 'paginas/predefinidos.html');
 });
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + 'paginas/index.html');
 });
 
 server.listen(8888, () => {
