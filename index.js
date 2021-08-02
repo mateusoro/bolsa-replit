@@ -10,16 +10,16 @@ const https = require('https');
 
 var Datastore = require('nedb-promise');
 var db = {};
-db.requisicao = new Datastore({ filename: '../requisicoes/requisicao.json', autoload: true });
-db.retorno = new Datastore({ filename: '../requisicoes/retorno.json', autoload: true });
-db.grafico = new Datastore({ filename: '../requisicoes/grafico.json', autoload: true });
-db.predefinido = new Datastore({ filename: '../requisicoes/predefinodo.json', autoload: true });
-db.status = new Datastore({ filename: '../requisicoes/status.json', autoload: true });
-db.parar = new Datastore({ filename: '../requisicoes/parar.json', autoload: true });
+db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
+db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
+db.grafico = new Datastore({ filename: 'requisicoes/grafico.json', autoload: true });
+db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
+db.status = new Datastore({ filename: 'requisicoes/status.json', autoload: true });
+db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true });
 
 const localtunnel = require('localtunnel');
 var shell = require('shelljs');
-shell.exec('cd .. && mkdir acoes');
+//shell.exec('node servico_cruzamento.js&');
 
 
 setInterval(async () => {
@@ -177,20 +177,20 @@ function emitir(resultado) {
 
 }
 app.get('/grafico', function (req, res) {
-    res.sendFile(__dirname + '/paginas/grafico.html');
+    res.sendFile('/home/runner/bolsa-replit/paginas/grafico.html');
 });
 app.get('/tabela', function (req, res) {
-    res.sendFile(__dirname + '/paginas/tabela.html');
+    res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
 });
 app.get('/predefinidos', function (req, res) {
-    res.sendFile(__dirname + '/paginas/predefinidos.html');
+    res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
 });
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/paginas/index.html');
+    res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
 });
 
 server.listen(8888, () => {
-    console.log('https://bolsa-mateusoro1.loca.lt/');
+    //console.log('https://bolsa-mateusoro1.loca.lt/');
 });
 
 
@@ -230,7 +230,7 @@ function tunel() {
 
 async function atualizar_acao(nome_acao) {
     try {
-        nome_acao[1] = "../acoes/"+nome_acao[1]
+        nome_acao[1] = "acoes/"+nome_acao[1]
         if (fs.existsSync(nome_acao[1])) {
             const stats = fs.statSync(nome_acao[1]);
             if (stats.mtime.getDay() != new Date().getDay()) {
@@ -273,7 +273,7 @@ async function download(acao) {
     });
 
 }
-tunel();
+//tunel();
 
 
 

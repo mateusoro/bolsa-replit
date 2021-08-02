@@ -1,10 +1,15 @@
 {
+  "scripts": {
+    "start": "node index.js & node servico_cruzamento.js &"
+  },
   "dependencies": {
     "async-get-file": "^1.0.4",
+    "chart.js": "^3.5.0",
     "cron": "^1.8.2",
     "csv-load-sync": "^2.3.1",
     "express": "^4.17.1",
     "localtunnel": "^2.0.1",
+    "moment": "^2.29.1",
     "nedb-promise": "^2.0.1",
     "path": "^0.12.7",
     "shelljs": "^0.8.4",

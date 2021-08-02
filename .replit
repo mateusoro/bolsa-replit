@@ -1,0 +1,1 @@
+run = "node index.js & node servico_cruzamento.js"

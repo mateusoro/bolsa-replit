@@ -3,13 +3,12 @@ const { load } = require('csv-load-sync');
 var Datastore = require('nedb-promise');
 var moment = require('moment');
 var db = {};
-db.requisicao = new Datastore({ filename: '../requisicoes/requisicao.json', autoload: true });
-db.retorno = new Datastore({ filename: '../requisicoes/retorno.json', autoload: true });
-db.grafico = new Datastore({ filename: '../requisicoes/grafico.json', autoload: true });
-db.predefinido = new Datastore({ filename: '../requisicoes/predefinodo.json', autoload: true });
-db.status = new Datastore({ filename: '../requisicoes/status.json', autoload: true });
-db.parar = new Datastore({ filename: '../requisicoes/parar.json', autoload: true });
-
+db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
+db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
+db.grafico = new Datastore({ filename: 'requisicoes/grafico.json', autoload: true });
+db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
+db.status = new Datastore({ filename: 'requisicoes/status.json', autoload: true });
+db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true });
 var shell = require('shelljs');
 
 //shell.exec('rclone sync /home/coder/busca/servico_cruzamento.js  rclone:/busca/ -vv');
@@ -26,6 +25,7 @@ setInterval(async () => {
             await iniciar_cruzamente(docs[x]);
 
         }
+		//console.log('Rodando Servico');
         if (docs.length > 0) console.log('Carregou requisições: ' + docs.length);
 
     } catch (e) {
@@ -42,7 +42,7 @@ function carregar_acao(acao_nome) {
     var volume = [];
     var data = [];
 
-    const csv = load("../acoes/"+acao_nome);
+    const csv = load("acoes/"+acao_nome);
 
     //console.log(csv);
     //console.log(row);
