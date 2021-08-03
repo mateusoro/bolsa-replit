@@ -1,6 +1,6 @@
 var sqlite3 = require('sqlite3');
 var {open} = require('sqlite');
-var db
+var db;
 
   (async () => {
     const db = await open({
