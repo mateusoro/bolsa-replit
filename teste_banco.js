@@ -7,7 +7,7 @@ db = new sqlite3.Database('sqlite.db');
 async function teste() {
     try {
         console.log(1);
-        var docs = await db.status.find({}).limit(10).execAsync();
+        var docs = await db.db.query(sql, 
         console.log(docs);        
         console.log(2);
     } catch (err) {
