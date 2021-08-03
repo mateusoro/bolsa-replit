@@ -152,7 +152,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
 
             //console.log(estra[index].operador, estra[index].indicador)
             estra[index].indicador_valores = await escolher_indicador(acao, estra[index].indicador, v1);
-            var sin = sinal(estra[index].indicador_valores, v2, null, estra[index].operador)
+            var sin = sinal(estra[index].indicador_valores, v2, null, estra[index].operador);
             estra[index].sinal = [0];
             estra[index].tendencia = sinal(estra[index].indicador_valores, v2, null, estra[index].operador)[0];
 
