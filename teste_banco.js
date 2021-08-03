@@ -1,5 +1,5 @@
 var sqlite3 = require('sqlite3');
-var {open} = require('sqlite3');
+var {open} = require('sqlite');
 var db = sqlite3({
     filename: 'sqlite.db',
     driver: sqlite3.Database
