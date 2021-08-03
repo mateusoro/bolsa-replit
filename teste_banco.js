@@ -16,3 +16,4 @@ try {
 	// handle errors
 }
 }
+TextEncoder()
