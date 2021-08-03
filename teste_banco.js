@@ -4,13 +4,6 @@ var sqlite3 = require('sqlite3').verbose();
 var db = {}
 db = new sqlite3.Database('sqlite.db');
 
-db.requisicao =  new LinvoDB('requisicao', {});
-db.retorno =  new LinvoDB('retorno', {});
-db.grafico =  new LinvoDB('grafico', {});
-db.predefinido2 =  new LinvoDB('predefinido', {});
-db.parar =  new LinvoDB('parar', {});
-
-
 async function teste() {
     try {
         console.log(1);
