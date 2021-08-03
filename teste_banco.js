@@ -3,7 +3,7 @@ var Promise = require("bluebird");
 
 var db = {}
 db.status = new LinvoDB('status', {});
-db.requisicao =  new LinvoDB('status', {});
+db.requisicao =  new LinvoDB('requisicao', {});
 db.retorno =  new LinvoDB('status', {});
 db.grafico =  new LinvoDB('status', {});
 db.predefinido =  new LinvoDB('status', {});
