@@ -183,7 +183,7 @@ function emitir(resultado) {
 
 }
 app.get('/grafico', function (req, res) {
-    res.sendFile('/home/runner/bolsa-replit/paginas/grafico.html');
+    //res.sendFile('/home/runner/bolsa-replit/paginas/grafico.html');
 });
 app.get('/tabela', function (req, res) {
     res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
