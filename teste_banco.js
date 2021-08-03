@@ -10,7 +10,7 @@ db.predefinido2 =  new LinvoDB('predefinido', {});
 db.parar =  new LinvoDB('parar', {});
 
 Promise.promisifyAll(db.status.find().__proto__);
-Promise.promisifyAll(db.status.find().__proto__);
+Promise.promisifyAll(db.requisicao.find().__proto__);
 Promise.promisifyAll(db.status.find().__proto__);
 Promise.promisifyAll(db.status.find().__proto__);
 Promise.promisifyAll(db.status.find().__proto__);
