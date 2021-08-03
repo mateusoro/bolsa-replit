@@ -404,7 +404,7 @@
                 $('.quant_operacoes').val(($.urlParam('quant_operacoes') * 1) - 1);
                 $('.quant_acertos').val(($.urlParam('quant_acertos') * 1) - 1);
                 $('.quant_perdas').val(($.urlParam('quant_perdas') * 1) + 1);
-
+                $('#tipo_cruzamento').val($.urlParam('tipo_cruzamento'));
 
                 var estrategias_carregar = JSON.parse(decodeURIComponent($.urlParam('estrategias')))
                 for (var e in estrategias_carregar) {
