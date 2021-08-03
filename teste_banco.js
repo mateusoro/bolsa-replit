@@ -1,4 +1,5 @@
 var sqlite3 = require('sqlite');
+
 var db = new sqlite3.Database('sqlite.db');
 
 async function teste() {
