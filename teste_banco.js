@@ -9,5 +9,3 @@ db.grafico =  new LinvoDB('grafico', {});
 db.predefinido2 =  new LinvoDB('predefinido', {});
 db.parar =  new LinvoDB('parar', {});
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
