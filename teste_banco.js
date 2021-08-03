@@ -1,20 +1,17 @@
 var LinvoDB = require("linvodb3");
 var Promise = require("bluebird");
+var sqlite3 = require('sqlite3').verbose();
+
 
 var db = {}
-db.status = new LinvoDB('status', {});
+db.status = new sqlite3.Database('requisicoes/requisicao.db');
+
 db.requisicao =  new LinvoDB('requisicao', {});
 db.retorno =  new LinvoDB('retorno', {});
 db.grafico =  new LinvoDB('grafico', {});
 db.predefinido2 =  new LinvoDB('predefinido', {});
 db.parar =  new LinvoDB('parar', {});
 
-Promise.promisifyAll(db.status.find().__proto__);
-Promise.promisifyAll(db.requisicao.find().__proto__);
-Promise.promisifyAll(db.retorno.find().__proto__);
-Promise.promisifyAll(db.grafico.find().__proto__);
-Promise.promisifyAll(db.predefinido2.find().__proto__);
-Promise.promisifyAll(db.parar.find().__proto__);
 
 async function teste() {
     try {
