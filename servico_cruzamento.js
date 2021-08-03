@@ -305,7 +305,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         };
                     }
                     if (est.indicador == 'stochrsi') {
-                        if (est.sinal[a] != 'Comprar') {
+                        if (est.tendencia[a] != 'Comprar') {
                             sinal_compra = '';
                         };
                     }
