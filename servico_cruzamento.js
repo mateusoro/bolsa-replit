@@ -218,10 +218,10 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
        
         if(lista_curta[a-1]){
-            if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
-            if (lista_curta[a] < novo_parametro) { lista_retorno.push("Vender") }
+            if (lista_curta[a] > novo_parametro) { lista_tendencia.push("Comprar") }
+            if (lista_curta[a] < novo_parametro) { lista_tendencia.push("Vender") }
         }else{
-            if (lista_curta[a] == novo_parametro) { lista_retorno.push("Lateralizado") }
+            if (lista_curta[a] == novo_parametro) { lista_tendencia.push("Lateralizado") }
         }
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
