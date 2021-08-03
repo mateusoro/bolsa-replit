@@ -21,7 +21,7 @@ async function teste() {
         console.log(1);
         var docs = await db.status.find({}).limit(10).execAsync();
         console.log(docs);
-        var docs = await db.status.save({t:'1'}).execAsync();
+        var docs2 = await db.status.save({t:'1'}).execAsync();
         console.log(docs);
         console.log(2);
     } catch (err) {
