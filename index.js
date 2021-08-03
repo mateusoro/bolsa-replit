@@ -186,13 +186,13 @@ app.get('/grafico', function (req, res) {
     //res.sendFile('/home/runner/bolsa-replit/paginas/grafico.html');
 });
 app.get('/tabela', function (req, res) {
-    res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
+    //res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
 });
 app.get('/predefinidos', function (req, res) {
-    res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
+    //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
 });
 app.get('/', function (req, res) {
-    res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
+    //res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
 });
 
 server.listen(8888, () => {
