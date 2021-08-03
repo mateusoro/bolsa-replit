@@ -15,6 +15,7 @@ Promise.promisifyAll(db.retorno.find().__proto__);
 Promise.promisifyAll(db.grafico.find().__proto__);
 Promise.promisifyAll(db.predefinido2.find().__proto__);
 Promise.promisifyAll(db.parar.find().__proto__);
+
 Promise.promisifyAll(db.status.find().__proto__);
 Promise.promisifyAll(db.requisicao.find().__proto__);
 Promise.promisifyAll(db.retorno.find().__proto__);
