@@ -307,7 +307,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     if (est.indicador == 'stochrsi') {
                         if (est.tendencia[a] != 'Comprar') {
                             sinal_compra = '';
-                        };
+                        }
                     }
                     if (est.tipo == 'Venda') {
                         if (est.sinal[a] != 'Vender') {
