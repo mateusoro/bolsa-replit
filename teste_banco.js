@@ -7,7 +7,7 @@ db.requisicao =  new LinvoDB('status', {});
 db.retorno =  new LinvoDB('status', {});
 db.grafico =  new LinvoDB('status', {});
 db.predefinido =  new LinvoDB('status', {});
-db.status = new Datastore({ filename: 'requisicoes/status.json', autoload: true });
+db.status =  new LinvoDB('status', {});
 db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true });
 
 Promise.promisifyAll(db.status.find().__proto__);
