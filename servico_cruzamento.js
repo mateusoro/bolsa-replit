@@ -308,7 +308,6 @@ function crosser(acao, estrategias, stop, tipo) {
                         if (est.sinal[a] != 'Comprar') {
                             sinal_compra = '';
                         };
-
                     }
                     if (est.tipo == 'Venda') {
                         if (est.sinal[a] != 'Vender') {
