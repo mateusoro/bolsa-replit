@@ -5,6 +5,12 @@ var db = open({
     driver: sqlite3.Database
   })
 
+  (async () => {
+    const db = await open({
+      filename: '/tmp/database.db',
+      driver: sqlite3.cached.Database
+    })
+})()
 async function teste() {
     try {
         console.log(1);
