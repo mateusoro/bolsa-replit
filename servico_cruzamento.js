@@ -314,6 +314,11 @@ function crosser(acao, estrategias, stop, tipo) {
                             sinal_venda = '';
                         };
                     }
+                    if (est.indicador == 'stochrsi') {
+                        if (est.tendencia[a] != 'Cima') {
+                            sinal_compra = '';
+                        }
+                    }
                     if (est.tipo == 'Crosser') {
                         if (est.sinal[a] != 'Vender') {
                             sinal_venda = '';
