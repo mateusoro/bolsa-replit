@@ -1,5 +1,3 @@
-var LinvoDB = require("linvodb3");
-var Promise = require("bluebird");
 var sqlite3 = require('sqlite3').verbose();
 
 
