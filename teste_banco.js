@@ -7,7 +7,6 @@ db.requisicao =  new LinvoDB('requisicao', {});
 db.retorno =  new LinvoDB('retorno', {});
 db.grafico =  new LinvoDB('grafico', {});
 db.predefinido =  new LinvoDB('predefinido', {});
-db.status =  new LinvoDB('status', {});
 db.parar =  new LinvoDB('status', {});
 
 Promise.promisifyAll(db.status.find().__proto__);
