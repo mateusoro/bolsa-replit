@@ -196,7 +196,7 @@ app.get('/', function (req, res) {
 });
 
 server.listen(8888, () => {
-    //console.log('https://bolsa-mateusoro1.loca.lt/');
+    console.log('https://bolsa-mateusoro1.loca.lt/');
 });
 
 
