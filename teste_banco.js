@@ -2,7 +2,7 @@ var LinvoDB = require("linvodb3");
 var Promise = require("bluebird");
 
 var db = {}
-db.status = new LinvoDB('status', {}, { filename: "requisicoes/status.json" });
+db.status = new LinvoDB('status', {});
 
 Promise.promisifyAll(db.status.find().__proto__);
 
