@@ -187,6 +187,7 @@ app.get('/grafico', function (req, res) {
 });
 app.get('/tabela', function (req, res) {
     //res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
+    res.sendFile('/home/runner/bolsa-replit/paginas/tabela.html');
 });
 app.get('/predefinidos', function (req, res) {
     //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
