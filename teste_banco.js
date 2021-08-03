@@ -25,7 +25,7 @@ async function teste() {
         console.log(docs);
         console.log(2);
     } catch (err) {
-        // handle errors
+       console.log()
     }
 }
 teste();
