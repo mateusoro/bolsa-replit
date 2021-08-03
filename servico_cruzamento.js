@@ -222,7 +222,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             if (lista_curta[a] < novo_parametro) { lista_tendencia.push("Vender") }
             if (lista_curta[a] == novo_parametro) { lista_tendencia.push("Lateralizado") }
         }else{
-            if (lista_curta[a] == novo_parametro) { lista_tendencia.push("Lateralizado") }
+            lista_tendencia.push("Lateralizado") }
         }
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
