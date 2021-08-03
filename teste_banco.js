@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3');
 var {open} = require('sqlite');
 
   (async () => {
-    db = await open({
+    const db = await open({
       filename: 'sqlite.db',
       driver: sqlite3.cached.Database
     })
