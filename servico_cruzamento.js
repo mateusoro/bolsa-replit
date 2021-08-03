@@ -218,9 +218,10 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
         var tendencia = "igual";
         if(lista_curta[a-1]){
-            anterior = 
+            if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
+            if (lista_curta[a] < novo_parametro) { lista_retorno.push("Vender") }
         }else{
-            
+
         }
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
