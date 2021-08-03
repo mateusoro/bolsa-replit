@@ -119,7 +119,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('rodar_predefinidos', async (msg) => {
 
         console.log('rodar_predefinidos');
-        
+        await db.parar.remove({}, { multi: true });
         db.predefinido.loadDatabase();
         var docs = await db.predefinido.find({ _id: msg });
 
