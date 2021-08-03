@@ -1,5 +1,8 @@
 var sqlite3 = require('sqlite');
-
+open({
+    filename: '/tmp/database.db',
+    driver: sqlite3.Database
+  })
 var db = new sqlite3.Database('sqlite.db');
 
 async function teste() {
