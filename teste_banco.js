@@ -7,7 +7,7 @@ var db = open({
 
   (async () => {
     const db = await open({
-      filename: '/tmp/database.db',
+      filename: 'sqlite.db',
       driver: sqlite3.cached.Database
     })
 })()
