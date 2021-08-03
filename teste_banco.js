@@ -3,7 +3,10 @@ open({
     filename: '/tmp/database.db',
     driver: sqlite3.Database
   })
-var db = new sqlite3.Database('sqlite.db');
+var db = new sqlite3.open({
+    filename: '/tmp/database.db',
+    driver: sqlite3.Database
+  })
 
 async function teste() {
     try {
