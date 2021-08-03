@@ -4,7 +4,7 @@ var sqlite3 = require('sqlite3').verbose();
 
 
 var db = {}
-var db.status = new sqlite3.Database(':memory:');
+db.status = new sqlite3.Database(':memory:');
 
 db.requisicao =  new LinvoDB('requisicao', {});
 db.retorno =  new LinvoDB('retorno', {});
