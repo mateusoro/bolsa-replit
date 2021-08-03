@@ -1,6 +1,6 @@
 var sqlite3 = require('sqlite');
 var db = new sqlite3.open({
-    filename: '/tmp/database.db',
+    filename: 'sqlite.db',
     driver: sqlite3.Database
   })
 
