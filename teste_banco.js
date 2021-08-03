@@ -6,7 +6,7 @@ db.status = new LinvoDB('status', {});
 db.requisicao =  new LinvoDB('requisicao', {});
 db.retorno =  new LinvoDB('retorno', {});
 db.grafico =  new LinvoDB('grafico', {});
-db.predefinido =  new LinvoDB('status', {});
+db.predefinido =  new LinvoDB('predefinido', {});
 db.status =  new LinvoDB('status', {});
 db.parar =  new LinvoDB('status', {});
 
