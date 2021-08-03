@@ -9,7 +9,7 @@ Promise.promisifyAll(db.status.find().__proto__);
 try {
     console.log(1);
 	var docs = await db.status.find({ }).limit(10).execAsync();
-    console.log(2);
+    console.log(docs);
 	console.log(2);
 } catch (err) {
 	// handle errors
