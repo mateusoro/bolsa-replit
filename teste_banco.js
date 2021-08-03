@@ -6,7 +6,7 @@ db.status = new LinvoDB('status', {},{filename:"requisicoes/status.json"});
 
 Promise.promisifyAll(db.status.find().__proto__);
 
-async function
+async function (){}
 try {
     console.log(1);
 	var docs = await db.status.find({ }).limit(10).execAsync();
