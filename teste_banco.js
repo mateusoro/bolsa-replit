@@ -16,4 +16,4 @@ try {
 	// handle errors
 }
 }
-TextEncoder()
+teste()
