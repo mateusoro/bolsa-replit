@@ -3,7 +3,7 @@ var Promise = require("bluebird");
 
 var db = {}
 db.status = new LinvoDB('status', {});
-db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
+db.requisicao =  new LinvoDB('status', {});
 db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
 db.grafico = new Datastore({ filename: 'requisicoes/grafico.json', autoload: true });
 db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
