@@ -216,7 +216,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
-        var tendencia = ""
+        var tendencia = "igual"
         if(lista_curta[a-1]){
             anterior = 
         }
