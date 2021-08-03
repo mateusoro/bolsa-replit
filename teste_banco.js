@@ -21,6 +21,8 @@ async function teste() {
         console.log(1);
         var docs = await db.status.find({}).limit(10).execAsync();
         console.log(docs);
+        var docs = await db.status.find({}).limit(10).execAsync();
+        console.log(docs);
         console.log(2);
     } catch (err) {
         // handle errors
