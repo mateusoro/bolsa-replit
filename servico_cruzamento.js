@@ -43,7 +43,6 @@ function carregar_acao(acao_nome) {
     var data = [];
 
     const csv = load("acoes/"+acao_nome);
-
     //console.log(csv);
     //console.log(row);
     for (var a in csv) {
