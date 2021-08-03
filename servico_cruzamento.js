@@ -216,7 +216,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
-        if(lista_curta[a-1])
+        if(lista_curta[a-1]){}
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
             if (lista_curta[a] < novo_parametro) { lista_retorno.push("Vender") }
