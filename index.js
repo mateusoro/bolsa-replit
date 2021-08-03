@@ -190,6 +190,7 @@ app.get('/tabela', function (req, res) {
 });
 app.get('/predefinidos', function (req, res) {
     //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
+    res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
 });
 app.get('/', function (req, res) {
     //res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
