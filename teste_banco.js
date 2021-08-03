@@ -15,3 +15,4 @@ try {
 } catch (err) {
 	// handle errors
 }
+}
