@@ -18,13 +18,15 @@ db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autol
 db.status = new Datastore({ filename: 'requisicoes/status.json', autoload: true });
 db.parar = new Datastore({ filename: 'requisicoes/parar.json', autoload: true });
 
+
 const localtunnel = require('localtunnel');
 var shell = require('shelljs');
+/*
 var rrr = shell.exec('pidof node');
 if(rrr.stdout.split(' ').length>4){
 	shell.exec('kill $(pidof node)');	
 	shell.exec('node index.js & node servico_cruzamento.js');	
-}
+}*/
 
 
 setInterval(async () => {

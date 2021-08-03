@@ -8,17 +8,17 @@
         "commands": [
             {
                 "match": "\\.py$",
-                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
+                "cmd": "cd /home/mateusoro/bolsa-replit/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
                 "isAsync": true               
             },
             {
                 "match": "\\.js$",
-                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
+                "cmd": "cd /home/mateusoro/bolsa-replit/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
                 "isAsync": true               
             },
             {
                 "match": "\\.html$",
-                "cmd": "cd /home/coder/code-server-bolsa/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
+                "cmd": "cd /home/mateusoro/bolsa-replit/ && git add . && echo -e 'a\n*\nq\n'|git add -i && git commit -m 'Added script' && git push -u origin HEAD:main",
                 "isAsync": true               
             }
 
