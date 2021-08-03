@@ -316,7 +316,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
                     if (est.indicador == 'stochrsi') {
                         if (est.tendencia[a] != 'Baixo') {
-                            sinal_compra = '';
+                            sinal_venda = '';
                         }
                     }
                     if (est.tipo == 'Crosser') {
