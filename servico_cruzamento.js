@@ -200,7 +200,7 @@ function escolher_operador(indicador) {
         return 'invertido';
     }
     if (indicador == 'stochrsi') {
-        return 'invertido';
+        return 'normal';
     }
     return 'normal';
 
