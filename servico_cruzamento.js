@@ -219,6 +219,8 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         var tendencia = "igual";
         if(lista_curta[a-1]){
             anterior = 
+        }else{
+            
         }
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
