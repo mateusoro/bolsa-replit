@@ -118,7 +118,7 @@ io.sockets.on('connection', (socket) => {
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
-            
+            d.id =docs[x]
             io.emit('predefinidos',d);
         }
        
