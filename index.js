@@ -121,8 +121,6 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_todos', async () => {
 
-        // console.log('carregar_predefinidos');
-        //iniciar_cruzamente(msg);
         var docs = await sqlite.all('select * from predefinido where ativo = "S"');
         
         for (var x in docs) {
