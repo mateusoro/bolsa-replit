@@ -402,7 +402,7 @@ function crosser(acao, estrategias, stop, tipo) {
                 for (var e in estrategias) {
                     var est = estrategias[e];
 
-                    if (est.tipo == 'Crosser') {
+                  
                         if (est.sinal[a] != 'Vender') {
                             sinal_venda = '';
                         };
