@@ -697,7 +697,7 @@ async function iniciar(nome_acao, solicitacao) {
 
                                                                                     for (var vv10_2 of estrategias[9].vs2) {
 
-                                                                                        var longa_maior10 = await escolher_estrategia_tipo(petr4, estrategias, 9, vv6_1, vv6_2, longa_maior9);
+                                                                                        var longa_maior10 = await escolher_estrategia_tipo(petr4, estrategias, 9, vv10_1, vv6_2, longa_maior9);
 
 
                                                                                         for (var vv_stop of variavel_stop) {
