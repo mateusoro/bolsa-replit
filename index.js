@@ -90,7 +90,7 @@ io.sockets.on('connection', (socket) => {
 
         console.log('Carregando');
         //iniciar_cruzamente(msg);
-        await sqlite.run('update status set campo = "Ações atualizadas"');
+        await sqlite.run('update parar set campo = "Ações atualizadas"');
         await db.requisicao.insert(msg);
 
     });
