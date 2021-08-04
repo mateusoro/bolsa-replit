@@ -43,7 +43,9 @@ async function rodar_requisicoes(){
              console.log('Carregou requisições: ' + docs.length);
         }else{
 
-            setTimeout
+            setTimeout(() => {
+                
+            }, timeout);
 
         }
     } catch (e) {
