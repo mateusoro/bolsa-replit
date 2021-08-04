@@ -134,7 +134,7 @@ async function adx(acao, tamanho) {
 async function aroonosc(acao, tamanho) {
     var result = await tulind.indicators.aroonosc.indicator([acao.high, acao.low], [tamanho]);
     var t = acao.close.length;
-    
+
     result = corrige_tamanho(t, result[0]);
     return result;
 }
@@ -600,7 +600,7 @@ async function iniciar(nome_acao, solicitacao) {
             est.vs2 = est.parametro.split(',');
         }
         if (est.tipo == 'Crosser') {
-            console.log(est.teste_compra, est.teste_venda);
+            //console.log(est.teste_compra, est.teste_venda);
             est.vs1 = est.teste_compra.split(',');
             est.vs2 = est.teste_venda.split(',');
         }
