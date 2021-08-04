@@ -1,4 +1,4 @@
-const aaSqlite = require("aa-sqlite");
+const sqlite = require("aa-sqlite");
 
   (async () => {
     console.log(await sqlite.open('sqlite.db'))
