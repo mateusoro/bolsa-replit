@@ -91,7 +91,8 @@ io.sockets.on('connection', (socket) => {
         console.log('Carregando');
         //iniciar_cruzamente(msg);
         await sqlite.run('update parar set campo = "N"');
-        var t = JSON.stringify(msg)
+        var t = JSON.stringify(msg);
+        console.log()
         await sqlite.run('insert into requisicao values (null, "'+JSON.stringify(msg)+'", "S")')
         
 
