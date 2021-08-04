@@ -575,7 +575,7 @@ async function iniciar(nome_acao, solicitacao) {
                     var dd = new Date(restantes);
                     await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" +dd.getSeconds() +'"');
         
-                    await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" +dd.getSeconds() }, { upsert: true });
+                    //await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" +dd.getSeconds() }, { upsert: true });
 
                     for (var vv2_2 of estrategias[1].vs2) {
 
