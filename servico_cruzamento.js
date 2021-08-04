@@ -7,13 +7,13 @@ const sqlite = require("aa-sqlite");
     console.log(await sqlite.open('sqlite.db'))
     await sqlite.run('delete from status')
     await sqlite.run('insert into status values (null, "Início", "S")')
-    
+
     await sqlite.run('delete from parar')
     await sqlite.run('insert into parar values (null, "N", "S")')
     //var docs = await sqlite.all('select * from status')
     //console.log(docs);
-  
-  })()
+
+})()
 
 var db = {};
 //db.requisicao = new Datastore({ filename: 'requisicoes/requisicao2.json', autoload: true });
@@ -32,11 +32,11 @@ setInterval(async () => {
         var docs = await sqlite.all('select * from requisicao where ativo = "S"');
         for (var x in docs) {
             //console.log(docs[x]); 
-            await sqlite.run('update requisicao set ativo = "N" where id='+docs[x].id);               
+            await sqlite.run('update requisicao set ativo = "N" where id=' + docs[x].id);
             await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
         }
-		//console.log('Rodando Servico');
+        //console.log('Rodando Servico');
         if (docs.length > 0) console.log('Carregou requisições: ' + docs.length);
 
     } catch (e) {
@@ -53,7 +53,7 @@ function carregar_acao(acao_nome) {
     var volume = [];
     var data = [];
 
-    const csv = load("acoes/"+acao_nome);
+    const csv = load("acoes/" + acao_nome);
     //console.log(csv);
     //console.log(row);
     for (var a in csv) {
@@ -163,7 +163,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
 
             //console.log(estra[index].operador, estra[index].indicador)
             estra[index].indicador_valores = await escolher_indicador(acao, estra[index].indicador, v1);
-            
+
             var sin = sinal(estra[index].indicador_valores, v2, null, estra[index].operador);
             estra[index].sinal = sin[0];
             estra[index].tendencia = sin[1];
@@ -230,12 +230,12 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
-       
-        if(lista_curta[a-1]){
-            if (lista_curta[a] > lista_curta[a-1]) { lista_tendencia.push("Cima") }
-            if (lista_curta[a] < lista_curta[a-1]) { lista_tendencia.push("Baixo") }
-            if (lista_curta[a] == lista_curta[a-1]) { lista_tendencia.push("Lateralizado") }
-        }else{
+
+        if (lista_curta[a - 1]) {
+            if (lista_curta[a] > lista_curta[a - 1]) { lista_tendencia.push("Cima") }
+            if (lista_curta[a] < lista_curta[a - 1]) { lista_tendencia.push("Baixo") }
+            if (lista_curta[a] == lista_curta[a - 1]) { lista_tendencia.push("Lateralizado") }
+        } else {
             lista_tendencia.push("Lateralizado");
         }
         if (operador == 'normal') {
@@ -325,7 +325,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             sinal_venda = '';
                         };
                     }
-                    
+
                     if (est.indicador == 'stochrsi') {
                         if (est.tendencia[a] != 'Baixo') {
                             sinal_venda = '';
@@ -558,19 +558,19 @@ async function iniciar(nome_acao, solicitacao) {
     for (var vv1_1 of estrategias[0].vs1) {
 
         process.stdout.write(contagem + ' ');
-        await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades +'"');
+        await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades + '"');
         //await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades }, { upsert: true });
 
 
-        
+
         var docs = await sqlite.all('select * from parar');
         var parar = false;
-        if(docs){
-            if(docs[0].campo=="S"){
+        if (docs) {
+            if (docs[0].campo == "S") {
                 parar = true;
             }
         }
-        
+
         if (!parar) {
             for (var vv1_2 of estrategias[0].vs2) {
 
@@ -579,15 +579,15 @@ async function iniciar(nome_acao, solicitacao) {
                 for (var vv2_1 of estrategias[1].vs1) {
 
 
-                    var tempo2 = new Date();                    
-                    var timeDifference = tempo2.getTime() - tempo1.getTime();    
-                    
+                    var tempo2 = new Date();
+                    var timeDifference = tempo2.getTime() - tempo1.getTime();
+
                     var restantes = possibilidades - contagem;
                     restantes = restantes * timeDifference / contagem;
                     //console.log(timeDifference, new Date(restantes).getMinutes());
                     var dd = new Date(restantes);
-                    await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" +dd.getSeconds() +'"');
-        
+                    await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" + dd.getSeconds() + '"');
+
                     //await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades + ". Tempo restante: " + dd.getMinutes() + ":" +dd.getSeconds() }, { upsert: true });
 
                     for (var vv2_2 of estrategias[1].vs2) {
@@ -623,8 +623,8 @@ async function iniciar(nome_acao, solicitacao) {
                                                         const estrategia = crosser(petr4, estrategias, sto, solicitacao.tipo_cruzamento);
                                                         console.log((estrategia.Resultado) / (estrategia.Dias) > maior, estrategia.Dias > 5, estrategia.Operacoes.length > quant_operacoes, estrategia.quant_stops < quant_stop, estrategia.quant_perdas < quant_perdas, estrategia.quant_vitorias > quant_acertos, estrategia.quant_perdas, quant_perdas, estrategia.quant_vitorias, quant_acertos);
 
-                                                        if ((estrategia.Resultado) / (estrategia.Dias) > maior && 
-                                                            estrategia.Dias > 5 && 
+                                                        if ((estrategia.Resultado) / (estrategia.Dias) > maior &&
+                                                            estrategia.Dias > 5 &&
                                                             estrategia.Operacoes.length > quant_operacoes && estrategia.quant_stops < quant_stop && estrategia.quant_perdas < quant_perdas && estrategia.quant_vitorias > quant_acertos) {
 
                                                             maior = (estrategia.Resultado) / (estrategia.Dias);
@@ -634,7 +634,7 @@ async function iniciar(nome_acao, solicitacao) {
                                                         }
                                                         contagem++;
                                                         id++;
-                                                    }else{
+                                                    } else {
                                                         //console.log('não entrou 1')
                                                     }
 
@@ -1002,8 +1002,8 @@ async function grafico(estra, id, solicitacao) {
     //console.log('Resultado: ' + resultadoG + " STOP:" + stop + " Curta:" + estrategia_crosser.v1 + " Longa:" + estrategia_crosser.v2 + " Compra:" + estrategia_compra.v1 + " Venda:" + estrategia_venda.v1);
     var rrr = JSON.stringify({ resultado: sol_temp, grafico: config, segundo_grafico: config_segundo_grafico });
     console.log(rrr);
-    await sqlite.run("insert into retorno values (null, '"+rrr+"', 'S')")         
-    
+    await sqlite.run("insert into retorno values (null, '" + rrr + "', 'S')")
+
     //emitir('resultado', { descricao: solicitacao, url: link + "/?id=" + id })
 
 }
