@@ -139,7 +139,7 @@ io.sockets.on('connection', (socket) => {
         var docs = await sqlite.all('select * from grafico where id ='+id);
         
         for (var x in docs) {
-            var d = JSON.parse(docs[x])
+            var d = JSON.parse(docs[x].campo)
             io.emit('grafico', { grafico: docs[x].grafico, segundo_grafico: docs[x].segundo_grafico });
         }
         if (docs.length > 0) console.log('Carregou graficos: ' + docs.length);
