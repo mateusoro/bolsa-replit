@@ -41,6 +41,9 @@ async function rodar_requisicoes(){
         //console.log('Rodando Servico');
         if (docs.length > 0){
              console.log('Carregou requisições: ' + docs.length);
+        }else{
+
+            
         }
     } catch (e) {
         console.log(e);
