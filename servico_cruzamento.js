@@ -572,10 +572,7 @@ async function iniciar(nome_acao, solicitacao) {
                 parar = true;
             }
         }
-        //console.log(docs);
-        for (var x in docs) {
-            parar = true;
-        }
+        
         if (!parar) {
             for (var vv1_2 of estrategias[0].vs2) {
 
