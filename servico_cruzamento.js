@@ -431,7 +431,6 @@ function crosser(acao, estrategias, stop, tipo) {
 
             }
 
-
             //Compra
             if (sinal_compra == "Comprar" && preco_compra == 0) {
                 preco_compra = acao.close[a];
