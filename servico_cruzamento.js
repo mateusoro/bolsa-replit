@@ -31,7 +31,8 @@ setInterval(async () => {
 
         var docs = await sqlite.all('select * from requisicao where ativo = "S"');
         for (var x in docs) {
-            //console.log(docs[x]);   
+            //console.log(docs[x]); 
+            await sqlite.run('update parar set campo = "N"');  
             await sqlite.run('delete from requisicao where id='+docs[x].id);            
             await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
