@@ -7,10 +7,10 @@ var moment = require('moment');
     await sqlite.run('delete from status')
     await sqlite.run('insert into status values (null, "Início", "S")')
     //var docs = await sqlite.all('select * from status')
-    console.log(docs);
+    //console.log(docs);
   
   })()
-  
+
 var db = {};
 db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
 db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
