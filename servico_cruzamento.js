@@ -422,6 +422,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             quant_compra++;
                         }
                     }
+                    console.log('quant_venda > quant_compra',quant_venda, quant_compra,est.tipo)
 
                 }
                 if (quant_venda > quant_compra) {
