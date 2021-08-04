@@ -430,7 +430,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     sinal_compra = "Comprar";
                     sinal_venda = "Comprar";
                 }
-                console.log('quant_venda > quant_compra',quant_venda > quant_compra)
+                console.log('quant_venda > quant_compra',quant_venda, quant_compra)
 
             }
 
