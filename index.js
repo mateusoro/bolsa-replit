@@ -140,7 +140,7 @@ io.sockets.on('connection', (socket) => {
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
-            d.id =docs[x].id;
+            d.requisicao
             io.emit('predefinidos',d);
         }
         await sqlite.run('update parar set campo = "N"');       
