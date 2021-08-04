@@ -678,64 +678,72 @@ async function iniciar(nome_acao, solicitacao) {
                                                         for (var vv6_1 of estrategias[5].vs1) {
 
                                                             for (var vv6_2 of estrategias[5].vs2) {
-        
+
                                                                 var longa_maior6 = await escolher_estrategia_tipo(petr4, estrategias, 5, vv6_1, vv6_2, longa_maior5);
 
                                                                 for (var vv6_1 of estrategias[5].vs1) {
 
                                                                     for (var vv6_2 of estrategias[5].vs2) {
-                
+
                                                                         var longa_maior6 = await escolher_estrategia_tipo(petr4, estrategias, 5, vv6_1, vv6_2, longa_maior5);
 
                                                                         for (var vv6_1 of estrategias[5].vs1) {
 
                                                                             for (var vv6_2 of estrategias[5].vs2) {
-                        
+
                                                                                 var longa_maior6 = await escolher_estrategia_tipo(petr4, estrategias, 5, vv6_1, vv6_2, longa_maior5);
 
                                                                                 for (var vv6_1 of estrategias[5].vs1) {
 
                                                                                     for (var vv6_2 of estrategias[5].vs2) {
-                                
+
                                                                                         var longa_maior6 = await escolher_estrategia_tipo(petr4, estrategias, 5, vv6_1, vv6_2, longa_maior5);
-                                
 
-                                                        for (var vv_stop of variavel_stop) {
 
-                                                            var sto = vv_stop * 1;
+                                                                                        for (var vv_stop of variavel_stop) {
 
-                                                            if (longa_maior6) {
+                                                                                            var sto = vv_stop * 1;
 
-                                                                //console.log('entrou 1')
-                                                                const estrategia = crosser(petr4, estrategias, sto, solicitacao.tipo_cruzamento);
-                                                                //console.log((estrategia.Resultado) / (estrategia.Dias) > maior, estrategia.Dias > 5, estrategia.Operacoes.length > quant_operacoes, estrategia.quant_stops < quant_stop, estrategia.quant_perdas < quant_perdas, estrategia.quant_vitorias > quant_acertos, estrategia.quant_perdas, quant_perdas, estrategia.quant_vitorias, quant_acertos);
+                                                                                            if (longa_maior6) {
 
-                                                                if ((estrategia.Resultado) / (estrategia.Dias) > maior &&
-                                                                    estrategia.Dias > 5 &&
-                                                                    estrategia.Operacoes.length > quant_operacoes &&
-                                                                    estrategia.quant_stops < quant_stop &&
-                                                                    estrategia.quant_perdas < quant_perdas &&
-                                                                    estrategia.quant_vitorias > quant_acertos) {
+                                                                                                //console.log('entrou 1')
+                                                                                                const estrategia = crosser(petr4, estrategias, sto, solicitacao.tipo_cruzamento);
+                                                                                                //console.log((estrategia.Resultado) / (estrategia.Dias) > maior, estrategia.Dias > 5, estrategia.Operacoes.length > quant_operacoes, estrategia.quant_stops < quant_stop, estrategia.quant_perdas < quant_perdas, estrategia.quant_vitorias > quant_acertos, estrategia.quant_perdas, quant_perdas, estrategia.quant_vitorias, quant_acertos);
 
-                                                                    maior = (estrategia.Resultado) / (estrategia.Dias);
-                                                                    estrategia.id = id;
-                                                                    melhor = JSON.parse(JSON.stringify(estrategia));
+                                                                                                if ((estrategia.Resultado) / (estrategia.Dias) > maior &&
+                                                                                                    estrategia.Dias > 5 &&
+                                                                                                    estrategia.Operacoes.length > quant_operacoes &&
+                                                                                                    estrategia.quant_stops < quant_stop &&
+                                                                                                    estrategia.quant_perdas < quant_perdas &&
+                                                                                                    estrategia.quant_vitorias > quant_acertos) {
 
+                                                                                                    maior = (estrategia.Resultado) / (estrategia.Dias);
+                                                                                                    estrategia.id = id;
+                                                                                                    melhor = JSON.parse(JSON.stringify(estrategia));
+
+                                                                                                }
+                                                                                                contagem++;
+                                                                                                id++;
+                                                                                            } else {
+                                                                                                //console.log('não entrou 1')
+                                                                                            }
+
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                    }
                                                                 }
-                                                                contagem++;
-                                                                id++;
-                                                            } else {
-                                                                //console.log('não entrou 1')
                                                             }
-
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-
                                     }
-                                }}}}}}}}}
+                                }
                             }
                         }
                     }
