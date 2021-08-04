@@ -136,7 +136,8 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_predefinidos', async (msg) => {
 
-        
+        await sqlite.run('update parar set campo = "N"');       
+        await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
 
 
     });
