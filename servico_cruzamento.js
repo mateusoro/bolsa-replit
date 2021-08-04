@@ -20,7 +20,7 @@ var shell = require('shelljs');
 
 //shell.exec('rclone sync /home/coder/busca/servico_cruzamento.js  rclone:/busca/ -vv');
 
-async function rodar_requisicoes(){
+async function rodar_requisicoes() {
     try {
 
         var docs = await sqlite.all('select * from requisicao where ativo = "S" limit  1');
@@ -32,9 +32,9 @@ async function rodar_requisicoes(){
 
         }
         //console.log('Rodando Servico');
-        if (docs.length > 0){
-             console.log('Carregou requisições: ' + docs.length);
-        }else{
+        if (docs.length > 0) {
+            console.log('Carregou requisições: ' + docs.length);
+        } else {
 
             setTimeout(() => {
                 rodar_requisicoes();
@@ -393,7 +393,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
             }
             if (tipo == 'maior') { // apenas um sinal precisa ser comprar
-               
+
                 var sinal_ou_compra = '';
                 var quant_compra = 0;
                 var sinal_ou_venda = '';
@@ -402,124 +402,124 @@ function crosser(acao, estrategias, stop, tipo) {
                 for (var e in estrategias) {
                     var est = estrategias[e];
 
-                  
-                        if (est.sinal[a] != 'Vender') {
-                            sinal_venda = '';
-                        };
-                        if (est.sinal[a] != 'Comprar') {
-                            sinal_compra = '';
-                        };
-                    
-                    
-                }
 
-                
-                if (sinal_compra == 'Comprar')//se crosser vier comprado
-                    if (quant_compra > 0) //se tiver estrategia de compra
-                        if (sinal_ou_compra != 'Comprar') {// se a estrategia de compra não tiver nenhum sinal de compra
-                            sinal_compra = '';
-                        }
-                if (sinal_venda == 'Vender')//se crosser vier comprado
-                    if (quant_venda > 0) //se tiver estrategia de compra
-                        if (sinal_ou_venda != 'Vender') {// se a estrategia de compra não tiver nenhum sinal de compra
-                            sinal_venda = '';
-                        }
-            }
-
-
-
-            //Compra
-            if (sinal_compra == "Comprar" && preco_compra == 0) {
-                preco_compra = acao.close[a];
-                posicao_compra = a;
-                //console.log("Comprou", sinal_compra)
-            }
-
-
-            var ultrapassou_stop = false;
-            var resultado = 0;
-            //Calcula se ultrapassou limite do stop
-            if (preco_compra > 0) {
-
-                resultado = (acao.close[a] - preco_compra) / preco_compra * 100;
-                resultado = resultado * 1;
-                if (resultado < stop) {
-                    ultrapassou_stop = true;
-                    quant_stops++;
-                    resultado = stop * 1;
+                    if (est.sinal[a] != 'Vender') {
+                        sinal_venda = '';
+                    };
+                    if (est.sinal[a] != 'Comprar') {
+                        sinal_compra = '';
+                    };
                 }
 
             }
 
+
+            if (sinal_compra == 'Comprar')//se crosser vier comprado
+                if (quant_compra > 0) //se tiver estrategia de compra
+                    if (sinal_ou_compra != 'Comprar') {// se a estrategia de compra não tiver nenhum sinal de compra
+                        sinal_compra = '';
+                    }
+            if (sinal_venda == 'Vender')//se crosser vier comprado
+                if (quant_venda > 0) //se tiver estrategia de compra
+                    if (sinal_ou_venda != 'Vender') {// se a estrategia de compra não tiver nenhum sinal de compra
+                        sinal_venda = '';
+                    }
+        }
+
+
+
+        //Compra
+        if (sinal_compra == "Comprar" && preco_compra == 0) {
+            preco_compra = acao.close[a];
+            posicao_compra = a;
+            //console.log("Comprou", sinal_compra)
+        }
+
+
+        var ultrapassou_stop = false;
+        var resultado = 0;
+        //Calcula se ultrapassou limite do stop
+        if (preco_compra > 0) {
+
+            resultado = (acao.close[a] - preco_compra) / preco_compra * 100;
             resultado = resultado * 1;
-            //Venda
-            if (ultrapassou_stop || (sinal_venda == "Vender" && preco_compra > 0)) {
-
-                if (resultado < 0) {
-                    quant_perdas++;
-                }
-                if (resultado > 0) {
-                    quant_vitorias++;
-                }
-
-                total += resultado;
-
-                var date1 = new Date(acao.data[posicao_compra]);
-                var date2 = new Date(acao.data[a]);
-                var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24));
-                dias_comprados += diffDays;
-
-                var operacao = {
-                    "Nome": acao.nome,
-                    "Compra": preco_compra,
-                    "Venda": acao.close[a],
-                    "d_compra": acao.data[posicao_compra],
-                    "d_venda": acao.data[a],
-                    "p_compra": posicao_compra,
-                    "p_venda": a,
-                    "dias": diffDays,
-                    "stop": stop,
-                    "ultrapassou_stop": ultrapassou_stop,
-                    "d_inicial": acao.data[0],
-                    "d_final": acao.data[acao.data.length - 1],
-                    "Resultado": resultado,
-                    "ResultadoDia": resultado / diffDays
-                }
-                //console.log("Vendido: ", operacao);
-
-                operacoes.push(operacao);
-                preco_compra = 0;
+            if (resultado < stop) {
+                ultrapassou_stop = true;
+                quant_stops++;
+                resultado = stop * 1;
             }
+
         }
 
-    }
-    if (preco_compra > 0) {
+        resultado = resultado * 1;
+        //Venda
+        if (ultrapassou_stop || (sinal_venda == "Vender" && preco_compra > 0)) {
 
-        var operacao = {
-            "Nome": acao.nome,
-            "Compra": preco_compra,
-            "d_compra": acao.data[posicao_compra],
-            "p_compra": posicao_compra,
-            "d_inicial": acao.data[0],
-            "d_final": acao.data[acao.data.length - 1]
+            if (resultado < 0) {
+                quant_perdas++;
+            }
+            if (resultado > 0) {
+                quant_vitorias++;
+            }
+
+            total += resultado;
+
+            var date1 = new Date(acao.data[posicao_compra]);
+            var date2 = new Date(acao.data[a]);
+            var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24));
+            dias_comprados += diffDays;
+
+            var operacao = {
+                "Nome": acao.nome,
+                "Compra": preco_compra,
+                "Venda": acao.close[a],
+                "d_compra": acao.data[posicao_compra],
+                "d_venda": acao.data[a],
+                "p_compra": posicao_compra,
+                "p_venda": a,
+                "dias": diffDays,
+                "stop": stop,
+                "ultrapassou_stop": ultrapassou_stop,
+                "d_inicial": acao.data[0],
+                "d_final": acao.data[acao.data.length - 1],
+                "Resultado": resultado,
+                "ResultadoDia": resultado / diffDays
+            }
+            //console.log("Vendido: ", operacao);
+
+            operacoes.push(operacao);
+            preco_compra = 0;
         }
-        operacoes.push(operacao);
-
     }
 
-    const estrategia = {
-        "Acao": acao,
-        "estrategias": estrategias,
-        "Operacoes": operacoes,
-        "Resultado": total,
-        "quant_stops": quant_stops,
-        "quant_perdas": quant_perdas,
-        "quant_vitorias": quant_vitorias,
-        "stop": stop,
-        "Dias": dias_comprados,
-        "ResultadoDia": total / dias_comprados
+}
+if (preco_compra > 0) {
+
+    var operacao = {
+        "Nome": acao.nome,
+        "Compra": preco_compra,
+        "d_compra": acao.data[posicao_compra],
+        "p_compra": posicao_compra,
+        "d_inicial": acao.data[0],
+        "d_final": acao.data[acao.data.length - 1]
     }
-    return estrategia;
+    operacoes.push(operacao);
+
+}
+
+const estrategia = {
+    "Acao": acao,
+    "estrategias": estrategias,
+    "Operacoes": operacoes,
+    "Resultado": total,
+    "quant_stops": quant_stops,
+    "quant_perdas": quant_perdas,
+    "quant_vitorias": quant_vitorias,
+    "stop": stop,
+    "Dias": dias_comprados,
+    "ResultadoDia": total / dias_comprados
+}
+return estrategia;
 
 }
 
