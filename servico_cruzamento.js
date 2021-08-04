@@ -392,6 +392,56 @@ function crosser(acao, estrategias, stop, tipo) {
                             sinal_venda = '';
                         }
             }
+            if (tipo == 'ou') { // apenas um sinal precisa ser comprar
+
+                sinal_compra = 'Comprar';
+                sinal_venda = 'Vender';
+                var sinal_ou_compra = '';
+                var quant_compra = 0;
+                var sinal_ou_venda = '';
+                var quant_venda = 0;
+
+                for (var e in estrategias) {
+                    var est = estrategias[e];
+
+                    if (est.tipo == 'Crosser') {
+                        if (est.sinal[a] != 'Vender') {
+                            sinal_venda = '';
+                        };
+                        if (est.sinal[a] != 'Comprar') {
+                            sinal_compra = '';
+                        };
+                    }
+                }
+
+                for (var e in estrategias) {
+                    var est = estrategias[e];
+                    if (est.tipo == 'Compra') {
+                        quant_compra++;
+                        if (est.sinal[a] == 'Comprar') {
+                            sinal_ou_compra = 'Comprar';
+                        };
+                    }
+
+                    if (est.tipo == 'Venda') {
+                        quant_venda++;
+                        if (est.sinal[a] == 'Vender') {
+                            sinal_ou_venda = 'Vender';
+                        };
+                    }
+                }
+                if (sinal_compra == 'Comprar')//se crosser vier comprado
+                    if (quant_compra > 0) //se tiver estrategia de compra
+                        if (sinal_ou_compra != 'Comprar') {// se a estrategia de compra não tiver nenhum sinal de compra
+                            sinal_compra = '';
+                        }
+                if (sinal_venda == 'Vender')//se crosser vier comprado
+                    if (quant_venda > 0) //se tiver estrategia de compra
+                        if (sinal_ou_venda != 'Vender') {// se a estrategia de compra não tiver nenhum sinal de compra
+                            sinal_venda = '';
+                        }
+            }
+
 
 
             //Compra
