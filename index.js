@@ -12,7 +12,7 @@ const sqlite = require("aa-sqlite");
 
 (async () => {
   console.log(await sqlite.open('sqlite.db'))
-  await sqlite.run('select * from status')
+  await sqlite.run('delete from status')
   //var docs = await sqlite.all('select * from status')
   console.log(docs);
 
