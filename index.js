@@ -197,6 +197,10 @@ app.get('/predefinidos', function (req, res) {
     //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
     res.sendFile( '/home/mateusoro/bolsa-replit/paginas/predefinidos.html');
 });
+app.get('/predefinidos', function (req, res) {
+    //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
+    res.sendFile( '/home/mateusoro/bolsa-replit/paginas/predefinidos.html');
+});
 app.get('/', function (req, res) {
     //res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
     res.sendFile('/home/mateusoro/bolsa-replit/paginas/index.html');
