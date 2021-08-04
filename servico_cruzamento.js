@@ -16,13 +16,6 @@ const sqlite = require("aa-sqlite");
 
 })()
 
-var db = {};
-//db.requisicao = new Datastore({ filename: 'requisicoes/requisicao2.json', autoload: true });
-//db.retorno = new Datastore({ filename: 'requisicoes/retorno2.json', autoload: true });
-//db.grafico = new Datastore({ filename: 'requisicoes/grafico2.json', autoload: true });
-//db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo2.json', autoload: true });
-//db.status = new Datastore({ filename: 'requisicoes/status2.json', autoload: true });
-//db.parar = new Datastore({ filename: 'requisicoes/parar2.json', autoload: true });
 var shell = require('shelljs');
 
 //shell.exec('rclone sync /home/coder/busca/servico_cruzamento.js  rclone:/busca/ -vv');
