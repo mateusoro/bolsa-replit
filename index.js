@@ -114,6 +114,10 @@ io.sockets.on('connection', (socket) => {
 
         // console.log('carregar_predefinidos');
         //iniciar_cruzamente(msg);
+        var docs = await sqlite.all('select * from grafico where id ='+id);
+        
+        for (var x in docs) {
+            var d = JSON.parse(docs[x].campo);
         var docs = await db.predefinido.find({});
 
         for (var x in docs) {
