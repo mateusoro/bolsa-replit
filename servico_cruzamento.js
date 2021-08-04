@@ -29,7 +29,7 @@ var shell = require('shelljs');
 setInterval(async () => {
     try {
 
-        var docs = await sqlite.all('select * from parar');
+        var docs = await sqlite.all('select * from requisicao');
 
         for (var x in docs) {
             //console.log(docs[x]);
