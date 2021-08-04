@@ -403,10 +403,10 @@ function crosser(acao, estrategias, stop, tipo) {
                     var est = estrategias[e];
                     if (est.sinal[a] == 'Vender') {
                         sinal_venda = '';
-                    };
+                    }
                     if (est.sinal[a] == 'Comprar') {
                         sinal_compra = '';
-                    };
+                    }
                 }
 
             }
