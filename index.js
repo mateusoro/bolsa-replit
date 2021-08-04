@@ -130,16 +130,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_predefinidos', async (msg) => {
 
-        console.log('rodar_predefinidos');
-        await sqlite.run('update parar set campo = "N"');
-        db.predefinido.loadDatabase();
-        var docs = await db.predefinido.find({ _id: msg });
-
-        for (var x in docs) {
-            //console.log({ grafico: docs[x].grafico, segundo_grafico: docs[x].segundo_grafico })
-            db.requisicao.insert(docs[x].requisicao);
-        }
-        if (docs.length > 0) console.log('Rodando Predefinido: ' + docs.length);
+        
 
 
     });
