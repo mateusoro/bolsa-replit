@@ -33,7 +33,7 @@ setInterval(async () => {
 
         for (var x in docs) {
             //console.log(docs[x]);   
-            await sqlite.run('delete rom requisicao');         
+            await sqlite.run('delete from requisicao');         
             await db.requisicao.remove({ _id: docs[x]._id });
             await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
