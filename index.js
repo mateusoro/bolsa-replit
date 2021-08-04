@@ -122,7 +122,7 @@ io.sockets.on('connection', (socket) => {
         var docs = await db.predefinido.find({});
 
         for (var x in docs) {
-            io.emit('predefinidos', docs[x]);
+            
         }
         if (docs.length > 0) console.log('Carregou predefinidos: ' + docs.length);
 
