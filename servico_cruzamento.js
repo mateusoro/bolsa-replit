@@ -409,7 +409,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
                 }
                 if(quant_venda>quant_compra){
-                    sinal_compra
+                    sinal_compra = ""
                 }
 
             }
