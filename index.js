@@ -92,7 +92,7 @@ io.sockets.on('connection', (socket) => {
         //iniciar_cruzamente(msg);
         await sqlite.run('update parar set campo = "N"');
         var t = JSON.stringify(msg);
-        console.log("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')");
+        console.log("insert into requisicao values (null, '"+t+"', 'S')");
         await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
         
 
