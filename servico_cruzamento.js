@@ -408,7 +408,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         quant_compra++;
                     }
                 }
-                if(qu)_
+                if(quant_venda>)_
 
             }
 
