@@ -33,7 +33,7 @@ setInterval(async () => {
         for (var x in docs) {
             //console.log(docs[x]); 
             await sqlite.run('update requisicao set ativo = "N" where id=' + docs[x].id);
-            console.log(JSON.parse(docs[x].campo))
+            console.log(JSON.parse(docs[x].campo));
             await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
         }
