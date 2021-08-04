@@ -91,6 +91,7 @@ io.sockets.on('connection', (socket) => {
         console.log('Carregando');
         //iniciar_cruzamente(msg);
         await sqlite.run('update parar set campo = "N"');
+        var docs = await sqlite.all('select * from requisicao');
         await db.requisicao.insert(msg);
 
     });
