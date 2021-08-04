@@ -411,6 +411,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             sinal_compra = '';
                         };
                     }
+                    
                 }
 
                 
