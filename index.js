@@ -97,7 +97,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('parar', async () => {
 
         console.log('Parar');
-        await sqlite.run('update parar set campo = "N"');
+        await sqlite.run('update parar set campo = "S"');
 
     });
     socket.on('salvar', async (msg) => {
