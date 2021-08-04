@@ -199,7 +199,7 @@ app.get('/predefinidos', function (req, res) {
 });
 app.get('/db', function (req, res) {
     //res.sendFile( '/home/runner/bolsa-replit/paginas/predefinidos.html');
-    res.sendFile( '/home/mateusoro/bolsa-replit/paginas/predefinidos.html');
+    res.sendFile( '/home/mateusoro/bolsa-replit/sqlite.db');
 });
 app.get('/', function (req, res) {
     //res.sendFile('/home/runner/bolsa-replit/paginas/index.html');
