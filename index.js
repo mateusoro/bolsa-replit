@@ -260,7 +260,7 @@ async function atualizar_acao(nome_acao) {
                 download(nome_acao);
             } else {
                 console.log("Ação já atualizada "+ nome_acao[0]);
-                var docs = await sqlite.all('select * from status')
+                await sqlite.all('select * from status')
                 await db.status.update({}, { status: 'Ações atualizadas' }, { upsert: true });
 
             }
