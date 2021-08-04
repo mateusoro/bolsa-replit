@@ -708,7 +708,7 @@ async function iniciar(nome_acao, solicitacao) {
                                                 }
                                             }
                                         }
-                                    }
+                                    
                                 }
                             }
                         }
