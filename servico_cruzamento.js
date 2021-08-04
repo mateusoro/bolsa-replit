@@ -1021,7 +1021,7 @@ async function grafico(estra, id, solicitacao) {
     //emitir('resultado', { descricao: solicitacao, url: link + "/?id=" + id })
 
 }
-
+rodar_requisicoes();
 console.log("Rodando Serviço");
 
 
