@@ -430,10 +430,9 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
 
                     if (est.tipo == 'Venda') {
-                        quant_venda++;
                         if (est.sinal[a] == 'Vender') {
-                            sinal_ou_venda = 'Vender';
-                        };
+                            quant_venda++;
+                        }
                     }
                 }
                 
