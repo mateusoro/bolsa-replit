@@ -404,7 +404,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         sinal_venda = '';
                     }
 
-                    
+
             if (tipo == 'maior') { // apenas um sinal precisa ser comprar
 
                 var sinal_ou_compra = '';
@@ -431,7 +431,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     sinal_compra = "Comprar";
                     sinal_venda = "Comprar";
                 }
-                console.log('quant_venda > quant_compra',quant_venda, quant_compra)
+                console.log('quant_venda > quant_compra',quant_venda, quant_compra,est.tipo)
 
             }
 
