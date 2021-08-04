@@ -422,8 +422,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
                         }
-                    }
-                   
+                    }      
 
                 }
                 if (quant_venda > quant_compra) {
