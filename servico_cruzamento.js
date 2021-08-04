@@ -413,22 +413,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
                 }
 
-                for (var e in estrategias) {
-                    var est = estrategias[e];
-                    if (est.tipo == 'Compra') {
-                        quant_compra++;
-                        if (est.sinal[a] == 'Comprar') {
-                            sinal_ou_compra = 'Comprar';
-                        };
-                    }
-
-                    if (est.tipo == 'Venda') {
-                        quant_venda++;
-                        if (est.sinal[a] == 'Vender') {
-                            sinal_ou_venda = 'Vender';
-                        };
-                    }
-                }
+                
                 if (sinal_compra == 'Comprar')//se crosser vier comprado
                     if (quant_compra > 0) //se tiver estrategia de compra
                         if (sinal_ou_compra != 'Comprar') {// se a estrategia de compra não tiver nenhum sinal de compra
