@@ -569,7 +569,7 @@ async function iniciar(nome_acao, solicitacao) {
 
         var docs = await sqlite.all('select * from parar');
         var parar = false;
-        if (docs) {
+        if (docs[0]) {
             if (docs[0].campo == "S") {
                 parar = true;
             }
