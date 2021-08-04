@@ -44,6 +44,7 @@ async function rodar_requisicoes(){
         }else{
 
             
+
         }
     } catch (e) {
         console.log(e);
