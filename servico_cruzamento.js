@@ -408,6 +408,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         quant_compra++;
                     }
                 }
+                
 
             }
 
