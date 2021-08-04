@@ -15,7 +15,7 @@ const sqlite = require("aa-sqlite");
   await sqlite.run('delete from status')
   await sqlite.run('insert into status values (null, "Início", "S")')
   await sqlite.run('delete from parar')a
-  wait sqlite.run('insert into parar values (null, "N", "S")')
+  await sqlite.run('insert into parar values (null, "N", "S")')
 
 })()
 
