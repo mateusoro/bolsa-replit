@@ -118,7 +118,7 @@ io.sockets.on('connection', (socket) => {
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
-            io.emit('predefinidos', docs[x]);
+            io.emit('predefinidos',d);
         }
         var docs = await db.predefinido.find({});
 
