@@ -548,7 +548,7 @@ async function iniciar(nome_acao, solicitacao) {
 
         process.stdout.write(contagem + ' ');
         await sqlite.run('update status set campo = "Calculando ' + nome_acao[0] + ': ' + contagem + '/' + possibilidades +'"');
-        await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades }, { upsert: true });
+        //await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades }, { upsert: true });
 
 
         db.parar.loadDatabase();
