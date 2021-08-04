@@ -41,15 +41,7 @@ if(rrr.stdout.split(' ').length>4){
 
 setInterval(async () => {
     try {
-
-        var docs = await sqlite.all('select * from requisicao where ativo = "S"');
-        for (var x in docs) {
-            //console.log(docs[x]); 
-            await sqlite.run('update requisicao set ativo = "N" where id='+docs[x].id);               
-            await iniciar_cruzamente(JSON.parse(docs[x].campo));
-
-        }
-
+       
         var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
             //console.log('Emitindo', x)
