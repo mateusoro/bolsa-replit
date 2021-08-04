@@ -131,7 +131,7 @@ io.sockets.on('connection', (socket) => {
 
         console.log('remover_predefinidos');
         //iniciar_cruzamente(msg);
-        await sqlite.run('update predefinido set ativo = "N" where id='+msg.id);     
+        await sqlite.run('update predefinido set ativo = "N" where id='+msg);     
 
     });
     socket.on('rodar_predefinidos', async (msg) => {
