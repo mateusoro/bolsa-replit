@@ -2,6 +2,15 @@ var tulind = require('tulind');
 const { load } = require('csv-load-sync');
 var Datastore = require('nedb-promise');
 var moment = require('moment');
+(async () => {
+    console.log(await sqlite.open('sqlite.db'))
+    await sqlite.run('delete from status')
+    await sqlite.run('insert into status values (null, "Início", "S")')
+    //var docs = await sqlite.all('select * from status')
+    console.log(docs);
+  
+  })()
+  
 var db = {};
 db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
 db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
