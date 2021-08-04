@@ -27,7 +27,7 @@ var shell = require('shelljs');
 
 //shell.exec('rclone sync /home/coder/busca/servico_cruzamento.js  rclone:/busca/ -vv');
 
-setInterval(async () => {
+rodar
     try {
 
         var docs = await sqlite.all('select * from requisicao where ativo = "S"');
