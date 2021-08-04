@@ -412,10 +412,10 @@ function crosser(acao, estrategias, stop, tipo) {
                 var sinal_ou_venda = '';
                 var quant_venda = 0;
 
-               
-                    for (var e in estrategias) {
-                        var est = estrategias[e];
-                        if (est.tipo) {
+
+                for (var e in estrategias) {
+                    var est = estrategias[e];
+                    if (est.tipo) {
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
                         }
@@ -423,7 +423,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             quant_compra++;
                         }
                     }
-                    console.log('quant_venda > quant_compra',quant_venda, quant_compra,est.tipo)
+                    console.log('quant_venda > quant_compra', quant_venda, quant_compra, est.tipo)
 
                 }
                 if (quant_venda > quant_compra) {
@@ -434,7 +434,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     sinal_compra = "Comprar";
                     sinal_venda = "Comprar";
                 }
-                
+
 
             }
 
