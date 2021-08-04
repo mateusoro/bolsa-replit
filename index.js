@@ -21,7 +21,7 @@ const sqlite = require("aa-sqlite");
 
 var Datastore = require('nedb-promise');
 var db = {};
-db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
+d//b.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
 db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
 db.grafico = new Datastore({ filename: 'requisicoes/grafico.json', autoload: true });
 db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
