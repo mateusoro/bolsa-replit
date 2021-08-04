@@ -30,7 +30,6 @@ setInterval(async () => {
     try {
 
         var docs = await sqlite.all('select * from requisicao');
-
         for (var x in docs) {
             //console.log(docs[x]);   
             await sqlite.run('delete from requisicao where id='+docs[x].id);            
