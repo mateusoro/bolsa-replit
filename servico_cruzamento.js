@@ -29,8 +29,7 @@ var shell = require('shelljs');
 setInterval(async () => {
     try {
 
-        db.requisicao.loadDatabase();
-        var docs = await db.requisicao.find({});
+        var docs = await sqlite.all('select * from parar');
 
         for (var x in docs) {
             //console.log(docs[x]);
