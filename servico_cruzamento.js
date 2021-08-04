@@ -657,7 +657,7 @@ async function iniciar(nome_acao, solicitacao) {
 
     }
 
-    console.log(melhor)
+    //console.log(melhor)
     if (melhor) {
         console.log(melhor.Resultado);
         var m = JSON.parse(JSON.stringify(melhor));
