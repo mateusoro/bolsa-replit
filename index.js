@@ -61,7 +61,7 @@ setInterval(async () => {
             emitir([{ destino: 'status', mensagem: docs[0].campo }]);
         }
     } catch (e) {
-        console.log('Erro'e);        
+        console.log('Erro', e);        
     }
 
 
