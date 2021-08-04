@@ -45,7 +45,7 @@ async function rodar_requisicoes(){
 
             setTimeout(() => {
                 
-            }, timeout);
+            }, 1000);
 
         }
     } catch (e) {
