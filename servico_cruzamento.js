@@ -44,7 +44,7 @@ async function rodar_requisicoes(){
         }else{
 
             setTimeout(() => {
-                
+                rodar_requisicoes()
             }, 1000);
 
         }
