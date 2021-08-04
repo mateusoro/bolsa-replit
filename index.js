@@ -121,7 +121,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_todos', async () => {
 
-        var docs = await sqlite.all('select * from predefinido where id='+msg);
+        var docs = await sqlite.all('select * from predefinido');
         await sqlite.run('update parar set campo = "N"');       
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);            
