@@ -29,7 +29,7 @@ var shell = require('shelljs');
 setInterval(async () => {
     try {
 
-        var docs = await sqlite.all('select * from requisicao');
+        var docs = await sqlite.all('select * from requisicao where ativo = ""');
         for (var x in docs) {
             //console.log(docs[x]);   
             await sqlite.run('delete from requisicao where id='+docs[x].id);            
