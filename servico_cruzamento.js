@@ -494,6 +494,7 @@ async function iniciar_cruzamente(msg) {
         await iniciar(nome_acao, solicitacao);
 
     }
+    await sqlite.run('update status set campo = "Ações atualizadas"');
     await db.status.update({}, { status: 'Fim' }, { upsert: true });
     console.log('Fim');
 
