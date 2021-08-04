@@ -9,7 +9,7 @@ db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autol
   var docs = await db.predefinido.find({});
 
   for (var x in docs) {
-    await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
+    await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(docs[x])+"', 'S')")
     io.emit('predefinidos', docs[x]);
   }
 
