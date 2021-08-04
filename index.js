@@ -290,7 +290,7 @@ async function download(acao) {
             file.close();
             console.log('Ação Atualizada');
             await sqlite.run('update status set campo = "Ações atualizadas"');
-            await db.status.update({}, { status: 'Ações atualizadas' }, { upsert: true });
+            //await db.status.update({}, { status: 'Ações atualizadas' }, { upsert: true });
 
         });
     }).on('error', function (err) { // Handle errors
