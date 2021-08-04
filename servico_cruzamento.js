@@ -565,7 +565,7 @@ async function iniciar(nome_acao, solicitacao) {
 
 
         
-        var docs = await sqlite.run('update parar set campo = "N"');
+        var docs = await sqlite.all('update parar set campo = "N"');
         var parar = false;
         //console.log(docs);
         for (var x in docs) {
