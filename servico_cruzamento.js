@@ -403,7 +403,33 @@ function crosser(acao, estrategias, stop, tipo) {
                     if (sinal_ou_venda != 'Vender') {// se a estrategia de compra não tiver nenhum sinal de compra
                         sinal_venda = '';
                     }
-                    
+            
+                    if (tipo == 'maior') { // apenas um sinal precisa ser comprar
+
+                        var sinal_ou_compra = '';
+                        var quant_compra = 0;
+                        var sinal_ou_venda = '';
+                        var quant_venda = 0;
+        
+                        for (var e in estrategias) {
+                            var est = estrategias[e];
+                            if (est.sinal[a] == 'Vender') {
+                                quant_venda++;
+                            }
+                            if (est.sinal[a] == 'Comprar') {
+                                quant_compra++;
+                            }
+                        }
+                        if(quant_venda>quant_compra){
+                            sinal_compra = "Vender";
+                            sinal_venda = "Vender";
+                        }
+                        if(quant_venda<quant_compra){
+                            sinal_compra = "Comprar";
+                            sinal_venda = "Comprar";
+                        }
+        
+                    }
         }
 
 
