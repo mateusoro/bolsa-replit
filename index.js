@@ -45,6 +45,7 @@ setInterval(async () => {
         var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
             //console.log('Emitindo', x)
+            
             emitir([{ destino: 'resultado', mensagem: JSON.parse(docs[x].campo) }]);
             await sqlite.run("insert into grafico values (null, '"+JSON.stringify(docs[x].campo)+"', 'S')")            
             await sqlite.run('update retorno set ativo = "N" where id='+docs[x].id);     
