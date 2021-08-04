@@ -143,11 +143,7 @@ io.sockets.on('connection', (socket) => {
             await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(d.requisicao)+"', 'S')")
            
         }
-        
-        
-
-
-    });
+        );
     socket.on('carregar_grafico', async (id) => {
         
         var docs = await sqlite.all('select * from retorno where id ='+id);
