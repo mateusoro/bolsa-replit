@@ -119,6 +119,22 @@ io.sockets.on('connection', (socket) => {
 
 
     });
+    socket.on('carregar_predefinidos', async (msg) => {
+
+        // console.log('carregar_predefinidos');
+        //iniciar_cruzamente(msg);
+        var docs = await sqlite.all('select * from predefinido where ativo = "S"');
+        
+        for (var x in docs) {
+            var d = JSON.parse(docs[x].campo);
+            d.id =docs[x].id;
+            io.emit('predefinidos',d);
+        }
+       
+        if (docs.length > 0) console.log('Carregou predefinidos: ' + docs.length);
+
+
+    });
     socket.on('remover_predefinidos', async (msg) => {
 
         console.log('remover_predefinidos');
