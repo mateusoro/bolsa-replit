@@ -52,7 +52,7 @@ setInterval(async () => {
         //db.status.loadDatabase();
         //var docs = await db.status.find({});
         var docs = await sqlite.all('select * from status')
-        if (docs.length > 0) {
+        if (docs) {
             emitir([{ destino: 'status', mensagem: docs[0].status }]);
         }
     } catch (e) {
