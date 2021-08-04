@@ -632,7 +632,7 @@ async function iniciar(nome_acao, solicitacao) {
                                                         contagem++;
                                                         id++;
                                                     }else{
-                                                        console.log('não encotrun 1')
+                                                        console.log('não entrou 1')
                                                     }
 
                                                 }
