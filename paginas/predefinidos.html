@@ -78,7 +78,7 @@
         socket.on('resultado', function (msg) {
 
             console.log(msg);
-            id = msg._id;
+            id = msg.id;
             msg.descricao = msg.resultado;
 
             var estrategias_prontas = [];
