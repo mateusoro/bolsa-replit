@@ -393,8 +393,6 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
             }
            
-
-
             if (sinal_compra == 'Comprar')//se crosser vier comprado
                 if (quant_compra > 0) //se tiver estrategia de compra
                     if (sinal_ou_compra != 'Comprar') {// se a estrategia de compra não tiver nenhum sinal de compra
