@@ -21,7 +21,7 @@ const sqlite = require("aa-sqlite");
 
 var Datastore = require('nedb-promise');
 var db = {};
-d//b.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
+db.requisicao = new Datastore({ filename: 'requisicoes/requisicao.json', autoload: true });
 db.retorno = new Datastore({ filename: 'requisicoes/retorno.json', autoload: true });
 db.grafico = new Datastore({ filename: 'requisicoes/grafico.json', autoload: true });
 db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autoload: true });
@@ -140,7 +140,7 @@ io.sockets.on('connection', (socket) => {
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
-            io.emit('grafico', { grafico: d.grafico, segundo_grafico: d.segundo_grafico });
+            io.emit('grafico', { grafico: d.grafico, segundo_grafico: docs[x].segundo_grafico });
         }
         if (docs.length > 0) console.log('Carregou graficos: ' + docs.length);
 
