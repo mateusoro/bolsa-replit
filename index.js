@@ -129,7 +129,7 @@ io.sockets.on('connection', (socket) => {
 
         console.log('remover_predefinidos');
         //iniciar_cruzamente(msg);
-        await sqlite.run('update retorno set ativo = "N" where id='+docs[x].id);     
+        await sqlite.run('update retorno set ativo = "N" where id='+msg.id);     
 
     });
     socket.on('rodar_predefinidos', async (msg) => {
