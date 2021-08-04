@@ -53,7 +53,7 @@ setInterval(async () => {
         //var docs = await db.status.find({});
         var docs = await sqlite.all('select * from status')
         if (docs) {
-            emitir([{ destino: 'status', mensagem: docs[0].status }]);
+            emitir([{ destino: 'status', mensagem: docs[0].campo }]);
         }
     } catch (e) {
         console.log(e);
