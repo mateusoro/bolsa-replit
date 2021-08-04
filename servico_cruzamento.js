@@ -604,6 +604,7 @@ async function iniciar(nome_acao, solicitacao) {
             est.vs1 = est.teste_compra.split(',');
             est.vs2 = est.teste_venda.split(',');
         }
+        
         possibilidades = possibilidades * est.vs1.length * est.vs2.length;
     }
 
