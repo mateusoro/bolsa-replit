@@ -47,7 +47,7 @@ setInterval(async () => {
             //console.log('Emitindo', x)
             var rr = JSON.parse(docs[x].campo);
             rr.id = docs[x].id;
-            emitir([{ destino: 'resultado', mensagem: JSON.parse(docs[x].campo) }]);
+            emitir([{ destino: 'resultado', mensagem: rr }]);
             await sqlite.run("insert into grafico values (null, '"+JSON.stringify(docs[x].campo)+"', 'S')")            
             await sqlite.run('update retorno set ativo = "N" where id='+docs[x].id);     
             
