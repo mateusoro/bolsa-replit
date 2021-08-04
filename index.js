@@ -107,7 +107,7 @@ io.sockets.on('connection', (socket) => {
 
         console.log('Salvando');
         //iniciar_cruzamente(msg);
-        await sqlite.run("insert into grafico values (null, '"+JSON.stringify(rr)+"', 'S')")    
+        await sqlite.run("insert into grafico values (null, '"+JSON.stringify(msg)+"', 'S')")    
         await db.predefinido.insert(msg);
 
     });
