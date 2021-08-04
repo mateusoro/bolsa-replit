@@ -422,7 +422,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
                         }
-                    }  
+                    }
                     if (est.tipo == 'Compra') {
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
@@ -435,7 +435,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
                     }
                 }
-                
+
                 if (quant_venda > quant_compra) {
                     sinal_compra = "Vender";
                     sinal_venda = "Vender";
