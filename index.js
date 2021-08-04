@@ -119,7 +119,7 @@ io.sockets.on('connection', (socket) => {
 
 
     });
-    socket.on('rodar_todos', async (msg) => {
+    socket.on('rodar_todos', async () => {
 
         // console.log('carregar_predefinidos');
         //iniciar_cruzamente(msg);
