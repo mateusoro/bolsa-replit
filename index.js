@@ -107,6 +107,7 @@ io.sockets.on('connection', (socket) => {
 
         console.log('Salvando');
         //iniciar_cruzamente(msg);
+        
         await db.predefinido.insert(msg);
 
     });
