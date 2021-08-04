@@ -32,7 +32,8 @@ setInterval(async () => {
         var docs = await sqlite.all('select * from requisicao');
 
         for (var x in docs) {
-            //console.log(docs[x]);            
+            //console.log(docs[x]);   
+            await sqlite.all('select * from requisicao');         
             await db.requisicao.remove({ _id: docs[x]._id });
             await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
