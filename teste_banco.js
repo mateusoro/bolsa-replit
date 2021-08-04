@@ -1,5 +1,4 @@
-var sqlite3 = require('sqlite3');
-var {open} = require('sqlite');
+const aaSqlite = require("aa-sqlite");
 
   (async () => {
     const db = await open({
