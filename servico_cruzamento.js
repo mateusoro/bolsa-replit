@@ -30,7 +30,7 @@ var shell = require('shelljs');
 async function rodar_requisicoes(){
     try {
 
-        var docs = await sqlite.all('select * from requisicao where ativo = "S"');
+        var docs = await sqlite.all('select * from requisicao where ativo = "S" limit  1');
         for (var x in docs) {
             //console.log(docs[x]); 
             await sqlite.run('update requisicao set ativo = "N" where id=' + docs[x].id);
