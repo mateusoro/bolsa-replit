@@ -46,7 +46,7 @@
 
             var col = $('<ul class="collection">');
             var t1 = $('<li class="collection-item"><a href="' + msg.link + '" target="_blank">' + msg.requisicao.acao + '</a></li>');
-            var t2 = $('<li class="collection-item" style="height: 45px;"><a class="waves-effect waves-light btn-small" style="margin-top: 4px !important; margin-right: 5px !important;" onclick="rodar(\'' + msg._id + '\')">Rodar</a><a class="waves-effect waves-light red btn-small" style="margin-top: 4px !important;" onclick="remove(\'' + msg._id + '\',this)">Remover</a></li>')
+            var t2 = $('<li class="collection-item" style="height: 45px;"><a class="waves-effect waves-light btn-small" style="margin-top: 4px !important; margin-right: 5px !important;" onclick="rodar(\'' + msg._id + '\')">Rodar</a><a class="waves-effect waves-light red btn-small" style="margin-top: 4px !important;" onclick="remove(\'' + msg.id + '\',this)">Remover</a></li>')
 
             col.append(t1);
 
