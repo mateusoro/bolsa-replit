@@ -67,8 +67,7 @@ setInterval(async () => {
             emitir([{ destino: 'status', mensagem: docs[0].campo }]);
         }
     } catch (e) {
-        console.log(e);
-        await db.retorno.remove({ _id: docs[x]._id })
+        console.log(e);        
     }
 
 
