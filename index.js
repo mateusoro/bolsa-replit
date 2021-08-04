@@ -136,7 +136,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_predefinidos', async (msg) => {
 
-        var docs = await sqlite.all('select * from predefinido where ativo = "S"');
+        var docs = await sqlite.all('select * from predefinido where id=');
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
