@@ -56,7 +56,7 @@ setInterval(async () => {
             emitir([{ destino: 'resultado', mensagem: JSON.parse(docs[x].campo) }]);
             await db.grafico.insert(docs[x]);
             await sqlite.run('update retorno set ativo = "N" where id='+docs[x].id);     
-            await db.retorno.remove({ _id: docs[x]._id })
+            
         }
         if (docs.length > 0) console.log('Carregou retorno: ' + docs.length);
 
