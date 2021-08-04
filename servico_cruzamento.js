@@ -567,7 +567,9 @@ async function iniciar(nome_acao, solicitacao) {
         
         var docs = await sqlite.all('select * from');
         var parar = false;
-        
+        if(docs){
+            
+        }
         //console.log(docs);
         for (var x in docs) {
             parar = true;
