@@ -415,6 +415,7 @@ function crosser(acao, estrategias, stop, tipo) {
                
                     for (var e in estrategias) {
                         var est = estrategias[e];
+                        if (est.tipo) {
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
                         }
