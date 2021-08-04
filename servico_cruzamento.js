@@ -995,7 +995,7 @@ async function grafico(estra, id, solicitacao) {
 
     //console.log('Resultado: ' + resultadoG + " STOP:" + stop + " Curta:" + estrategia_crosser.v1 + " Longa:" + estrategia_crosser.v2 + " Compra:" + estrategia_compra.v1 + " Venda:" + estrategia_venda.v1);
     
-    
+    await sqlite.run("insert into grafico values (null, '"+JSON.stringify(docs[x].campo)+"', 'S')")         
     await db.retorno.insert({ resultado: sol_temp, grafico: config, segundo_grafico: config_segundo_grafico });
     //emitir('resultado', { descricao: solicitacao, url: link + "/?id=" + id })
 
