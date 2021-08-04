@@ -708,27 +708,27 @@ async function iniciar(nome_acao, solicitacao) {
                                                 }
                                             }
                                         }
-                                    
+
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        } else {
+            console.log('Parando');
         }
-    } else {
-        console.log('Parando');
+
     }
 
-}
-
-//console.log(melhor)
-if (melhor) {
-    console.log(melhor.Resultado);
-    var m = JSON.parse(JSON.stringify(melhor));
-    grafico(m, m.id, solicitacao);
-}
-console.log("Pronto: " + id);
+    //console.log(melhor)
+    if (melhor) {
+        console.log(melhor.Resultado);
+        var m = JSON.parse(JSON.stringify(melhor));
+        grafico(m, m.id, solicitacao);
+    }
+    console.log("Pronto: " + id);
 
     //emitir('fim', "Fim: Testado " + id + " possibilidades");
 
