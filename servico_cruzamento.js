@@ -44,7 +44,7 @@ async function rodar_requisicoes(){}
     } catch (e) {
         console.log(e);
     }
-}, 1000);
+);
 
 
 function carregar_acao(acao_nome) {
