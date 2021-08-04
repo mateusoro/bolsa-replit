@@ -679,7 +679,7 @@ async function iniciar(nome_acao, solicitacao) {
 
                                                             var sto = vv_stop * 1;
 
-                                                            if (longa_maior5) {
+                                                            if (longa_maior6) {
 
                                                                 //console.log('entrou 1')
                                                                 const estrategia = crosser(petr4, estrategias, sto, solicitacao.tipo_cruzamento);
