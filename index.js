@@ -50,10 +50,6 @@ setInterval(async () => {
 
         }
 
-
-
-
-
         var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
             //console.log('Emitindo', x)
