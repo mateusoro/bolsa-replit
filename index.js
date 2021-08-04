@@ -53,7 +53,7 @@ setInterval(async () => {
         var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
             //console.log('Emitindo', x)
-            emitir([{ destino: 'resultado', mensagem: docs[x] }]);
+            emitir([{ destino: 'resultado', mensagem: JSON.parse(docs[x].campo) }]);
             await db.grafico.insert(docs[x]);
             await db.retorno.remove({ _id: docs[x]._id })
         }
