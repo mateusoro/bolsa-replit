@@ -409,8 +409,8 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
                 }
                 if(quant_venda>quant_compra){
-                    
-                }_
+
+                }
 
             }
 
