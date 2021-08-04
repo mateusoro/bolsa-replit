@@ -411,7 +411,7 @@ function crosser(acao, estrategias, stop, tipo) {
                 var sinal_ou_venda = '';
                 var quant_venda = 0;
 
-                if (est.tipo){}
+                if (est.tipo){
                 for (var e in estrategias) {
                     var est = estrategias[e];
                     if (est.sinal[a] == 'Vender') {
