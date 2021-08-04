@@ -114,7 +114,7 @@ io.sockets.on('connection', (socket) => {
 
         // console.log('carregar_predefinidos');
         //iniciar_cruzamente(msg);
-        var docs = await sqlite.all('select * from predefinido where ativo = ""');
+        var docs = await sqlite.all('select * from predefinido where ativo = "S"');
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
