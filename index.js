@@ -144,7 +144,7 @@ io.sockets.on('connection', (socket) => {
            
         }
         
-        await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
+        
 
 
     });
