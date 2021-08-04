@@ -49,8 +49,8 @@ setInterval(async () => {
         }
         if (docs.length > 0) console.log('Carregou retorno: ' + docs.length);
 
-        db.status.loadDatabase();
-        var docs = await db.status.find({});
+        //db.status.loadDatabase();
+        //var docs = await db.status.find({});
         var docs = await sqlite.all('select * from status')
         if (docs.length > 0) {
             emitir([{ destino: 'status', mensagem: docs[0].status }]);
