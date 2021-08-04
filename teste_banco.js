@@ -6,5 +6,11 @@ db.predefinido = new Datastore({ filename: 'requisicoes/predefinodo.json', autol
   console.log(await sqlite.open('sqlite.db'))
   var docs = await sqlite.all('select * from status')
   console.log(docs);
+  var docs = await db.predefinido.find({});
+
+  for (var x in docs) {
+    io.emit('predefinidos', docs[x]);
+  }
+
 
 })()
