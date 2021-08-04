@@ -8,6 +8,14 @@ var allClients = [];
 const fs = require('fs');
 const https = require('https');
 var process = require('process');
+const sqlite = require("aa-sqlite");
+
+(async () => {
+  console.log(await sqlite.open('sqlite.db'))
+  var docs = await sqlite.all('select * from status')
+  console.log(docs);
+
+})()
 
 var Datastore = require('nedb-promise');
 var db = {};
