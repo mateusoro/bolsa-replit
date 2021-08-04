@@ -3,6 +3,7 @@
     "start": "node index.js & node servico_cruzamento.js &"
   },
   "dependencies": {
+    "aa-sqlite": "^1.0.29",
     "async-get-file": "^1.0.4",
     "bluebird": "^3.7.2",
     "chart.js": "^3.5.0",
