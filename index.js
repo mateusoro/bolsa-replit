@@ -142,7 +142,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('carregar_grafico', async (id) => {
         
-        var docs = await sqlite.all('select * from grafico where id ='+id);
+        var docs = await sqlite.all('select * from retorno where id ='+id);
         
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
