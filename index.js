@@ -135,8 +135,7 @@ io.sockets.on('connection', (socket) => {
 
     });
     socket.on('carregar_grafico', async (id) => {
-        db.grafico.loadDatabase();
-        // console.log(id);
+        
         var docs = await sqlite.all('select * from grafico where id ='+id);
         //BVlaheOj38klNMAa
         for (var x in docs) {
