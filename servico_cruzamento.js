@@ -411,16 +411,17 @@ function crosser(acao, estrategias, stop, tipo) {
                 var sinal_ou_venda = '';
                 var quant_venda = 0;
 
-                if (est.tipo){
-                for (var e in estrategias) {
-                    var est = estrategias[e];
-                    if (est.sinal[a] == 'Vender') {
-                        quant_venda++;
+                if (est.tipo) {
+                    for (var e in estrategias) {
+                        var est = estrategias[e];
+                        if (est.sinal[a] == 'Vender') {
+                            quant_venda++;
+                        }
+                        if (est.sinal[a] == 'Comprar') {
+                            quant_compra++;
+                        }
                     }
-                    if (est.sinal[a] == 'Comprar') {
-                        quant_compra++;
-                    }
-                }}
+                }
                 if (quant_venda > quant_compra) {
                     sinal_compra = "Vender";
                     sinal_venda = "Vender";
