@@ -41,6 +41,12 @@ if(rrr.stdout.split(' ').length>4){
 
 setInterval(async () => {
     try {
+
+
+
+
+
+        
         db.retorno.loadDatabase();
         var docs = await db.retorno.find({});
         for (var x in docs) {
