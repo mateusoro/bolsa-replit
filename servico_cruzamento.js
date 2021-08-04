@@ -403,6 +403,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     if (sinal_ou_venda != 'Vender') {// se a estrategia de compra não tiver nenhum sinal de compra
                         sinal_venda = '';
                     }
+                    
         }
 
 
