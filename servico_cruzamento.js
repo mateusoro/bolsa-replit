@@ -35,7 +35,7 @@ setInterval(async () => {
             //console.log(docs[x]);
             JSON.parse()
             await db.requisicao.remove({ _id: docs[x]._id });
-            await iniciar_cruzamente(JSON.parse(docs[x]));
+            await iniciar_cruzamente(JSON.parse(docs[x].campo));
 
         }
 		//console.log('Rodando Servico');
