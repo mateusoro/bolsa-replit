@@ -140,7 +140,7 @@ io.sockets.on('connection', (socket) => {
         await sqlite.run('update parar set campo = "N"');       
         for (var x in docs) {
             var d = JSON.parse(docs[x].campo);
-            d.requisicao
+            
             await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
            
         }
