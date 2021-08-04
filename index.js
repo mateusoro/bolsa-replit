@@ -136,6 +136,13 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('rodar_predefinidos', async (msg) => {
 
+        var docs = await sqlite.all('select * from predefinido where ativo = "S"');
+        
+        for (var x in docs) {
+            var d = JSON.parse(docs[x].campo);
+            d.id =docs[x].id;
+            io.emit('predefinidos',d);
+        }
         await sqlite.run('update parar set campo = "N"');       
         await sqlite.run("insert into requisicao values (null, '"+JSON.stringify(msg)+"', 'S')")
 
