@@ -262,7 +262,7 @@ async function atualizar_acao(nome_acao) {
                 download(nome_acao);
             } else {
                 console.log("Ação já atualizada "+ nome_acao[0]);
-                await sqlite.run('update status set campo = "Ações atualizadas"')
+                await sqlite.run('update status set campo = "Ações atualizadas"');
                 await db.status.update({}, { status: 'Ações atualizadas' }, { upsert: true });
 
             }
