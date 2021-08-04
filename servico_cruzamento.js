@@ -517,7 +517,7 @@ async function iniciar_cruzamente(msg) {
     await sqlite.run('update status set campo = "Fim"');
     //await db.status.update({}, { status: 'Fim' }, { upsert: true });
     console.log('Fim');
-
+    
     //emitir(resultado);
 
 }
