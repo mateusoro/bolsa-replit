@@ -625,7 +625,8 @@ async function iniciar(nome_acao, solicitacao) {
 
                                                         if ((estrategia.Resultado) / (estrategia.Dias) > maior &&
                                                             estrategia.Dias > 5 &&
-                                                            estrategia.Operacoes.length > quant_operacoes && estrategia.quant_stops < quant_stop && estrategia.quant_perdas < quant_perdas && estrategia.quant_vitorias > quant_acertos) {
+                                                            estrategia.Operacoes.length > quant_operacoes && 
+                                                            estrategia.quant_stops < quant_stop && estrategia.quant_perdas < quant_perdas && estrategia.quant_vitorias > quant_acertos) {
 
                                                             maior = (estrategia.Resultado) / (estrategia.Dias);
                                                             estrategia.id = id;
