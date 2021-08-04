@@ -55,6 +55,7 @@ setInterval(async () => {
             //console.log('Emitindo', x)
             emitir([{ destino: 'resultado', mensagem: JSON.parse(docs[x].campo) }]);
             await db.grafico.insert(docs[x]);
+            
             await db.retorno.remove({ _id: docs[x]._id })
         }
         if (docs.length > 0) console.log('Carregou retorno: ' + docs.length);
