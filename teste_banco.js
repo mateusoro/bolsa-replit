@@ -1,7 +1,7 @@
 const aaSqlite = require("aa-sqlite");
 
   (async () => {
-    console.log(await sqlite.open('./users.db'))
+    console.log(await sqlite.open('sqlite.db'))
     
     // Adds a table
     
