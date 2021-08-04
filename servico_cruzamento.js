@@ -564,7 +564,7 @@ async function iniciar(nome_acao, solicitacao) {
         //await db.status.update({}, { status: 'Calculando ' + nome_acao[0] + ': ' + contagem + "/" + possibilidades }, { upsert: true });
 
 
-        db.parar.loadDatabase();
+        
         var docs = await db.parar.findOne({});
         var parar = false;
         //console.log(docs);
