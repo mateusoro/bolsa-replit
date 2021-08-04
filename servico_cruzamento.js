@@ -140,7 +140,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
     v1 = v1 * 1;
     v2 = v2 * 1;
 
-    //console.log(estra[index].tipo, index, v1, v2, longa_maior_anterior);
+    console.log(estra[index].tipo, index, v1, v2, longa_maior_anterior);
     if (!estra[index + 1]) {
         estra[index + 1] = { vs1: [false], vs2: [false] }
     }
