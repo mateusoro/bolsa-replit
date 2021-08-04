@@ -54,8 +54,7 @@ setInterval(async () => {
 
 
 
-        db.retorno.loadDatabase();
-        var docs = await db.retorno.find({});
+        var docs = await sqlite.all('select * from requisicao where ativo = "S"');
         for (var x in docs) {
             //console.log('Emitindo', x)
             emitir([{ destino: 'resultado', mensagem: docs[x] }]);
