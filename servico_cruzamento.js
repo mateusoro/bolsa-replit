@@ -393,7 +393,6 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
             }
             if (tipo == 'maior') { // apenas um sinal precisa ser comprar
-
                
                 var sinal_ou_compra = '';
                 var quant_compra = 0;
