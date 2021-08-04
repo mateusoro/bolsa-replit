@@ -3,6 +3,7 @@ const { load } = require('csv-load-sync');
 var Datastore = require('nedb-promise');
 var moment = require('moment');
 const sqlite = require("aa-sqlite");
+
 (async () => {
     console.log(await sqlite.open('sqlite.db'))
     await sqlite.run('delete from status')
