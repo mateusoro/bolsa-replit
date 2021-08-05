@@ -416,19 +416,7 @@ function crosser(acao, estrategias, stop, tipo) {
 
                 for (var e in estrategias) {
                     var est = estrategias[e];
-
-                    if (est.indicador == 'stochrsi') {
-                        if (est.tendencia[a] != 'Cima') {
-                            sinal_compra = '';
-                        }
-                    }
-                    if (est.tipo == 'Venda') {
-                        if (est.sinal[a] != 'Vender') {
-                            sinal_venda = '';
-                        };
-                    }
-
-                    
+                                        
                     if (est.tipo == 'Crosser') {
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
