@@ -846,6 +846,7 @@ async function grafico(estra, id, solicitacao) {
                 fill: false,
                 borderColor: 'blue',
                 data: d,
+                data_sinal: est.sinal,
                 pointRadius: 0,
                 borderWidth: 1
             });
