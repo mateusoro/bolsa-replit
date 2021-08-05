@@ -887,11 +887,10 @@ async function grafico(estra, id, solicitacao) {
             dataset_compra_venda.push({
                 label: est.indicador_venda.toUpperCase() + '(' + est.v2 + ')',
                 fill: false,
-                borderColor: '#408d91',
-                data: est.indicador_valores_venda,
-                data_sinal: est.sinal,
+                borderColor: 'green',
+                data: est.indicador_valores,
                 pointRadius: 0,
-                borderDash: [12, 4],
+                borderWidth: 1
             });
         }
         if (est.tipo == 'Compra') {
