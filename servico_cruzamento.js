@@ -446,6 +446,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
 
                     if (est.tipo == 'Venda') {
+                        
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
                         } else {
