@@ -450,6 +450,8 @@ function crosser(acao, estrategias, stop, tipo) {
                             est.sinal[a] = '';
                         }
                         if (est.indicador == 'stochrsi') {
+                            
+                        }
                     }
                 }
 
