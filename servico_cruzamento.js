@@ -449,8 +449,8 @@ function crosser(acao, estrategias, stop, tipo) {
                         } else {
                             est.sinal[a] = '';
                         }
-                        if (est.indicador == 'stochrsi') {
-                            
+                        if (est.indicador == 'aroon') {
+
                         }
                     }
                 }
