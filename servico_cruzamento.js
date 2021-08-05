@@ -834,8 +834,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador.toUpperCase() + ' Compra (' + est.v1 + ', ' + est.v2 + ')',
                 fill: false,
                 borderColor: 'blue',
-                data: est.indicador_valores,
-                
+                data: est.indicador_valores,                
                 pointRadius: 0,
                 borderWidth: 1
             });
