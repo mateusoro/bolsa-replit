@@ -823,6 +823,7 @@ async function grafico(estra, id, solicitacao) {
                 fill: false,
                 borderColor: '#408d91',
                 data: est.indicador_valores_venda,
+                data_sinal: est.sinal,
                 pointRadius: 0,
                 borderDash: [12, 4],
             });
