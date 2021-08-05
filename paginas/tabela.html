@@ -28,28 +28,28 @@
             console.log(grafico);
             var graf1 = grafico.grafico;
             var graf2 = grafico.segundo_grafico;
-            
-            var colunas = [{ title: 'Data'}];
+
+            var colunas = [{ title: 'Data' }];
             var datas = [];
             var dataset = [];
             datas.push(graf1.data.labels);
 
-            for(var g of graf1.data.datasets){
+            for (var g of graf1.data.datasets) {
                 colunas.push({ title: g.label });
                 datas.push(g.data);
-                if(g.data_sinal){
+                if (g.data_sinal) {
                     colunas.push({ title: 'Sinal' });
-                datas.push(g.data_sinal);
+                    datas.push(g.data_sinal);
                 }
             }
-            for(var g of graf2.data.datasets){
+            for (var g of graf2.data.datasets) {
                 colunas.push({ title: g.label });
                 datas.push(g.data);
             }
-            for(var x in datas[0]){
+            for (var x in datas[0]) {
                 var linha = [];
-                for(var d of datas){
-                    linha.push(d[x]);                                      
+                for (var d of datas) {
+                    linha.push(d[x]);
                 }
                 dataset.push(linha);
             }
@@ -58,11 +58,11 @@
 
 
 
-                $('#tabela').DataTable({
-                    data: dataset,
-                    columns: colunas
-                });
-           
+            $('#tabela').DataTable({
+                data: dataset,
+                columns: colunas
+            });
+
 
 
         });
