@@ -450,6 +450,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             quant_venda++;
                         } else {
                             est.sinal[a] = '';
+                            
                         }
                         
                     }
