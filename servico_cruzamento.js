@@ -846,7 +846,7 @@ async function grafico(estra, id, solicitacao) {
     for (var e in estrategia.estrategias) {
         var est = estrategia.estrategias[e];
 
-        if (est.tipo == 'Crosser' && est.indicador_compra) {
+        if (est.tipo == 'Crosser' && est.indicador_compra ) {
             arre_lista(est.indicador_valores_compra);
             arre_lista(est.indicador_valores_venda);
             dataset_crosser.push({
