@@ -427,7 +427,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     if (est.tipo == 'Compra') {
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
-                        }else{
+                        } else {
                             est.sinal[a] = '';
                         }
                     }
@@ -435,7 +435,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     if (est.tipo == 'Venda') {
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
-                        }else{
+                        } else {
                             est.sinal[a] = '';
                         }
                     }
@@ -815,7 +815,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador_compra.toUpperCase() + '(' + est.v1 + ")",
                 fill: false,
                 borderColor: 'rgb(54, 162, 235)',
-                data: est.indicador_valores_compra,               
+                data: est.indicador_valores_compra,
                 pointRadius: 0,
                 borderDash: [4, 2],
 
@@ -837,7 +837,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador.toUpperCase() + ' Compra (' + est.v1 + ', ' + est.v2 + ')',
                 fill: false,
                 borderColor: 'blue',
-                data: est.indicador_valores,                
+                data: est.indicador_valores,
                 pointRadius: 0,
                 borderWidth: 1
             });
@@ -871,7 +871,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador.toUpperCase() + ' Venda (' + est.v1 + ', ' + est.v2 + ')',
                 fill: false,
                 borderColor: 'green',
-                data: est.indicador_valores,                
+                data: est.indicador_valores,
                 pointRadius: 0,
                 borderWidth: 1
             });
