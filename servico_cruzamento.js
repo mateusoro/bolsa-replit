@@ -451,6 +451,9 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
                         
                     }
+                    if (est.indicador == 'aroonosc' && est.tipo == 'Venda') {
+                        console.log('Vender aroonosc',est.sinal[a] )
+                     }
                 }
 
                 if (quant_venda > quant_compra) {
