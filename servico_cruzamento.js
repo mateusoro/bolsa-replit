@@ -449,9 +449,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         } else {
                             est.sinal[a] = '';
                         }
-                        if (est.indicador == 'aroonosc' && est.tipo == 'Venda') {
-                           console.log('Vender aroonosc',est.sinal[a] )
-                        }
+                        
                     }
                 }
 
