@@ -812,7 +812,7 @@ async function grafico(estra, id, solicitacao) {
                 fill: false,
                 borderColor: 'rgb(54, 162, 235)',
                 data: est.indicador_valores_compra,
-                data_sinal: est.sinal
+                data_sinal: est.sinal,
                 pointRadius: 0,
                 borderDash: [4, 2],
 
