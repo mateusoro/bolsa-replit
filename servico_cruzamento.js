@@ -438,6 +438,11 @@ function crosser(acao, estrategias, stop, tipo) {
                         }
                     }
                     if (est.tipo == 'Compra') {
+                        if (est.indicador == 'stochrsi') {
+                            if (est.tendencia[a] != 'Baixo') {
+                                est.sinal[a] = '';
+                            }
+                        }
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
                         } else {
