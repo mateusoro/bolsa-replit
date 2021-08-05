@@ -870,6 +870,30 @@ async function grafico(estra, id, solicitacao) {
                 borderDash: [12, 4],
             });
         }
+        if (est.tipo == 'Crosser' && est.indicador_compra != 'di_plus' && est.indicador_venda != 'di_minus') {
+            arre_lista(est.indicador_valores_compra);
+            arre_lista(est.indicador_valores_venda);
+            dataset_crosser.push({
+
+                label: est.indicador_compra.toUpperCase() + '(' + est.v1 + ")",
+                fill: false,
+                borderColor: 'rgb(54, 162, 235)',
+                data: est.indicador_valores_compra,
+                pointRadius: 0,
+                borderDash: [4, 2],
+
+            });
+
+            dataset_crosser.push({
+                label: est.indicador_venda.toUpperCase() + '(' + est.v2 + ')',
+                fill: false,
+                borderColor: '#408d91',
+                data: est.indicador_valores_venda,
+                data_sinal: est.sinal,
+                pointRadius: 0,
+                borderDash: [12, 4],
+            });
+        }
         if (est.tipo == 'Compra') {
             arre_lista(est.indicador_valores);
             dataset_compra_venda.push({
