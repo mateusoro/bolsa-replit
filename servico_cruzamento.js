@@ -131,6 +131,12 @@ async function adx(acao, tamanho) {
     result = corrige_tamanho(t, result[0]);
     return result;
 }
+async function adx(acao, tamanho) {
+    var result = await tulind.indicators.adx.indicator([acao.high, acao.low, acao.close], [tamanho]);
+    var t = acao.close.length;
+    result = corrige_tamanho(t, result[0]);
+    return result;
+}
 .di(high, low, close, 5)
 async function aroonosc(acao, tamanho) {
     var result = await tulind.indicators.aroonosc.indicator([acao.high, acao.low], [tamanho]);
