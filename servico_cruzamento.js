@@ -449,7 +449,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         } else {
                             est.sinal[a] = '';
                         }
-                        if (est.indicador == 'aroonosc') {
+                        if (est.indicador == 'aroonosc' ) {
                            console.log('Vender aroonosc',est.sinal[a] )
                         }
                     }
