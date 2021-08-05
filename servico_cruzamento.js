@@ -811,8 +811,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador_compra.toUpperCase() + '(' + est.v1 + ")",
                 fill: false,
                 borderColor: 'rgb(54, 162, 235)',
-                data: est.indicador_valores_compra,
-                data_sinal: est.sinal,
+                data: est.indicador_valores_compra,               
                 pointRadius: 0,
                 borderDash: [4, 2],
 
