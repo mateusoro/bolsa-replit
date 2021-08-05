@@ -465,7 +465,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     sinal_compra = "Comprar";
                     sinal_venda = "Comprar";
                 }
-                if (quant_neutro > quant_venda && quant_neutro >=  quant_compra) {
+                if (quant_neutro >= quant_venda && quant_neutro >=  quant_compra) {
                     sinal_compra = "";
                     sinal_venda = "";
                 }
