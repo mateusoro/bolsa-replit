@@ -224,7 +224,7 @@ async function escolher_indicador(acao, indicador, v) {
         resultado = await di_minus(acao, v);
     }
     if (indicador == 'di_plus') {
-        resultado = await di_minus(acao, v);
+        resultado = await di_plus(acao, v);
     }
     return resultado;
 
