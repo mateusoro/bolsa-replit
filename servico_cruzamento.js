@@ -428,7 +428,7 @@ function crosser(acao, estrategias, stop, tipo) {
                         if (est.sinal[a] == 'Comprar') {
                             quant_compra++;
                         }else{
-                            est.sinal[a] = ''
+                            est.sinal[a] = '';
                         }
                     }
 
