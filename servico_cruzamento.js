@@ -888,7 +888,7 @@ async function grafico(estra, id, solicitacao) {
                 label: est.indicador_venda.toUpperCase() + '(' + est.v2 + ')',
                 fill: false,
                 borderColor: 'green',
-                data: est.indicador_valores,
+                data: est.indicador_valores_venda,
                 pointRadius: 0,
                 borderWidth: 1
             });
