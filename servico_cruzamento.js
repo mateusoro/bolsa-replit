@@ -610,7 +610,7 @@ async function iniciar(nome_acao, solicitacao) {
 
     var variavel_stop = stops;
 
-    var maior = -100;
+    var maior = -500;
     var melhor;
 
     var tempo1 = new Date();
