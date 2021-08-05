@@ -884,7 +884,7 @@ async function grafico(estra, id, solicitacao) {
 
             });
 
-            dataset_crosser.push({
+            dataset_compra_venda.push({
                 label: est.indicador_venda.toUpperCase() + '(' + est.v2 + ')',
                 fill: false,
                 borderColor: '#408d91',
