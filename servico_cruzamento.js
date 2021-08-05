@@ -220,6 +220,9 @@ async function escolher_indicador(acao, indicador, v) {
     if (indicador == 'stochrsi') {
         resultado = await stochrsi(acao, v);
     }
+    if (indicador == 'stochrsi') {
+        resultado = await stochrsi(acao, v);
+    }
     return resultado;
 
 }
