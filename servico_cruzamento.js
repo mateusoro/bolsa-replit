@@ -132,7 +132,7 @@ async function adx(acao, tamanho) {
     return result;
 }
 async function di_minus(acao, tamanho) {
-    var result = await tulind.indicators.adx.indicator([acao.high, acao.low, acao.close], [tamanho]);
+    var result = await tulind.indicators.d.indicator([acao.high, acao.low, acao.close], [tamanho]);
     var t = acao.close.length;
     result = corrige_tamanho(t, result[0]);
     return result;
