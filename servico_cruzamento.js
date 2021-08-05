@@ -416,6 +416,7 @@ function crosser(acao, estrategias, stop, tipo) {
 
                 for (var e in estrategias) {
                     var est = estrategias[e];
+                    
                     if (est.indicador == 'stochrsi') {
                         if (est.tendencia[a] != 'Cima') {
                             sinal_compra = '';
