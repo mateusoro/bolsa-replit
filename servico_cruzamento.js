@@ -221,7 +221,7 @@ async function escolher_indicador(acao, indicador, v) {
         resultado = await stochrsi(acao, v);
     }
     if (indicador == 'di_minus') {
-        resultado = await di(acao, v);
+        resultado = await di_minus(acao, v);
     }
     return resultado;
 
