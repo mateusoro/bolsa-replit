@@ -130,7 +130,7 @@
 
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
-                var parametro = $(this).find('.parametro').val();               
+                var parametro = $(this).find('.parametro').val();
 
                 var estrategia = {
                     tipo: 'Compra',
@@ -147,7 +147,7 @@
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
                 var parametro = $(this).find('.parametro').val();
-                
+
 
                 var estrategia = {
                     tipo: 'Venda',
@@ -203,7 +203,7 @@
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
                 var parametro = $(this).find('.parametro').val();
-                
+
 
                 var estrategia = {
                     tipo: 'Compra',
@@ -220,7 +220,7 @@
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
                 var parametro = $(this).find('.parametro').val();
-               
+
                 var estrategia = {
                     tipo: 'Venda',
                     indicador: indicador,
@@ -279,7 +279,7 @@
 
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
-                var parametro = $(this).find('.parametro').val();               
+                var parametro = $(this).find('.parametro').val();
 
                 var estrategia = {
                     tipo: 'Compra',
@@ -333,7 +333,7 @@
                 quant_operacoes: quant_operacoes,
                 quant_acertos: quant_acertos,
                 quant_perdas: quant_perdas,
-                tipo_cruzamento:tipo_cruzamento,
+                tipo_cruzamento: tipo_cruzamento,
                 estrategias: estrategias
             }
             socket.emit('salvar', { link: link, requisicao: resultado });
@@ -351,7 +351,7 @@
                 $('.quant_operacoes').val($.urlParam('quant_operacoes'));
                 $('.quant_acertos').val($.urlParam('quant_acertos'));
                 $('.quant_perdas').val($.urlParam('quant_perdas'));
-                $('#tipo_cruzamento').val($.urlParam('tipo_cruzamento'));               
+                $('#tipo_cruzamento').val($.urlParam('tipo_cruzamento'));
 
                 var estrategias_carregar = JSON.parse(decodeURIComponent($.urlParam('estrategias')))
                 for (var e in estrategias_carregar) {
@@ -365,7 +365,7 @@
                         c.find('.indicador').val(est.indicador);
                         c.find('.teste').val(est.teste);
                         c.find('.parametro').val(est.parametro);
-                        
+
                         c.appendTo(".estrategias")
                         $('select').formSelect();
                     }
@@ -377,7 +377,7 @@
                         c.find('.indicador').val(est.indicador);
                         c.find('.teste').val(est.teste);
                         c.find('.parametro').val(est.parametro);
-                       
+
                         c.appendTo(".estrategias")
                         $('select').formSelect();
                     }
@@ -418,7 +418,7 @@
                         c.find('.indicador').val(est.indicador);
                         c.find('.teste').val(est.tamanho_indicador);
                         c.find('.parametro').val(est.parametro);
-                       
+
                         c.appendTo(".estrategias")
                         $('select').formSelect();
                     }
@@ -430,7 +430,7 @@
                         c.find('.indicador').val(est.indicador);
                         c.find('.teste').val(est.tamanho_indicador);
                         c.find('.parametro').val(est.parametro);
-                       
+
                         c.appendTo(".estrategias")
                         $('select').formSelect();
                     }
@@ -470,7 +470,7 @@
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
                 var parametro = $(this).find('.parametro').val();
-               
+
                 var estrategia = {
                     tipo: 'Compra',
                     indicador: indicador,
@@ -486,7 +486,7 @@
                 var indicador = $(this).find('.indicador').val();
                 var teste = $(this).find('.teste').val();
                 var parametro = $(this).find('.parametro').val();
-                
+
                 var estrategia = {
                     tipo: 'Venda',
                     indicador: indicador,
@@ -688,30 +688,29 @@
 
                 </div>
             </div>
-            
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">Card Title</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
+
+            <div class="row">
+                <div class="col s12 m6">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="col s6">
             <div class="col s12" style="margin-top: 25px;">
                 <a class="col s2 waves-effect waves-light btn" id="rodar" onclick="rodar();iniciar();">Rodar</a>
                 <a class="col s2 waves-effect waves-light btn grey" onclick="link_consulta()">Link Estratégia</a>
-                <a class="col s2 waves-effect waves-light btn grey"
-                    onclick="salvar_consulta()">Salvar</a>
+                <a class="col s2 waves-effect waves-light btn grey" onclick="salvar_consulta()">Salvar</a>
                 <a class="col s2 waves-effect waves-light btn red" onclick="socket.emit('parar');">Parar</a>
                 <a class="col s2 waves-effect waves-light btn grey" onclick="atualizar()">Atualizar</a>
                 <a class="col s2 waves-effect waves-light btn orange" onclick="$('#messages').empty()">Limpar</a>
@@ -728,7 +727,7 @@
                     <label>Filtrar</label>
                 </div>
             </div>
-           
+
             <div class="col s12">
                 <ul id="messages"></ul>
             </div>
@@ -739,7 +738,7 @@
     <div class="modelos" style="display: none;height: 0px;">
         <div class="col s6 modelo_compra" style="margin-top: 20px;">
             <div class="input-field col s12">
-                <select class="indicador">                    
+                <select class="indicador">
                     <option value="adx">ADX</option>
                     <option value="aroonosc">Oscilador AROON</option>
                     <option value="rsi">RSI</option>
@@ -755,14 +754,14 @@
                 <input placeholder="0" value="0" type="text" class="validate parametro">
                 <label>Parâmetro</label>
             </div>
-            
+
             <div class="input-field col s12">
                 <a class="waves-effect waves-light red btn" onclick="remove(this)">Remover</a>
             </div>
         </div>
         <div class="col s6 modelo_venda" style="margin-top: 20px;">
             <div class="input-field col s12">
-                <select class="indicador">                    
+                <select class="indicador">
                     <option value="adx">ADX</option>
                     <option value="aroonosc">Oscilador AROON</option>
                     <option value="rsi">RSI</option>
@@ -778,7 +777,7 @@
                 <input placeholder="0" value="0" type="text" class="validate parametro">
                 <label>Parâmetro</label>
             </div>
-            
+
             <div class="input-field col s12">
                 <a class="waves-effect waves-light red btn" onclick="remove(this)">Remover</a>
             </div>
@@ -787,7 +786,7 @@
             <div class="input-field col s12">
                 <select class="indicador_compra">
                     <option value="sma">Média Simples</option>
-                    <option value="ema">Média Exponencial</option>                    
+                    <option value="ema">Média Exponencial</option>
                 </select>
                 <label>Indicador Compra</label>
             </div>
@@ -798,7 +797,7 @@
             <div class="input-field col s12">
                 <select class="indicador_venda">
                     <option value="sma">Média Simples</option>
-                    <option value="ema">Média Exponencial</option>                   
+                    <option value="ema">Média Exponencial</option>
                 </select>
                 <label>Indicador Venda</label>
             </div>
