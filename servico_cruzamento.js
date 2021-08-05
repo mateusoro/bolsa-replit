@@ -446,7 +446,11 @@ function crosser(acao, estrategias, stop, tipo) {
                     }
 
                     if (est.tipo == 'Venda') {
-                        
+                        if (est.indicador == 'stochrsi') {
+                            if (est.tendencia[a] != 'Baixo') {
+                                sinal_venda = '';
+                            }
+                        }
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
                         } else {
