@@ -920,6 +920,7 @@ async function grafico(estra, id, solicitacao) {
                 fill: false,
                 borderColor: 'black',
                 data: est.indicador_valores_adx,
+                data_sinal: est.sinal,
                 pointRadius: 0,
                 borderWidth: 1
             });
