@@ -288,9 +288,9 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro_anterior) { cruzamento = "Cima"; }
             if (lista_curta[a] < novo_parametro && lista_curta[a - 1] > novo_parametro_anterior) { cruzamento = "Baixo"; }
 
-        } 
+        }
         lista_tendencia.push(tendencia);
-        lista_cruzamento.push(cruzamento)
+        lista_cruzamento.push(cruzamento);
 
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
