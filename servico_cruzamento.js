@@ -190,7 +190,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
             estra[index].indicador_valores_compra = await escolher_indicador(acao, estra[index].indicador_compra, v1);
             estra[index].indicador_valores_venda = await escolher_indicador(acao, estra[index].indicador_venda, v2);
             estra[index].sinal = sinal(estra[index].indicador_valores_compra, 0, estra[index].indicador_valores_venda, estra[index].operador)[0];
-
+            if()
         }
 
     }
