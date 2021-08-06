@@ -893,7 +893,7 @@ async function grafico(estra, id, solicitacao) {
         if (est.tipo == 'Crosser' && est.indicador_compra == 'di_plus' && est.indicador_venda == 'di_minus') {
             arre_lista(est.indicador_valores_compra);
             arre_lista(est.indicador_valores_venda);
-            console.log(indicador_valores_adx);
+            console.log(est.indicador_valores_adx);
             arre_lista(est.indicador_valores_adx);
             console.log(indicador_valores_adx);
 
