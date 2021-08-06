@@ -917,7 +917,7 @@ async function grafico(estra, id, solicitacao) {
                 label:  'ADX()',
                 fill: false,
                 borderColor: 'black',
-                data: est.indicador_valores_venda,
+                data: est.indicador_valores_adx,
                 pointRadius: 0,
                 borderWidth: 1
             });
