@@ -290,6 +290,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
 
         } 
         lista_tendencia.push(tendencia);
+        lista_cr
 
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
