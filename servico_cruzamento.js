@@ -313,6 +313,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
 
     }
+    console.log(lista_cruzamento)
     return [lista_retorno, lista_tendencia,lista_cruzamento];
 
 
