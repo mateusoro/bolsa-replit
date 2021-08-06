@@ -278,7 +278,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] < lista_curta[a - 2]) { lista_tendencia.push("Baixo") }
             if (lista_curta[a] == lista_curta[a - 1]) { lista_tendencia.push("Lateralizado") }
            
-            if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < lista_curta[a - 2]) { lista_tendencia.push("Cima") }
+            if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro) { lista_tendencia.push("Cima") }
 
         } else {
             lista_tendencia.push("Lateralizado");
