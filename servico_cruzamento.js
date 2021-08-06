@@ -273,7 +273,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
-        if (lista_longa) {
+        if (lista_longa[a - 1]) {
             novo_parametro = lista_longa[a];
         }
 
