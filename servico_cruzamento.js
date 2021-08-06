@@ -308,7 +308,7 @@ function corrige_tamanho(tamanho, curta) {
     return temp_curta;
 
 }
-function crosser(acao, estrategias, stop, tipo) {
+function crosser(acao, estrategias, stop) {
 
 
     var operacoes = [];
