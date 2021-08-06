@@ -274,13 +274,14 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         var novo_parametro_anterior2 = parametro_fixo;
         if (lista_longa) {
             novo_parametro = lista_longa[a];
+            if (lista_longa[a - 1]) {
+                novo_parametro_anterior = lista_longa[a - 1];
+            }
+            if (lista_longa[a - 2]) {
+                novo_parametro_anterior2 = lista_longa[a - 2];
+            }
         }
-        if (lista_longa[a - 1]) {
-            novo_parametro_anterior = lista_longa[a - 1];
-        }
-        if (lista_longa[a - 2]) {
-            novo_parametro_anterior2 = lista_longa[a - 2];
-        }
+        
 
         var tendencia = '';
         var cruzamento = '';
