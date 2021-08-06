@@ -203,7 +203,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
                     }
                 }
                 estra[index].sinal = s;
-                console.log(estra[index].sinal.length);
+                console.log(estra[index].sinal.length, estra[index].indicador_compra, estra[index].indicador_venda);
 
             } else {
 
