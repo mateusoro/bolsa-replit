@@ -914,7 +914,7 @@ async function grafico(estra, id, solicitacao) {
                 borderWidth: 1
             });
             dataset_compra_venda.push({
-                label:  'ADX (' + est.v2 + ')',
+                label:  'ADX(' + est.v2 + ')',
                 fill: false,
                 borderColor: 'green',
                 data: est.indicador_valores_venda,
