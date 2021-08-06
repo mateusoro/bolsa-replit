@@ -916,7 +916,7 @@ async function grafico(estra, id, solicitacao) {
             dataset_compra_venda.push({
                 label:  'ADX()',
                 fill: false,
-                borderColor: 'green',
+                borderColor: 'black',
                 data: est.indicador_valores_venda,
                 pointRadius: 0,
                 borderWidth: 1
