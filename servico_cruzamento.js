@@ -312,7 +312,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
 
     }
-    return [lista_retorno, lista_tendencia];
+    return [lista_retorno, lista_tendencia,lista_cruzamento];
 
 
 }
