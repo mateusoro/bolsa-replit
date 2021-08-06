@@ -193,7 +193,8 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
             
             if(estra[index].indicador_compra != 'di_plus'){
                 estra[index].indicador_valores_adx = await escolher_indicador(acao, 'adx', v2);
-                
+                estra[index].sinal = sinal(estra[index].indicador_valores_compra, 0, estra[index].indicador_valores_venda, estra[index].operador)[0];
+            
             }
         }
 
