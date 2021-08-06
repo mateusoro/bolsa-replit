@@ -269,6 +269,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
 
     for (var a in lista_curta) {
         var novo_parametro = parametro_fixo;
+        var novo_parametro = parametro_fixo;
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
