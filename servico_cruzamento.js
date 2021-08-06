@@ -287,7 +287,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro_anterior) { lista_cruzamento.push("Cima") }
 
         } else {
-            lista.push("Lateralizado");
+            tendencia = "Lateralizado";
         }
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
