@@ -282,7 +282,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
 
             if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { tendencia = "Cima" }
             if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] < lista_curta[a - 2]) { tendencia="Baixo" }
-            if (lista_curta[a] == lista_curta[a - 1]) { tendencia = "Lateralizado") }
+            if (lista_curta[a] == lista_curta[a - 1]) { tendencia = "Lateralizado" }
            
             if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro_anterior) { lista_cruzamento.push("Cima") }
 
