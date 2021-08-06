@@ -405,7 +405,7 @@ function crosser(acao, estrategias, stop) {
                 if (est.tipo == 'Venda') {
                     if (est.indicador == 'stochrsi') {
                         if (est.cruzamento[a] != 'Baixo') {
-                            console.log(est.cruzamento[a]
+                            console.log(est.cruzamento[a],est.sinal[a]
 
                             est.sinal[a] = '';
                         }else{'vende stochrsi'}
