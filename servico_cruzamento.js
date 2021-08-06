@@ -407,7 +407,7 @@ function crosser(acao, estrategias, stop) {
                         if (est.cruzamento[a] != 'Baixo') {                           
 
                             est.sinal[a] = '';
-                        } else { 'vende stochrsi' }
+                        } else { conso'vende stochrsi' }
                     }
                     if (est.sinal[a] == 'Vender') {
                         quant_venda++;
