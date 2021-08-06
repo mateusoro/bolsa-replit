@@ -389,8 +389,8 @@ function crosser(acao, estrategias, stop) {
                 }
                 if (est.tipo == 'Compra') {
                     if (est.indicador == 'stochrsi') {
-                        if (est.tendencia[a] != 'Cima') {   
-                            
+                        
+                        if (est.tendencia[a] != 'Cima') {                            
                             est.sinal[a] = '';
                         }
                         else { 'Compra stochrsi' }
