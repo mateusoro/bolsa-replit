@@ -913,6 +913,14 @@ async function grafico(estra, id, solicitacao) {
                 pointRadius: 0,
                 borderWidth: 1
             });
+            dataset_compra_venda.push({
+                label: est.indicador_venda.toUpperCase() + '(' + est.v2 + ')',
+                fill: false,
+                borderColor: 'green',
+                data: est.indicador_valores_venda,
+                pointRadius: 0,
+                borderWidth: 1
+            });
         }
         if (est.tipo == 'Compra') {
             arre_lista(est.indicador_valores);
