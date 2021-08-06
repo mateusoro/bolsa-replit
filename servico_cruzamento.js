@@ -255,7 +255,7 @@ function escolher_operador(indicador) {
     if (indicador == 'rsi') {
         return 'invertido';
     }
-    
+
     return 'normal';
 
 }
@@ -281,16 +281,16 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_curta[a - 1] && lista_curta[a - 2]) {
 
             if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { tendencia = "Cima" }
-            if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] < lista_curta[a - 2]) { tendencia="Baixo" }
+            if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] < lista_curta[a - 2]) { tendencia = "Baixo" }
             if (lista_curta[a] == lista_curta[a - 1]) { tendencia = "Lateralizado" }
-           
+
             if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro_anterior) { lista_cruzamento.push("Cima") }
 
         } else {
             tendencia = "Lateralizado";
         }
         lista_tendencia.push(tendencia);
-        
+
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
             if (lista_curta[a] < novo_parametro) { lista_retorno.push("Vender") }
@@ -357,70 +357,70 @@ function crosser(acao, estrategias, stop) {
         if (a > maior_indicador) {
 
 
-             // apenas um sinal precisa ser comprar
+            // apenas um sinal precisa ser comprar
 
-                var quant_compra = 0;               
-                var quant_venda = 0;
-                var quant_neutro_compra = 0;
-                var quant_neutro_venda = 0;
+            var quant_compra = 0;
+            var quant_venda = 0;
+            var quant_neutro_compra = 0;
+            var quant_neutro_venda = 0;
 
 
-                for (var e in estrategias) {
-                    var est = estrategias[e];
+            for (var e in estrategias) {
+                var est = estrategias[e];
 
-                    if (est.tipo == 'Crosser') {
-                        if (est.sinal[a] == 'Vender') {
-                            quant_venda++;
-                        }
-                        if (est.sinal[a] == 'Comprar') {
-                            quant_compra++;
-                        }
+                if (est.tipo == 'Crosser') {
+                    if (est.sinal[a] == 'Vender') {
+                        quant_venda++;
                     }
-                    if (est.tipo == 'Compra') {
-                        if (est.indicador == 'stochrsi') {
-                            if (est.tendencia[a] != 'Cima') {
-                                est.sinal[a] = '';
-                            }
-                        }
-                        if (est.sinal[a] == 'Comprar') {
-                            quant_compra++;
-                        } else {
+                    if (est.sinal[a] == 'Comprar') {
+                        quant_compra++;
+                    }
+                }
+                if (est.tipo == 'Compra') {
+                    if (est.indicador == 'stochrsi') {
+                        if (est.tendencia[a] != 'Cima') {
                             est.sinal[a] = '';
-                            quant_neutro_compra++;
                         }
                     }
+                    if (est.sinal[a] == 'Comprar') {
+                        quant_compra++;
+                    } else {
+                        est.sinal[a] = '';
+                        quant_neutro_compra++;
+                    }
+                }
 
-                    if (est.tipo == 'Venda') {
-                        if (est.indicador == 'stochrsi') {
-                            if (est.tendencia[a] != 'Baixo') {
-                                est.sinal[a] = '';
-                            }
-                        }
-                        if (est.sinal[a] == 'Vender') {
-                            quant_venda++;
-                        } else {
+                if (est.tipo == 'Venda') {
+                    if (est.indicador == 'stochrsi') {
+                        if (est.tendencia[a] != 'Baixo') {
                             est.sinal[a] = '';
-                            quant_neutro_venda++;
                         }
-
+                    }
+                    if (est.sinal[a] == 'Vender') {
+                        quant_venda++;
+                    } else {
+                        est.sinal[a] = '';
+                        quant_neutro_venda++;
                     }
 
                 }
 
-                if (quant_venda > quant_compra) {
-                    sinal_compra = "Vender";
-                    sinal_venda = "Vender";
-                }
-                if (quant_venda < quant_compra) {
-                    sinal_compra = "Comprar";
-                    sinal_venda = "Comprar";
-                }
-                if (quant_neutro_venda >= quant_venda) {                   
-                    sinal_venda = "";
-                }
-                if (quant_neutro_compra >= quant_compra) {
-                    sinal_compra = "";                   
-                }
+            }
+
+            if (quant_venda > quant_compra) {
+                sinal_compra = "Vender";
+                sinal_venda = "Vender";
+            }
+            if (quant_venda < quant_compra) {
+                sinal_compra = "Comprar";
+                sinal_venda = "Comprar";
+            }
+            if (quant_neutro_venda >= quant_venda) {
+                sinal_venda = "";
+            }
+            if (quant_neutro_compra >= quant_compra) {
+                sinal_compra = "";
+            }
 
 
             //Compra
@@ -803,7 +803,7 @@ async function grafico(estra, id, solicitacao) {
         }
         if (est.tipo == 'Crosser' && est.indicador_compra == 'di_plus' && est.indicador_venda == 'di_minus') {
             arre_lista(est.indicador_valores_compra);
-            arre_lista(est.indicador_valores_venda);            
+            arre_lista(est.indicador_valores_venda);
             arre_lista(est.indicador_valores_adx);
             //console.log(est.indicador_valores_adx);
 
@@ -827,7 +827,7 @@ async function grafico(estra, id, solicitacao) {
                 borderWidth: 1
             });
             dataset_compra_venda.push({
-                label:  'ADX()',
+                label: 'ADX()',
                 fill: false,
                 borderColor: 'black',
                 data: est.indicador_valores_adx,
