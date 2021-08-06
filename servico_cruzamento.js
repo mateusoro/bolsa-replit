@@ -406,7 +406,8 @@ function crosser(acao, estrategias, stop) {
                     if (est.indicador == 'stochrsi') {
                         if (est.cruzamento[a] != 'Baixo') { 
                             est.sinal[a] = '';
-                        } else { //console.log('vende stochrsi') }
+                        } else { //console.log('vende stochrsi')
+                         }
                     }
                     if (est.sinal[a] == 'Vender') {
                         quant_venda++;
