@@ -277,7 +277,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             novo_parametro_anterior = lista_longa[a - 1];
         }
 
-        var tendencia = ''
+        var tendencia = '';
         if (lista_curta[a - 1] && lista_curta[a - 2]) {
 
             if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { lista_tendencia.push("Cima") }
