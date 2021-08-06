@@ -388,8 +388,8 @@ function crosser(acao, estrategias, stop) {
                     }
                 }
                 if (est.tipo == 'Compra') {
-                    if (est.indicador == 'stochrsi') {                       
-                        if (est.cruzamento[a] != 'Cima') {                            
+                    if (est.indicador == 'stochrsi') {
+                        if (est.cruzamento[a] != 'Cima') {
                             est.sinal[a] = '';
                         }
                         else { //console.log('Compra stochrsi') 
@@ -405,10 +405,10 @@ function crosser(acao, estrategias, stop) {
 
                 if (est.tipo == 'Venda') {
                     if (est.indicador == 'stochrsi') {
-                        if (est.cruzamento[a] != 'Baixo') { 
+                        if (est.cruzamento[a] != 'Baixo') {
                             est.sinal[a] = '';
                         } else { //console.log('vende stochrsi')
-                         }
+                        }
                     }
                     if (est.sinal[a] == 'Vender') {
                         quant_venda++;
