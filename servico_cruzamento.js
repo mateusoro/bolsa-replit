@@ -277,7 +277,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             novo_parametro_anterior = lista_longa[a - 1];
         }
         if (lista_longa[a - 2]) {
-            novo_parametro_anterior2 = lista_longa[a - 1];
+            novo_parametro_anterior2 = lista_longa[a - 2];
         }
 
         var tendencia = '';
