@@ -183,7 +183,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
             var sin = sinal(estra[index].indicador_valores, v2, null, estra[index].operador);
             estra[index].sinal = sin[0];
             estra[index].tendencia = sin[1];
-            estra[index].cruzamento = sin[1];
+            estra[index].cruzamento = sin[2];
 
         }
         if (estra[index].tipo == 'Crosser') {
