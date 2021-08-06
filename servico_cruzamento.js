@@ -255,9 +255,7 @@ function escolher_operador(indicador) {
     if (indicador == 'rsi') {
         return 'invertido';
     }
-    if (indicador == 'stochrsi') {
-        return 'normal';
-    }
+    
     return 'normal';
 
 }
