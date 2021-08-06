@@ -278,7 +278,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
 
         var tendencia = '';
-        var cru
+        var cruzamento = ''
         if (lista_curta[a - 1] && lista_curta[a - 2]) {
 
             if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { tendencia = "Cima" }
