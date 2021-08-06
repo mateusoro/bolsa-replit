@@ -476,7 +476,7 @@ function crosser(acao, estrategias, stop, tipo) {
                             quant_compra++;
                         } else {
                             est.sinal[a] = '';
-                            quant_neutro++;
+                            quant_neutro_compra++;
                         }
                     }
 
