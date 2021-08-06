@@ -672,7 +672,7 @@ async function iniciar(nome_acao, solicitacao) {
                                                                                             if (longa_maior10) {
 
                                                                                                 //console.log('entrou 1')
-                                                                                                const estrategia = crosser(petr4, estrategias, sto, solicitacao.tipo_cruzamento);
+                                                                                                const estrategia = crosser(petr4, estrategias, sto, '');
                                                                                                 //console.log((estrategia.Resultado) / (estrategia.Dias) > maior, estrategia.Dias > 5, estrategia.Operacoes.length > quant_operacoes, estrategia.quant_stops < quant_stop, estrategia.quant_perdas < quant_perdas, estrategia.quant_vitorias > quant_acertos, estrategia.quant_perdas, quant_perdas, estrategia.quant_vitorias, quant_acertos);
 
                                                                                                 if ((estrategia.Resultado) / (estrategia.Dias) > maior &&
