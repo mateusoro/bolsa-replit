@@ -395,7 +395,7 @@ function crosser(acao, estrategias, stop) {
                         if (est.cruzamento[a] != 'Cima') {                            
                             est.sinal[a] = '';
                         }
-                        else { console.log('Compra stochrsi' }
+                        else { console.log('Compra stochrsi') }
                     }
                     if (est.sinal[a] == 'Comprar') {
                         quant_compra++;
