@@ -452,7 +452,7 @@ function crosser(acao, estrategias, stop, tipo) {
                 var sinal_ou_venda = '';
                 var quant_venda = 0;
                 var quant_neutro_compra = 0;
-                var quant_neutro_compra = 0;
+                var quant_neutro_venda = 0;
 
 
                 for (var e in estrategias) {
