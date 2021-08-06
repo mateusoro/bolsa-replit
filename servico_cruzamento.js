@@ -405,7 +405,7 @@ function crosser(acao, estrategias, stop) {
                 if (est.tipo == 'Venda') {
                     if (est.indicador == 'stochrsi') {
                         if (est.cruzamento[a] != 'Baixo') {
-                            cosnest.cruzamento[a]
+                            coest.cruzamento[a]
 
                             est.sinal[a] = '';
                         }else{'vende stochrsi'}
