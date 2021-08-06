@@ -893,6 +893,7 @@ async function grafico(estra, id, solicitacao) {
         if (est.tipo == 'Crosser' && est.indicador_compra == 'di_plus' && est.indicador_venda == 'di_minus') {
             arre_lista(est.indicador_valores_compra);
             arre_lista(est.indicador_valores_venda);
+            arre_lista(est.indicador_valores_venda);
             dataset_compra_venda.push({
 
                 label: est.indicador_compra.toUpperCase() + '(' + est.v1 + ")",
