@@ -281,7 +281,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
                 novo_parametro_anterior2 = lista_longa[a - 2];
             }
         }
-        
+
 
         var tendencia = '';
         var cruzamento = '';
@@ -294,8 +294,8 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
             if (lista_curta[a] > novo_parametro && lista_curta[a - 1] < novo_parametro_anterior) { cruzamento = "Cima"; }
             if (lista_curta[a] < novo_parametro && lista_curta[a - 1] > novo_parametro_anterior) { cruzamento = "Baixo"; }
 
-            if (lista_curta[a] > lista_curta[a-1] && lista_curta[a-1] > novo_parametro_anterior && lista_curta[a - 2] < novo_parametro_anterior2) { cruzamento = "Cima"; }
-            if (lista_curta[a] < lista_curta[a-1] && lista_curta[a-1] > novo_parametro_anterior && lista_curta[a - 2] < novo_parametro_anterior2) { cruzamento = "Cima"; }
+            if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > novo_parametro_anterior && lista_curta[a - 2] < novo_parametro_anterior2) { cruzamento = "Cima"; }
+            if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] > novo_parametro_anterior && lista_curta[a - 2] < novo_parametro_anterior2) { cruzamento = "Cima"; }
 
         }
         lista_tendencia.push(tendencia);
@@ -313,8 +313,8 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
 
     }
-    
-    return [lista_retorno, lista_tendencia,lista_cruzamento];
+
+    return [lista_retorno, lista_tendencia, lista_cruzamento];
 
 
 }
@@ -390,13 +390,13 @@ function crosser(acao, estrategias, stop) {
                 if (est.tipo == 'Compra') {
                     if (est.indicador == 'stochrsi') {
                         if (est.tendencia[a] != 'Cima') {
-                            if(est.sinal[a]=='Comprar'){
-                            console.log(est.cruzamento[a],'-',est.sinal[a])
-                            
-                            
+                            if (est.sinal[a] == 'Comprar') {
+                                console.log(est.cruzamento[a], '-', est.sinal[a])
+                            }
+
                             est.sinal[a] = '';
                         }
-                        else{'Compra stochrsi'}
+                        else { 'Compra stochrsi' }
                     }
                     if (est.sinal[a] == 'Comprar') {
                         quant_compra++;
@@ -412,7 +412,7 @@ function crosser(acao, estrategias, stop) {
                             //console.log(est.cruzamento[a],est.sinal[a])
 
                             est.sinal[a] = '';
-                        }else{'vende stochrsi'}
+                        } else { 'vende stochrsi' }
                     }
                     if (est.sinal[a] == 'Vender') {
                         quant_venda++;
