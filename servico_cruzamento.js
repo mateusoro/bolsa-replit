@@ -895,7 +895,7 @@ async function grafico(estra, id, solicitacao) {
             arre_lista(est.indicador_valores_venda);
             console.log(est.indicador_valores_adx);
             arre_lista(est.indicador_valores_adx);
-            console.log(indicador_valores_adx);
+            console.log(est.indicador_valores_adx);
 
             dataset_compra_venda.push({
 
