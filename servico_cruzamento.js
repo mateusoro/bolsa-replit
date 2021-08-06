@@ -197,7 +197,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
                 var s = [];
                 for (var temp in estra[index].sinal_temp) {
                     if(estra[index].indicador_valores_adx[temp] > 25){
-                        s.push(estra[index].sinal_temp)
+                        s.push(estra[index].sinal_temp[temp])
                     }
                 }
 
