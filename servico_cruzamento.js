@@ -494,7 +494,7 @@ function crosser(acao, estrategias, stop) {
                     "Resultado": resultado,
                     "ResultadoDia": resultado / diffDays
                 }
-                console.log("Vendido: ", operacao.Resultado);
+                //console.log("Vendido: ", operacao.Resultado);
 
                 operacoes.push(operacao);
                 preco_compra = 0;
