@@ -390,6 +390,7 @@ function crosser(acao, estrategias, stop) {
                 if (est.tipo == 'Compra') {
                     if (est.indicador == 'stochrsi') {
                         if (est.cruzamento[a] != 'Cima') {
+                            console.log(est.cruzamento[a],est.sinal[a])
                             est.sinal[a] = '';
                         }
                         else{'Compra stochrsi'}
