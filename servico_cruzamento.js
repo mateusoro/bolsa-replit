@@ -344,8 +344,6 @@ function crosser(acao, estrategias, stop, tipo) {
         if (a > maior_indicador) {
 
 
-           
-
             if (tipo == 'maior') { // apenas um sinal precisa ser comprar
 
                 var sinal_ou_compra = '';
