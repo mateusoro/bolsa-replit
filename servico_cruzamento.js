@@ -194,7 +194,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
                 estra[index].indicador_valores_adx = await escolher_indicador(acao, 'adx', v2);
                 estra[index].sinal_temp = sinal(estra[index].indicador_valores_compra, 0, estra[index].indicador_valores_venda, estra[index].operador)[0];
                 estra[index].sinal_adx = sinal(estra[index].indicador_valores_adx, v2, null, 'normal')[0];
-                console.log(estra[index].sinal_temp.length, estra[index].sinal_adx)            
+                console.log(estra[index].sinal_temp.length, estra[index].sinal_adx.l)            
             
             
             }else{
