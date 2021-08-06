@@ -160,7 +160,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
     if (!estra[index + 1]) {
         estra[index + 1] = { vs1: [false], vs2: [false] }
     }
-    if (estra[index].tipo == 'Crosser' && estra[index].indicador_compra != 'di_')
+    if (estra[index].tipo == 'Crosser' && estra[index].indicador_compra != 'di_plus')
         if (v1 + 3 >= v2) {
             //console.log('Menor', index, v1, v2, longa_maior_anterior);
             return false;
