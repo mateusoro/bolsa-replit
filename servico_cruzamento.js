@@ -132,13 +132,13 @@ async function adx(acao, tamanho) {
     return result;
 }
 async function di_minus(acao, tamanho) {
-    var result = await tulind.indicators.di.indicator([acao.high, acao.low, acao.close], [tamanho]);   
+    var result = await tulind.indicators.di.indicator([acao.high, acao.low, acao.close], [tamanho]);
     var t = acao.close.length;
     result = corrige_tamanho(t, result[1]);
     return result;
 }
 async function di_plus(acao, tamanho) {
-    var result = await tulind.indicators.di.indicator([acao.high, acao.low, acao.close], [tamanho]);   
+    var result = await tulind.indicators.di.indicator([acao.high, acao.low, acao.close], [tamanho]);
     var t = acao.close.length;
     result = corrige_tamanho(t, result[0]);
     return result;
@@ -189,20 +189,20 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
 
             estra[index].indicador_valores_compra = await escolher_indicador(acao, estra[index].indicador_compra, v1);
             estra[index].indicador_valores_venda = await escolher_indicador(acao, estra[index].indicador_venda, v2);
-           
-            if(estra[index].indicador_compra != 'di_plus'){
+
+            if (estra[index].indicador_compra != 'di_plus') {
                 estra[index].indicador_valores_adx = await escolher_indicador(acao, 'adx', v2);
                 estra[index].sinal_temp = sinal(estra[index].indicador_valores_compra, 0, estra[index].indicador_valores_venda, estra[index].operador)[0];
                 estra[index].sinal_adx = sinal(estra[index].indicador_valores_adx, v2, null, 'normal')[0];
-                for(var temp in  estra[index].sinal_temp ){
-                    
+                for (var temp in estra[index].sinal_temp) {
+
                 }
-            
-            
-            }else{
+
+
+            } else {
 
                 estra[index].sinal = sinal(estra[index].indicador_valores_compra, 0, estra[index].indicador_valores_venda, estra[index].operador)[0];
-            
+
 
             }
         }
@@ -268,7 +268,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         }
 
         if (lista_curta[a - 1] && lista_curta[a - 2]) {
-            if (lista_curta[a] >  lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { lista_tendencia.push("Cima") }
+            if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { lista_tendencia.push("Cima") }
             if (lista_curta[a] < lista_curta[a - 1] && lista_curta[a - 1] < lista_curta[a - 2]) { lista_tendencia.push("Baixo") }
             if (lista_curta[a] == lista_curta[a - 1]) { lista_tendencia.push("Lateralizado") }
         } else {
@@ -450,7 +450,7 @@ function crosser(acao, estrategias, stop, tipo) {
 
                 for (var e in estrategias) {
                     var est = estrategias[e];
-                                        
+
                     if (est.tipo == 'Crosser') {
                         if (est.sinal[a] == 'Vender') {
                             quant_venda++;
@@ -485,9 +485,9 @@ function crosser(acao, estrategias, stop, tipo) {
                             est.sinal[a] = '';
                             quant_neutro++;
                         }
-                        
+
                     }
-                   
+
                 }
 
                 if (quant_venda > quant_compra) {
@@ -498,7 +498,7 @@ function crosser(acao, estrategias, stop, tipo) {
                     sinal_compra = "Comprar";
                     sinal_venda = "Comprar";
                 }
-                if (quant_neutro >= quant_venda && quant_neutro >=  quant_compra) {
+                if (quant_neutro >= quant_venda && quant_neutro >= quant_compra) {
                     sinal_compra = "";
                     sinal_venda = "";
                 }
