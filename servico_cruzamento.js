@@ -289,7 +289,7 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         } else {
             tendencia = "Lateralizado";
         }
-        lista_tendencia.push(den)
+        lista_tendencia.push(tendencia)
         if (operador == 'normal') {
             if (lista_curta[a] > novo_parametro) { lista_retorno.push("Comprar") }
             if (lista_curta[a] < novo_parametro) { lista_retorno.push("Vender") }
