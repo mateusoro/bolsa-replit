@@ -202,7 +202,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
                         s.push('');
                     }
                 }
-
+                estra[index].sinal = s;
 
             } else {
 
