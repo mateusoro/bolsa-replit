@@ -273,6 +273,9 @@ function sinal(lista_curta, parametro_fixo, lista_longa, operador) {
         if (lista_longa) {
             novo_parametro = lista_longa[a];
         }
+        if (lista_longa) {
+            novo_parametro = lista_longa[a];
+        }
 
         if (lista_curta[a - 1] && lista_curta[a - 2] && lista_longa[a - 1]) {
             if (lista_curta[a] > lista_curta[a - 1] && lista_curta[a - 1] > lista_curta[a - 2]) { lista_tendencia.push("Cima") }
