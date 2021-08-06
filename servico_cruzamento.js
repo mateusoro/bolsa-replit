@@ -196,7 +196,7 @@ async function escolher_estrategia_tipo(acao, estra, index, v1, v2, longa_maior_
                 //console.log(estra[index].indicador_valores_adx);
                 var s = [];
                 for (var temp in estra[index].sinal_temp) {
-                    if (estra[index].indicador_valores_adx[temp] > 0) {
+                    if (estra[index].indicador_valores_adx[temp] > 20) {
                         s.push(estra[index].sinal_temp[temp]);
                     } else {
                         s.push('');
