@@ -121,7 +121,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('historico', async () => {
 
-        var docs = await sqlite.all('select * from retorno where ativo = "S"');
+        var docs = await sqlite.all('select * from retorno orde by id desc');
         for (var x in docs) {
             //console.log('Emitindo', x)
             var rr = JSON.parse(docs[x].campo);
