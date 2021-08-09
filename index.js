@@ -125,8 +125,7 @@ io.sockets.on('connection', (socket) => {
         for (var x in docs) {           
             var rr = JSON.parse(docs[x].campo);
             rr.id = docs[x].id;
-            emitir([{ destino: 'resultado', mensagem: rr }]);
-         
+            emitir([{ destino: 'resultado', mensagem: rr }]);         
             
         }
 
