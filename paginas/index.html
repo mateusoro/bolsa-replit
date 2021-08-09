@@ -711,6 +711,8 @@
             </div>
             <div class="col s12" style="margin: 5px;">
                 <a class="col s3 waves-effect waves-light btn-small grey" onclick="atualizar()">Atualizar Ação</a>
+                <a class="col s3 waves-effect waves-light btn-small grey"
+                    onclick="socket.emit('historico');">Histórico</a>
                 <a class="col s3 waves-effect waves-light btn-small orange" onclick="$('#messages').empty()">Limpar</a>
                 
             </div>
