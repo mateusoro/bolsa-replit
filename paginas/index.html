@@ -67,8 +67,8 @@
                 "&quant_perdas=" + msg.descricao.quant_perdas +
                 "&estrategias=" + estrat;
 
-                var link_consulta = window.location.origin;
-                link_consulta += "/?acao=" + msg.descricao.acao +
+            var link_consulta = window.location.origin;
+            link_consulta += "/?acao=" + msg.descricao.acao +
                 "&stop=" + msg.descricao.stop +
                 "&quant_stop=" + msg.descricao.quant_stop +
                 "&quant_operacoes=" + msg.descricao.quant_operacoes +
@@ -716,9 +716,9 @@
                 <a class="col s3 waves-effect waves-light btn-small" id="rodar" onclick="rodar();iniciar();">Rodar</a>
                 <a class="col s3 waves-effect waves-light btn-small red" onclick="socket.emit('parar');">Parar</a>
                 <a class="col s3 waves-effect waves-light btn-small grey" onclick="salvar_consulta()">Salvar</a>
-                <a href="/" class="col s3 waves-effect waves-light btn-small grey" >Home</a>
-                
-                
+                <a href="/" class="col s3 waves-effect waves-light btn-small grey">Home</a>
+
+
             </div>
             <div class="col s12" style="margin: 5px;">
                 <a class="col s3 waves-effect waves-light btn-small grey" onclick="link_consulta()">Link Estratégia</a>
@@ -726,7 +726,7 @@
                 <a class="col s3 waves-effect waves-light btn-small grey"
                     onclick="socket.emit('historico');">Histórico</a>
                 <a class="col s3 waves-effect waves-light btn-small orange" onclick="$('#messages').empty()">Limpar</a>
-                
+
             </div>
             <div class="col s12">
                 <div class="input-field col s12">
