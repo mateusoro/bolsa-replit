@@ -119,7 +119,7 @@ io.sockets.on('connection', (socket) => {
 
 
     });
-    socket.on('historico', async (msg) => {
+    socket.on('historico', async () => {
 
         var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
