@@ -357,6 +357,7 @@
                 $('#tipo_cruzamento').val($.urlParam('tipo_cruzamento'));
 
                 var estrategias_carregar = JSON.parse(decodeURIComponent($.urlParam('estrategias')))
+                console.log()
                 for (var e in estrategias_carregar) {
 
                     var est = estrategias_carregar[e];
