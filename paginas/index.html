@@ -658,7 +658,7 @@
                     <input placeholder="10" type="text" value="1" class="validate quant_acertos">
                     <label>Qtd MIN ACERTOS</label>
                 </div>
-            </div>           
+            </div>
             <div class="col s4">
                 <div class="input-field col s12">
                     <select id="estra">
@@ -693,8 +693,8 @@
                             <p>Oscilador AROON: Compra(14,30) - acima de 30</p>
                             <p>DI+: Compra - DI+ cruza o DI- para cima</p>
                             <p>DI-: Venda - DI+ cruza o DI- para baixo</p>
-                            
-                        </div>                       
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -706,11 +706,12 @@
                 <a class="col s2 waves-effect waves-light btn-small grey" onclick="link_consulta()">Link Estratégia</a>
                 <a class="col s1 waves-effect waves-light btn-small grey" onclick="salvar_consulta()">Salvar</a>
                 <a class="col s1 waves-effect waves-light btn-small red" onclick="socket.emit('parar');">Parar</a>
-                </div>
-                <div class="col s12" style="margin-top: 25px;">
+            </div>
+            <div class="col s12" style="margin-top: 25px;">
                 <a class="col s2 waves-effect waves-light btn-small grey" onclick="atualizar()">Atualizar</a>
                 <a class="col s2 waves-effect waves-light btn-small orange" onclick="$('#messages').empty()">Limpar</a>
-                <a class="col s2 waves-effect waves-light btn-small grey" onclick="socket.emit('historico');">Histórico</a>
+                <a class="col s2 waves-effect waves-light btn-small grey"
+                    onclick="socket.emit('historico');">Histórico</a>
             </div>
             <div class="col s12">
                 <div class="input-field col s12">
@@ -736,7 +737,7 @@
         <div class="col s6 modelo_compra" style="margin-top: 20px;">
             <div class="input-field col s12">
                 <select class="indicador">
-                    
+
                     <option value="aroonosc">Oscilador AROON</option>
                     <option value="rsi">RSI</option>
                     <option value="stochrsi">StochRSI</option>
@@ -759,7 +760,7 @@
         <div class="col s6 modelo_venda" style="margin-top: 20px;">
             <div class="input-field col s12">
                 <select class="indicador">
-                    
+
                     <option value="aroonosc">Oscilador AROON</option>
                     <option value="rsi">RSI</option>
                     <option value="stochrsi">StochRSI</option>
