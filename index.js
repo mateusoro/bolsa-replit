@@ -121,7 +121,7 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('historico', async () => {
 
-        var docs = await sqlite.all('select * from retorno order by id desc limit 10');
+        var docs = await sqlite.all('select * from retorno order by id desc limit 100');
         for (var x in docs) {           
             var rr = JSON.parse(docs[x].campo);
             rr.id = docs[x].id;
