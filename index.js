@@ -121,17 +121,16 @@ io.sockets.on('connection', (socket) => {
     });
     socket.on('historico', async (msg) => {
 
-        // console.log('carregar_predefinidos');
-        //iniciar_cruzamente(msg);
-        var docs = await sqlite.all('select * from predefinido where ativo = "S"');
-        
+        var docs = await sqlite.all('select * from retorno where ativo = "S"');
         for (var x in docs) {
-            var d = JSON.parse(docs[x].campo);
-            d.id =docs[x].id;
-            io.emit('predefinidos',d);
+            //console.log('Emitindo', x)
+            var rr = JSON.parse(docs[x].campo);
+            rr.id = docs[x].id;
+            emitir([{ destino: 'resultado', mensagem: rr }]);
+            //await sqlite.run("insert into grafico values (null, '"+JSON.stringify(rr)+"', 'S')")            
+            await sqlite.run('update retorno set ativo = "N" where id='+docs[x].id);     
+            
         }
-       
-        if (docs.length > 0) console.log('Carregou predefinidos: ' + docs.length);
 
 
     });
