@@ -192,7 +192,7 @@ function emitir(resultado) {
             } else {
                 setTimeout(() => {
                     //console.log(resultado);
-                    //emitir(resultado);
+                    emitir(resultado);
                 }, 1000);
             }
 
