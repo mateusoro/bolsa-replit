@@ -119,6 +119,7 @@ io.sockets.on('connection', (socket) => {
 
 
     });
+    
     socket.on('rodar_todos', async () => {
 
         var docs = await sqlite.all('select * from predefinido where ativo = "S"');
