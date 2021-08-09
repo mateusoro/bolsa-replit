@@ -191,7 +191,7 @@ function emitir(resultado) {
 
             } else {
                 setTimeout(() => {
-                    console.log(resultado);
+                    //console.log(resultado);
                     //emitir(resultado);
                 }, 1000);
             }
