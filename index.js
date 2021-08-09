@@ -122,8 +122,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('historico', async () => {
 
         var docs = await sqlite.all('select * from retorno order by id desc limit 10');
-        for (var x in docs) {
-            //console.log('Emitindo', x)
+        for (var x in docs) {           
             var rr = JSON.parse(docs[x].campo);
             rr.id = docs[x].id;
             emitir([{ destino: 'resultado', mensagem: rr }]);
