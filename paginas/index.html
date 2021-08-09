@@ -67,8 +67,14 @@
                 "&quant_perdas=" + msg.descricao.quant_perdas +
                 "&estrategias=" + estrat;
 
-            geral = link;
-            //console.log(link);
+                var link = window.location.origin;
+            link += "/?acao=" + msg.descricao.acao +
+                "&stop=" + msg.descricao.stop +
+                "&quant_stop=" + msg.descricao.quant_stop +
+                "&quant_operacoes=" + msg.descricao.quant_operacoes +
+                "&quant_acertos=" + msg.descricao.quant_acertos +
+                "&quant_perdas=" + msg.descricao.quant_perdas +
+                "&estrategias=" + estrat;
 
             var col = $('<ul class="collection">');
             var t1 = $('<li class="collection-item">' + msg.descricao.acao + '</li>');
